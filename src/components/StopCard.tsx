@@ -12,7 +12,8 @@ import {
   Compass,
   ChevronDown,
   ChevronUp,
-  MapPin
+  MapPin,
+  Trash2
 } from 'lucide-react';
 import { Stop, getCitymapperUrl } from '../data/itineraryData';
 import { handleImageError } from '../utils/images';
@@ -23,9 +24,16 @@ interface StopCardProps {
   index: number;
   isCompleted: boolean;
   onToggleComplete: (id: string) => void;
+  onDeleteStop?: (id: string) => void;
 }
 
-export const StopCard: React.FC<StopCardProps> = ({ stop, index, isCompleted, onToggleComplete }) => {
+export const StopCard: React.FC<StopCardProps> = ({ 
+  stop, 
+  index, 
+  isCompleted, 
+  onToggleComplete,
+  onDeleteStop
+}) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
   const citymapperUrl = getCitymapperUrl(stop.coordinates.lat, stop.coordinates.lng, stop.title, stop.address);
@@ -110,7 +118,21 @@ export const StopCard: React.FC<StopCardProps> = ({ stop, index, isCompleted, on
             )}
           </div>
 
-          <div>
+          <div className="flex items-center gap-1.5">
+            {stop.id.startsWith('custom-') && onDeleteStop && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (confirm('Vuoi rimuovere questa tappa aggiunta?')) {
+                    onDeleteStop(stop.id);
+                  }
+                }}
+                className="p-1 rounded-full bg-rose-600/90 text-white shadow-md active:scale-90"
+                title="Elimina tappa"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+              </button>
+            )}
             {getCategoryBadge()}
           </div>
         </div>

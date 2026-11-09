@@ -17,7 +17,7 @@ import {
   ExternalLink,
   MapPin,
   List,
-  Touchpad
+  Trash2
 } from 'lucide-react';
 
 interface StopStoryViewerProps {
@@ -25,13 +25,15 @@ interface StopStoryViewerProps {
   completedStops: Record<string, boolean>;
   onToggleComplete: (id: string) => void;
   onSwitchToList: () => void;
+  onDeleteStop?: (id: string) => void;
 }
 
 export const StopStoryViewer: React.FC<StopStoryViewerProps> = ({
   stops,
   completedStops,
   onToggleComplete,
-  onSwitchToList
+  onSwitchToList,
+  onDeleteStop
 }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
@@ -151,14 +153,32 @@ export const StopStoryViewer: React.FC<StopStoryViewerProps> = ({
           })}
         </div>
 
-        {/* Tasto switch rapido a elenco */}
-        <button
-          onClick={onSwitchToList}
-          className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md text-white text-xs font-bold border border-white/20 shadow-lg active:scale-95 transition-all"
-        >
-          <List className="w-3.5 h-3.5" />
-          <span>Elenco</span>
-        </button>
+        {/* Tasti in alto: Cestino se personalizzata + Switch Elenco */}
+        <div className="flex items-center gap-1.5">
+          {currentStop.id.startsWith('custom-') && onDeleteStop && (
+            <button
+              onClick={() => {
+                if (confirm('Vuoi rimuovere questa tappa aggiunta?')) {
+                  onDeleteStop(currentStop.id);
+                  if (currentIndex > 0) setCurrentIndex((i) => i - 1);
+                }
+              }}
+              className="flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-rose-600/80 hover:bg-rose-600 text-white text-xs font-bold border border-rose-400 shadow-lg active:scale-95 transition-all"
+              title="Elimina questa tappa aggiunta"
+            >
+              <Trash2 className="w-3.5 h-3.5" />
+              <span>Elimina</span>
+            </button>
+          )}
+
+          <button
+            onClick={onSwitchToList}
+            className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md text-white text-xs font-bold border border-white/20 shadow-lg active:scale-95 transition-all"
+          >
+            <List className="w-3.5 h-3.5" />
+            <span>Elenco</span>
+          </button>
+        </div>
       </div>
 
       {/* 2. AREA TAP LATERALE (Tap a destra per andare avanti, a sinistra per tornare indietro) */}

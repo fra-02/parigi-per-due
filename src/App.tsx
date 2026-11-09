@@ -13,7 +13,7 @@ import { MetroAssistantModal } from './components/MetroAssistantModal';
 import { RainPlanModal } from './components/RainPlanModal';
 import { Under26Modal } from './components/Under26Modal';
 import { NotesModal } from './components/NotesModal';
-import { getCustomStopsForDay, saveCustomStopForDay } from './utils/customStops';
+import { getCustomStopsForDay, saveCustomStopForDay, deleteCustomStop } from './utils/customStops';
 import { calculateDistanceMeters, formatDistance, formatWalkingTime } from './utils/geo';
 import { 
   Calendar, 
@@ -122,6 +122,11 @@ export const App: React.FC = () => {
     setCustomStopsVersion((v) => v + 1);
   };
 
+  const handleDeleteCustomStop = (stopId: string) => {
+    deleteCustomStop(baseDay.id, stopId);
+    setCustomStopsVersion((v) => v + 1);
+  };
+
   return (
     <div className="min-h-screen bg-[#0b0f19] text-slate-100 flex flex-col font-sans pb-24 selection:bg-rose-500 selection:text-white">
       
@@ -198,6 +203,7 @@ export const App: React.FC = () => {
                 completedStops={completedStops}
                 onToggleComplete={handleToggleComplete}
                 onSwitchToList={() => setItineraryMode('list')}
+                onDeleteStop={handleDeleteCustomStop}
               />
             ) : (
               <div className="space-y-3">
@@ -220,6 +226,7 @@ export const App: React.FC = () => {
                         index={idx}
                         isCompleted={!!completedStops[stop.id]}
                         onToggleComplete={handleToggleComplete}
+                        onDeleteStop={handleDeleteCustomStop}
                       />
 
                       {distanceToNext !== null && (
