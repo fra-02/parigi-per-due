@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { ITINERARY_DAYS } from './data/itineraryData';
-import { Navbar } from './components/Navbar';
+import React, { useState, useEffect, useMemo } from 'react';
+import { ITINERARY_DAYS, Stop } from './data/itineraryData';
 import { DaySelector } from './components/DaySelector';
 import { StopCard } from './components/StopCard';
 import { StopStoryViewer } from './components/StopStoryViewer';
@@ -9,10 +8,12 @@ import { WeatherWidget } from './components/WeatherWidget';
 import { NearbyRadar } from './components/NearbyRadar';
 import { TransitNavigator } from './components/TransitNavigator';
 import { UtilitiesView } from './components/UtilitiesView';
+import { AddStopModal } from './components/AddStopModal';
 import { MetroAssistantModal } from './components/MetroAssistantModal';
 import { RainPlanModal } from './components/RainPlanModal';
 import { Under26Modal } from './components/Under26Modal';
 import { NotesModal } from './components/NotesModal';
+import { getCustomStopsForDay, saveCustomStopForDay } from './utils/customStops';
 import { calculateDistanceMeters, formatDistance, formatWalkingTime } from './utils/geo';
 import { 
   Calendar, 
@@ -22,11 +23,10 @@ import {
   Sparkles, 
   ChevronLeft, 
   ChevronRight, 
-  Heart, 
-  Share2, 
-  Footprints,
+  Plus, 
+  List, 
   Layers,
-  List
+  Footprints
 } from 'lucide-react';
 
 export const App: React.FC = () => {
@@ -34,6 +34,8 @@ export const App: React.FC = () => {
   const [selectedDayId, setSelectedDayId] = useState<string>('day-1');
   const [itineraryMode, setItineraryMode] = useState<'story' | 'list'>('story');
   const [completedStops, setCompletedStops] = useState<Record<string, boolean>>({});
+  const [isAddStopOpen, setIsAddStopOpen] = useState<boolean>(false);
+  const [customStopsVersion, setCustomStopsVersion] = useState<number>(0);
   
   // Modals state
   const [isMetroOpen, setIsMetroOpen] = useState<boolean>(false);
@@ -41,12 +43,26 @@ export const App: React.FC = () => {
   const [isUnder26Open, setIsUnder26Open] = useState<boolean>(false);
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false);
 
-  // Caricamento tappe completate da localStorage
+  // Caricamento tappe completate da localStorage & auto-selezione intelligente del giorno
   useEffect(() => {
     try {
       const saved = localStorage.getItem('parigi_completed_stops');
       if (saved) {
         setCompletedStops(JSON.parse(saved));
+      }
+
+      // Rilevamento automatico del giorno in base alla data reale (Dicembre 7-12)
+      const now = new Date();
+      const currentMonth = now.getMonth(); // 11 = Dicembre
+      const currentDayDate = now.getDate();
+
+      if (currentMonth === 11) {
+        if (currentDayDate === 7) setSelectedDayId('day-1');
+        else if (currentDayDate === 8) setSelectedDayId('day-2');
+        else if (currentDayDate === 9) setSelectedDayId('day-3');
+        else if (currentDayDate === 10) setSelectedDayId('day-4');
+        else if (currentDayDate === 11) setSelectedDayId('day-5');
+        else if (currentDayDate === 12) setSelectedDayId('day-6');
       }
     } catch (e) {
       console.error('Error loading saved stops', e);
@@ -66,10 +82,26 @@ export const App: React.FC = () => {
   };
 
   const currentDayIndex = ITINERARY_DAYS.findIndex((d) => d.id === selectedDayId);
-  const currentDay = ITINERARY_DAYS[currentDayIndex] || ITINERARY_DAYS[0];
+  const baseDay = ITINERARY_DAYS[currentDayIndex] || ITINERARY_DAYS[0];
 
-  const totalStopsCount = ITINERARY_DAYS.reduce((acc, day) => acc + day.stops.length, 0);
-  const completedCount = Object.values(completedStops).filter(Boolean).length;
+  // Unione tappe predefinite + tappe personalizzate aggiunte al volo
+  const combinedStops = useMemo(() => {
+    const custom = getCustomStopsForDay(baseDay.id);
+    return [...baseDay.stops, ...custom];
+  }, [baseDay.id, customStopsVersion]);
+
+  const currentDay = useMemo(() => {
+    return {
+      ...baseDay,
+      stops: combinedStops
+    };
+  }, [baseDay, combinedStops]);
+
+  // Calcolo indice della PRIMA tappa ancora da fare per aprire subito l'app su quella!
+  const firstPendingStopIndex = useMemo(() => {
+    const idx = combinedStops.findIndex((s) => !completedStops[s.id]);
+    return idx !== -1 ? idx : 0;
+  }, [combinedStops, completedStops]);
 
   const handlePrevDay = () => {
     if (currentDayIndex > 0) {
@@ -85,111 +117,82 @@ export const App: React.FC = () => {
     }
   };
 
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: 'Parigi per Due ❤️ Nostro Itinerario',
-        text: 'Il nostro itinerario completo di Parigi con foto, mappa e Citymapper!',
-        url: window.location.href,
-      }).catch(() => {});
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      alert('Link copiato negli appunti! Invialo su WhatsApp alla tua ragazza ❤️');
-    }
+  const handleAddQuickStop = (title: string, time?: string) => {
+    saveCustomStopForDay(baseDay.id, title, time);
+    setCustomStopsVersion((v) => v + 1);
   };
 
   return (
-    <div className="min-h-screen bg-[#0b0f19] text-slate-100 flex flex-col font-sans pb-24">
+    <div className="min-h-screen bg-[#0b0f19] text-slate-100 flex flex-col font-sans pb-24 selection:bg-rose-500 selection:text-white">
       
-      {/* Top Navbar */}
-      <Navbar
-        onOpenMetro={() => setActiveTab('transit')}
-        onOpenRain={() => setIsRainOpen(true)}
-        onOpenUnder26={() => setIsUnder26Open(true)}
-        onOpenNotes={() => setIsNotesOpen(true)}
-        completedCount={completedCount}
-        totalCount={totalStopsCount}
-      />
-
-      {/* Main Container */}
-      <main className="max-w-2xl mx-auto w-full px-4 pt-3 flex-1">
+      {/* Main Container - SENZA TESTATA RIDONDANTE, PURO SPAZIO UTILE */}
+      <main className="max-w-2xl mx-auto w-full px-3 pt-2.5 flex-1">
         
-        {/* TAB 1: ITINERARIO CON MODALITÀ SFOGLIA & ELENCO */}
+        {/* TAB 1: ITINERARIO CON MODALITÀ SFOGLIA IMMEDIATA */}
         {activeTab === 'itinerary' && (
-          <div className="space-y-4">
+          <div className="space-y-3">
             
-            {/* Widget Meteo & Orario Tramonto */}
+            {/* Widget Meteo in Tempo Reale & Tramonto */}
             <WeatherWidget />
 
-            {/* Selettore dei Giorni */}
-            <div>
-              <div className="flex items-center justify-between px-1 mb-1 text-xs text-slate-400">
-                <span className="font-semibold uppercase tracking-wider text-[11px] text-slate-300">
-                  Scegli il Giorno
-                </span>
-                <button
-                  onClick={handleShare}
-                  className="flex items-center gap-1 text-[11px] text-rose-400 hover:text-rose-300 transition-colors"
-                >
-                  <Share2 className="w-3 h-3" />
-                  <span>Condividi con lei</span>
-                </button>
+            {/* Selettore dei Giorni Orizzontale a Scorrimento Rapido */}
+            <DaySelector
+              selectedDayId={selectedDayId}
+              onSelectDay={(id) => {
+                setSelectedDayId(id);
+              }}
+              completedStops={completedStops}
+            />
+
+            {/* Barra Azioni Giorno: Switch Sfoglia / Elenco + Tasto Aggiungi Tappa al Volo */}
+            <div className="flex items-center justify-between gap-2 px-1">
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs font-black text-white">{currentDay.title}</span>
+                <span className="text-[10px] text-slate-400">({currentDay.stops.length} tappe)</span>
               </div>
-              <DaySelector
-                selectedDayId={selectedDayId}
-                onSelectDay={(id) => {
-                  setSelectedDayId(id);
-                }}
-                completedStops={completedStops}
-              />
-            </div>
 
-            {/* Intestazione del Giorno con Switch Modalità Sfoglia / Elenco */}
-            <div className={`p-4 rounded-3xl bg-gradient-to-br ${currentDay.colorTheme} border border-slate-800/80 shadow-lg relative overflow-hidden backdrop-blur-sm`}>
-              <div className="flex items-center justify-between gap-2 mb-1">
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-white/10 text-white border border-white/20">
-                  {currentDay.dateStr}
-                </span>
+              <div className="flex items-center gap-1.5">
+                {/* Tasto Aggiungi Tappa al Volo */}
+                <button
+                  onClick={() => setIsAddStopOpen(true)}
+                  className="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-slate-750 text-rose-300 border border-slate-700/80 text-[11px] font-bold active:scale-95 transition-all shadow-sm"
+                >
+                  <Plus className="w-3.5 h-3.5 text-rose-400" />
+                  <span>Aggiungi</span>
+                </button>
 
-                {/* Selettore Sfoglia Card vs Elenco */}
-                <div className="flex items-center bg-slate-950/80 p-0.5 rounded-xl border border-white/10 text-xs">
+                {/* Switch Sfoglia vs Elenco */}
+                <div className="flex items-center bg-slate-900 p-0.5 rounded-xl border border-slate-800 text-xs">
                   <button
                     onClick={() => setItineraryMode('story')}
-                    className={`px-2.5 py-1 rounded-lg font-bold flex items-center gap-1 transition-all ${
+                    className={`px-2 py-1 rounded-lg font-bold flex items-center gap-1 transition-all ${
                       itineraryMode === 'story'
                         ? 'bg-rose-500 text-white shadow'
                         : 'text-slate-400 hover:text-white'
                     }`}
+                    title="Modalità Sfoglia Scheda per Scheda"
                   >
                     <Layers className="w-3 h-3" />
                     <span>Sfoglia</span>
                   </button>
                   <button
                     onClick={() => setItineraryMode('list')}
-                    className={`px-2.5 py-1 rounded-lg font-bold flex items-center gap-1 transition-all ${
+                    className={`px-2 py-1 rounded-lg font-bold flex items-center gap-1 transition-all ${
                       itineraryMode === 'list'
                         ? 'bg-rose-500 text-white shadow'
                         : 'text-slate-400 hover:text-white'
                     }`}
+                    title="Modalità Elenco Completo"
                   >
                     <List className="w-3 h-3" />
                     <span>Elenco</span>
                   </button>
                 </div>
               </div>
-
-              <h3 className="text-xl font-black text-white leading-tight">
-                {currentDay.title}
-              </h3>
-              <p className="text-xs text-rose-200/90 font-medium flex items-center gap-1 mt-0.5">
-                <Heart className="w-3 h-3 text-rose-400 fill-rose-400/40 shrink-0" />
-                <span>{currentDay.tagline}</span>
-              </p>
             </div>
 
-            {/* CONTENUTO ITINERARIO: MODALITÀ SFOGLIA VS ELENCO */}
+            {/* CONTENUTO ITINERARIO: SFOGLIA VS ELENCO */}
             {itineraryMode === 'story' ? (
-              /* SFOGLIA TAPPA PER TAPPA (In grande con story bars) */
               <StopStoryViewer
                 stops={currentDay.stops}
                 completedStops={completedStops}
@@ -197,7 +200,6 @@ export const App: React.FC = () => {
                 onSwitchToList={() => setItineraryMode('list')}
               />
             ) : (
-              /* ELENCO COMPLETO VERTICALE */
               <div className="space-y-3">
                 {currentDay.stops.map((stop, idx) => {
                   let distanceToNext: number | null = null;
@@ -237,13 +239,13 @@ export const App: React.FC = () => {
             )}
 
             {/* Navigazione Rapida Tra Giorni */}
-            <div className="mt-6 flex items-center justify-between gap-3 pt-3 border-t border-slate-800">
+            <div className="flex items-center justify-between gap-3 pt-2 border-t border-slate-800/80">
               <button
                 onClick={handlePrevDay}
                 disabled={currentDayIndex === 0}
-                className={`flex-1 py-2.5 px-3 rounded-2xl border text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
+                className={`flex-1 py-2 px-3 rounded-2xl border text-xs font-bold flex items-center justify-center gap-1 transition-all ${
                   currentDayIndex === 0
-                    ? 'opacity-40 border-slate-800 text-slate-600 cursor-not-allowed'
+                    ? 'opacity-30 border-slate-800 text-slate-600 cursor-not-allowed'
                     : 'bg-slate-900 border-slate-700 text-slate-200 hover:bg-slate-800 active:scale-98'
                 }`}
               >
@@ -254,9 +256,9 @@ export const App: React.FC = () => {
               <button
                 onClick={handleNextDay}
                 disabled={currentDayIndex === ITINERARY_DAYS.length - 1}
-                className={`flex-1 py-2.5 px-3 rounded-2xl border text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
+                className={`flex-1 py-2 px-3 rounded-2xl border text-xs font-bold flex items-center justify-center gap-1 transition-all ${
                   currentDayIndex === ITINERARY_DAYS.length - 1
-                    ? 'opacity-40 border-slate-800 text-slate-600 cursor-not-allowed'
+                    ? 'opacity-30 border-slate-800 text-slate-600 cursor-not-allowed'
                     : 'bg-gradient-to-r from-rose-600/30 to-amber-600/30 border-rose-500/40 text-amber-200 hover:from-rose-600/40 active:scale-98'
                 }`}
               >
@@ -268,9 +270,12 @@ export const App: React.FC = () => {
           </div>
         )}
 
-        {/* TAB 2: MAPPA INTERATTIVA (CON PERCORSO A PIEDI REALE & RISTORANTI VICINI) */}
+        {/* TAB 2: MAPPA INTERATTIVA A SCHERMO INTERO (CON RICERCA REALE & DEVIAZIONE A PIEDI) */}
         {activeTab === 'map' && (
-          <DayMap initialDayId={selectedDayId} />
+          <DayMap 
+            initialDayId={selectedDayId} 
+            onStopAdded={() => setCustomStopsVersion((v) => v + 1)}
+          />
         )}
 
         {/* TAB 3: RADAR NEI DINTORNI (CON SIMULATORE TEST DALL'ITALIA) */}
@@ -278,7 +283,7 @@ export const App: React.FC = () => {
           <NearbyRadar />
         )}
 
-        {/* TAB 4: TRANSIT NAVIGATOR (CITYMAPPER & METRO & HOTEL) */}
+        {/* TAB 4: TRANSIT NAVIGATOR (CITYMAPPER & METRO & SOS HOTEL) */}
         {activeTab === 'transit' && (
           <TransitNavigator />
         )}
@@ -294,7 +299,7 @@ export const App: React.FC = () => {
 
       </main>
 
-      {/* Floating Bottom Navigation Tab Bar (5 TAB) */}
+      {/* Floating Bottom Navigation Tab Bar (MENU PRINCIPALE IN BASSO) */}
       <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#0b0f19]/95 backdrop-blur-xl border-t border-slate-800/80 px-2 pt-2 pb-5">
         <div className="max-w-md mx-auto grid grid-cols-5 gap-0.5">
           
@@ -376,7 +381,14 @@ export const App: React.FC = () => {
         </div>
       </nav>
 
-      {/* Modals */}
+      {/* Modal Aggiungi Tappa al Volo */}
+      <AddStopModal
+        isOpen={isAddStopOpen}
+        onClose={() => setIsAddStopOpen(false)}
+        onAddStop={handleAddQuickStop}
+      />
+
+      {/* Modals Esistenti */}
       <MetroAssistantModal isOpen={isMetroOpen} onClose={() => setIsMetroOpen(false)} />
       <RainPlanModal isOpen={isRainOpen} onClose={() => setIsRainOpen(false)} />
       <Under26Modal isOpen={isUnder26Open} onClose={() => setIsUnder26Open(false)} />

@@ -4,36 +4,51 @@ import { ITINERARY_DAYS, Stop } from '../data/itineraryData';
 import { NEARBY_PLACES, NearbyPlace } from '../data/nearbyPlacesData';
 import { calculateDistanceMeters, formatDistance, formatWalkingTime } from '../utils/geo';
 import { fetchWalkingRoute } from '../services/routingService';
+import { searchParisPlaces, SearchResult } from '../services/searchService';
+import { saveCustomStopForDay } from '../utils/customStops';
 import { 
   Navigation, 
   Compass, 
   Footprints, 
   Search, 
   LocateFixed, 
-  Utensils, 
-  Camera, 
   X,
-  Sparkles,
-  MapPin
+  Plus,
+  Route,
+  Check,
+  Sparkles
 } from 'lucide-react';
 
 interface DayMapProps {
   initialDayId?: string;
+  onStopAdded?: () => void;
 }
 
-export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
+export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1', onStopAdded }) => {
   const [selectedDayId, setSelectedDayId] = useState<string>(initialDayId);
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [showRestaurants, setShowRestaurants] = useState<boolean>(true);
-  const [showPhotoSpots, setShowPhotoSpots] = useState<boolean>(true);
-  const [userGps, setUserGps] = useState<{ lat: number; lng: number } | null>(null);
+  const [showPhotoSpots, setShowPhotoSpots] = useState<boolean>(false);
   const [isLocating, setIsLocating] = useState<boolean>(false);
   const [activeStopIndex, setActiveStopIndex] = useState<number>(0);
+
+  // Deviazione attiva selezionata
+  const [activeDetour, setActiveDetour] = useState<{
+    place: { name: string; lat: number; lng: number; address: string };
+    closestStop: Stop;
+    detourDistance: number;
+    routeCoords: [number, number][];
+  } | null>(null);
+
+  const [addedSuccess, setAddedSuccess] = useState<boolean>(false);
 
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
   const routeLayerGroupRef = useRef<L.LayerGroup | null>(null);
   const nearbyLayerGroupRef = useRef<L.LayerGroup | null>(null);
+  const detourLayerGroupRef = useRef<L.LayerGroup | null>(null);
   const userGpsLayerGroupRef = useRef<L.LayerGroup | null>(null);
 
   const currentDay = ITINERARY_DAYS.find((d) => d.id === selectedDayId) || ITINERARY_DAYS[0];
@@ -46,7 +61,7 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
     totalDistanceMeters += calculateDistanceMeters(from.lat, from.lng, to.lat, to.lng);
   }
 
-  // 1. Inizializzazione Mappa a Schermo Intero
+  // 1. Inizializzazione Mappa
   useEffect(() => {
     if (!mapContainerRef.current) return;
 
@@ -58,7 +73,7 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
 
       L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-      // OpenStreetMap 100% libera e senza API key
+      // OpenStreetMap 100% gratuita senza API key
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; OpenStreetMap contributors'
@@ -66,18 +81,20 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
 
       routeLayerGroupRef.current = L.layerGroup().addTo(map);
       nearbyLayerGroupRef.current = L.layerGroup().addTo(map);
+      detourLayerGroupRef.current = L.layerGroup().addTo(map);
       userGpsLayerGroupRef.current = L.layerGroup().addTo(map);
       mapInstanceRef.current = map;
     }
   }, []);
 
-  // 2. Render Tappe e Percorso a Piedi Reale OSRM
+  // 2. Render Tappe e Percorso Principale a Piedi (Rosso)
   useEffect(() => {
     const map = mapInstanceRef.current;
     const routeLayer = routeLayerGroupRef.current;
     if (!map || !routeLayer) return;
 
     routeLayer.clearLayers();
+    setActiveDetour(null);
 
     const waypoints = currentDay.stops.map((s) => s.coordinates);
 
@@ -159,7 +176,7 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
       routeLayer.addLayer(marker);
     });
 
-    // Percorso pedonale reale
+    // Percorso reale con curve strade
     fetchWalkingRoute(waypoints).then((routeCoords) => {
       if (routeCoords.length > 1) {
         const polyline = L.polyline(routeCoords, {
@@ -202,17 +219,6 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
       const emoji = isFood ? '🥐' : '📸';
       const bgColor = isFood ? '#f59e0b' : '#38bdf8';
 
-      // Calcola distanza minima rispetto a una delle tappe del giorno
-      let minDistanceToDay = 999999;
-      let closestStopName = '';
-      currentDay.stops.forEach((s) => {
-        const dist = calculateDistanceMeters(s.coordinates.lat, s.coordinates.lng, place.coordinates.lat, place.coordinates.lng);
-        if (dist < minDistanceToDay) {
-          minDistanceToDay = dist;
-          closestStopName = s.title;
-        }
-      });
-
       const poiIcon = L.divIcon({
         className: 'custom-poi-pin',
         html: `
@@ -237,61 +243,138 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
         popupAnchor: [0, -14],
       });
 
-      const gmapsDir = `https://www.google.com/maps/dir/?api=1&destination=${place.coordinates.lat},${place.coordinates.lng}&travelmode=walking`;
-      const citymapperDir = `https://citymapper.com/directions?endcoord=${place.coordinates.lat}%2C${place.coordinates.lng}&endname=${encodeURIComponent(place.name)}&endaddress=${encodeURIComponent(place.address)}`;
-
       const marker = L.marker([place.coordinates.lat, place.coordinates.lng], { icon: poiIcon });
 
-      const popupContent = `
-        <div style="font-family: -apple-system, sans-serif; font-size: 12px; color: #0f172a; padding: 4px; min-width: 190px;">
-          <div style="font-size: 10px; font-weight: 800; color: ${isFood ? '#d97706' : '#0284c7'}; text-transform: uppercase;">
-            ${isFood ? '🥐 Cibo & Bistrot' : '📸 Punto Foto'} • ${place.neighborhood}
-          </div>
-          <div style="font-weight: 800; font-size: 13px; margin: 2px 0 2px 0; color: #0f172a;">
-            ${place.name}
-          </div>
-          <div style="font-size: 10px; font-weight: 700; color: #e11d48; margin-bottom: 4px;">
-            📍 A ${formatDistance(minDistanceToDay)} da ${closestStopName}
-          </div>
-          <div style="font-size: 11px; color: #475569; margin-bottom: 6px;">
-            ${place.description}
-          </div>
-          <div style="display: flex; gap: 4px;">
-            <a href="${gmapsDir}" target="_blank" rel="noopener noreferrer" style="
-              flex: 1;
-              background: #0f172a;
-              color: white;
-              padding: 5px 8px;
-              border-radius: 6px;
-              text-align: center;
-              text-decoration: none;
-              font-weight: 700;
-              font-size: 10px;
-              display: inline-block;
-            ">🚶 Naviga</a>
-            <a href="${citymapperDir}" target="_blank" rel="noopener noreferrer" style="
-              flex: 1;
-              background: #288330;
-              color: white;
-              padding: 5px 8px;
-              border-radius: 6px;
-              text-align: center;
-              text-decoration: none;
-              font-weight: 700;
-              font-size: 10px;
-              display: inline-block;
-            ">🚇 Citymapper</a>
-          </div>
-        </div>
-      `;
+      marker.on('click', () => {
+        handleTriggerDetour({
+          name: place.name,
+          lat: place.coordinates.lat,
+          lng: place.coordinates.lng,
+          address: place.address
+        });
+      });
 
-      marker.bindPopup(popupContent);
       nearbyLayer.addLayer(marker);
     });
 
   }, [showRestaurants, showPhotoSpots, selectedDayId]);
 
-  // 4. GPS Centra su di Me
+  // 4. Calcola DEVIAZIONE A PIEDI REALE (Tracciata in Ciano Elettrico!)
+  const handleTriggerDetour = (target: { name: string; lat: number; lng: number; address: string }) => {
+    const map = mapInstanceRef.current;
+    const detourLayer = detourLayerGroupRef.current;
+    if (!map || !detourLayer) return;
+
+    detourLayer.clearLayers();
+    setAddedSuccess(false);
+
+    // Trova la tappa più vicina dell'itinerario a questo punto
+    let closestStop = currentDay.stops[0];
+    let minDistance = 999999;
+
+    currentDay.stops.forEach((s) => {
+      const dist = calculateDistanceMeters(s.coordinates.lat, s.coordinates.lng, target.lat, target.lng);
+      if (dist < minDistance) {
+        minDistance = dist;
+        closestStop = s;
+      }
+    });
+
+    // Calcola il percorso reale a piedi dalla tappa più vicina alla deviazione
+    fetchWalkingRoute([
+      { lat: closestStop.coordinates.lat, lng: closestStop.coordinates.lng },
+      { lat: target.lat, lng: target.lng }
+    ]).then((routeCoords) => {
+      if (routeCoords.length > 1) {
+        // Linea Ciano Elettrico della deviazione
+        const detourPolyline = L.polyline(routeCoords, {
+          color: '#06b6d4',
+          weight: 5,
+          opacity: 0.95,
+          dashArray: '4, 6',
+          lineCap: 'round',
+        });
+        detourLayer.addLayer(detourPolyline);
+      }
+
+      // Pin speciale deviazione
+      const detourPin = L.divIcon({
+        className: 'custom-detour-pin',
+        html: `
+          <div style="
+            background: #06b6d4;
+            color: white;
+            font-size: 14px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 16px #06b6d4;
+            border: 2px solid white;
+          ">
+            📍
+          </div>
+        `,
+        iconSize: [32, 32],
+        iconAnchor: [16, 16],
+      });
+
+      L.marker([target.lat, target.lng], { icon: detourPin }).addTo(detourLayer);
+
+      setActiveDetour({
+        place: target,
+        closestStop,
+        detourDistance: minDistance,
+        routeCoords
+      });
+
+      // Centra per mostrare sia la tappa che la deviazione
+      const bounds = L.latLngBounds([
+        [closestStop.coordinates.lat, closestStop.coordinates.lng],
+        [target.lat, target.lng]
+      ]);
+      map.fitBounds(bounds, { padding: [50, 50], maxZoom: 17 });
+    });
+  };
+
+  // 5. Ricerca REALE su OpenStreetMap
+  const handleSearchSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+
+    setIsSearching(true);
+    const results = await searchParisPlaces(searchQuery.trim());
+    setIsSearching(false);
+    setSearchResults(results);
+  };
+
+  const handleSelectSearchResult = (result: SearchResult) => {
+    setSearchResults([]);
+    setSearchQuery('');
+    handleTriggerDetour({
+      name: result.name,
+      lat: result.lat,
+      lng: result.lng,
+      address: result.address
+    });
+  };
+
+  // 6. Aggiungi la deviazione direttamente all'itinerario con 1 click
+  const handleAddDetourToItinerary = () => {
+    if (!activeDetour) return;
+    saveCustomStopForDay(
+      selectedDayId,
+      activeDetour.place.name,
+      undefined,
+      { lat: activeDetour.place.lat, lng: activeDetour.place.lng }
+    );
+    setAddedSuccess(true);
+    if (onStopAdded) onStopAdded();
+  };
+
+  // 7. Centra GPS
   const handleLocateMe = () => {
     if (!navigator.geolocation) {
       alert('Geolocalizzazione non supportata');
@@ -303,8 +386,6 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
       (pos) => {
         setIsLocating(false);
         const coords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-        setUserGps(coords);
-
         const map = mapInstanceRef.current;
         const gpsLayer = userGpsLayerGroupRef.current;
         if (map && gpsLayer) {
@@ -320,7 +401,6 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
                 border: 3px solid white;
                 border-radius: 50%;
                 box-shadow: 0 0 15px #38bdf8;
-                animation: pulse 1.5s infinite;
               "></div>
             `,
             iconSize: [20, 20],
@@ -339,24 +419,6 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
     );
   };
 
-  // 5. Ricerca sulla Mappa
-  const filteredSearchResults = searchQuery.trim()
-    ? NEARBY_PLACES.filter(
-        (p) =>
-          p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          p.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          p.neighborhood.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    : [];
-
-  const handleSelectSearchResult = (place: NearbyPlace) => {
-    setSearchQuery('');
-    const map = mapInstanceRef.current;
-    if (map) {
-      map.flyTo([place.coordinates.lat, place.coordinates.lng], 17, { duration: 1.2 });
-    }
-  };
-
   const handleFlyToStop = (stop: Stop, idx: number) => {
     setActiveStopIndex(idx);
     const map = mapInstanceRef.current;
@@ -366,9 +428,9 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
   };
 
   return (
-    <div className="relative w-full rounded-3xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-950 flex flex-col h-[calc(100vh-140px)] min-h-[500px]">
+    <div className="relative w-full rounded-3xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-950 flex flex-col h-[calc(100vh-140px)] min-h-[520px]">
       
-      {/* 1. SELETTORE GIORNO FLOATING IN ALTO */}
+      {/* 1. SELETTORE GIORNO FLOATING */}
       <div className="absolute top-3 left-3 right-3 z-30 flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 pointer-events-auto">
         {ITINERARY_DAYS.map((d) => (
           <button
@@ -385,72 +447,84 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
         ))}
       </div>
 
-      {/* 2. BARRA DI RICERCA FLOATING SULLA MAPPA */}
+      {/* 2. BARRA DI RICERCA REALE (CERCA QUALSIASI COSA A PARIGI SU OPENSTREETMAP) */}
       <div className="absolute top-14 left-3 right-3 z-30 pointer-events-auto">
-        <div className="relative">
-          <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-[#0b0f19]/90 backdrop-blur-md border border-slate-700/80 shadow-xl">
+        <form onSubmit={handleSearchSubmit} className="relative">
+          <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-[#0b0f19]/90 backdrop-blur-md border border-slate-700/80 shadow-2xl">
             <Search className="w-4 h-4 text-slate-400 ml-2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Cerca un posto o cibo vicino al percorso..."
+              placeholder="Cerca qualsiasi posto reale (es. forni, starbucks, vie)..."
               className="flex-1 bg-transparent text-white text-xs placeholder:text-slate-500 focus:outline-none"
             />
+            {isSearching && <span className="text-[10px] text-amber-400 mr-2 animate-pulse">Cerca...</span>}
             {searchQuery && (
-              <button onClick={() => setSearchQuery('')} className="p-1 text-slate-400 hover:text-white">
+              <button 
+                type="button" 
+                onClick={() => { setSearchQuery(''); setSearchResults([]); }} 
+                className="p-1 text-slate-400 hover:text-white"
+              >
                 <X className="w-3.5 h-3.5" />
               </button>
             )}
+            <button
+              type="submit"
+              className="px-3 py-1.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs"
+            >
+              Cerca
+            </button>
           </div>
 
-          {/* Risultati a comparsa */}
-          {filteredSearchResults.length > 0 && (
-            <div className="absolute top-11 left-0 right-0 mt-1 max-h-48 overflow-y-auto rounded-2xl bg-[#0f1422]/95 backdrop-blur-xl border border-slate-700 shadow-2xl p-1.5 space-y-1">
-              {filteredSearchResults.slice(0, 5).map((p) => {
+          {/* Risultati di Ricerca Reale con Calcolo Deviazione */}
+          {searchResults.length > 0 && (
+            <div className="absolute top-12 left-0 right-0 mt-1 max-h-56 overflow-y-auto rounded-2xl bg-[#0f1422]/95 backdrop-blur-xl border border-slate-700 shadow-2xl p-1.5 space-y-1">
+              <div className="text-[10px] font-bold text-cyan-400 px-2 py-0.5">
+                Risultati trovati (Tocca per vedere il percorso):
+              </div>
+              {searchResults.map((r) => {
                 let minDist = 999999;
                 currentDay.stops.forEach((s) => {
-                  const dist = calculateDistanceMeters(s.coordinates.lat, s.coordinates.lng, p.coordinates.lat, p.coordinates.lng);
+                  const dist = calculateDistanceMeters(s.coordinates.lat, s.coordinates.lng, r.lat, r.lng);
                   if (dist < minDist) minDist = dist;
                 });
 
                 return (
                   <button
-                    key={p.id}
-                    onClick={() => handleSelectSearchResult(p)}
+                    key={r.id}
+                    type="button"
+                    onClick={() => handleSelectSearchResult(r)}
                     className="w-full text-left p-2 rounded-xl hover:bg-slate-800 flex items-center justify-between text-xs transition-colors"
                   >
-                    <div>
-                      <span className="font-bold text-white">{p.name}</span>
-                      <p className="text-[10px] text-slate-400">{p.neighborhood}</p>
+                    <div className="truncate mr-2">
+                      <span className="font-bold text-white block truncate">{r.name}</span>
+                      <p className="text-[10px] text-slate-400 truncate">{r.address}</p>
                     </div>
-                    <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">
-                      A {formatDistance(minDist)}
+                    <span className="text-[10px] font-bold text-cyan-300 bg-cyan-500/20 px-2 py-0.5 rounded-full shrink-0 border border-cyan-500/30">
+                      +{formatDistance(minDist)}
                     </span>
                   </button>
                 );
               })}
             </div>
           )}
-        </div>
+        </form>
       </div>
 
-      {/* 3. PULSANTI RAPIDI FLOATING A DESTRA (Centra GPS + Filtri Cibo/Foto) */}
+      {/* 3. PULSANTI RAPIDI FLOATING A DESTRA */}
       <div className="absolute top-28 right-3 z-30 flex flex-col gap-2 pointer-events-auto">
-        
-        {/* Pulsante GPS Dove siamo? */}
         <button
           onClick={handleLocateMe}
           disabled={isLocating}
           className={`w-10 h-10 rounded-2xl bg-[#0b0f19]/90 backdrop-blur-md border border-slate-700 shadow-xl flex items-center justify-center text-sky-400 active:scale-95 transition-all ${
             isLocating ? 'animate-pulse' : ''
           }`}
-          title="Centra sulla mia posizione"
+          title="Centra su di me"
         >
           <LocateFixed className="w-5 h-5" />
         </button>
 
-        {/* Toggle Cibo */}
         <button
           onClick={() => setShowRestaurants(!showRestaurants)}
           className={`w-10 h-10 rounded-2xl backdrop-blur-md border shadow-xl flex items-center justify-center text-sm active:scale-95 transition-all ${
@@ -458,12 +532,11 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
               ? 'bg-amber-500/80 border-amber-400 text-slate-950 font-black'
               : 'bg-[#0b0f19]/90 border-slate-700 text-slate-400 opacity-60'
           }`}
-          title="Mostra / Nascondi Ristoranti"
+          title="Ristoranti ON/OFF"
         >
           🥐
         </button>
 
-        {/* Toggle Foto */}
         <button
           onClick={() => setShowPhotoSpots(!showPhotoSpots)}
           className={`w-10 h-10 rounded-2xl backdrop-blur-md border shadow-xl flex items-center justify-center text-sm active:scale-95 transition-all ${
@@ -471,51 +544,95 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
               ? 'bg-sky-500/80 border-sky-400 text-slate-950 font-black'
               : 'bg-[#0b0f19]/90 border-slate-700 text-slate-400 opacity-60'
           }`}
-          title="Mostra / Nascondi Punti Foto"
+          title="Scorci Foto ON/OFF"
         >
           📸
         </button>
-
       </div>
 
-      {/* 4. MAPPA CONTAINER EFFETTIVA (A TUTTO SCHERMO) */}
+      {/* 4. MAPPA LEAFLET A TUTTO SCHERMO */}
       <div ref={mapContainerRef} className="w-full h-full z-10" />
 
-      {/* 5. CAROSELLO TAPPE IN BASSO (Stile Apple Maps / Airbnb) */}
-      <div className="absolute bottom-3 left-3 right-3 z-30 pointer-events-auto">
-        <div className="p-2.5 rounded-3xl bg-[#0b0f19]/95 backdrop-blur-xl border border-slate-700/80 shadow-2xl space-y-2">
-          
-          <div className="flex items-center justify-between px-1 text-[11px]">
-            <span className="font-extrabold text-white flex items-center gap-1">
-              <Footprints className="w-3.5 h-3.5 text-rose-400" />
-              <span>{currentDay.title}</span>
-            </span>
-            <span className="text-amber-300 font-bold bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
-              {formatDistance(totalDistanceMeters)} a piedi
-            </span>
-          </div>
+      {/* 5. SCHEDA DEVIAZIONE ATTIVA (LINEA CIANO ELETTRICO) */}
+      {activeDetour && (
+        <div className="absolute bottom-20 left-3 right-3 z-30 pointer-events-auto animate-fade-in">
+          <div className="p-3 rounded-2xl bg-[#0f1422]/95 backdrop-blur-xl border border-cyan-500/60 shadow-2xl space-y-2">
+            <div className="flex items-start justify-between gap-2">
+              <div>
+                <div className="flex items-center gap-1.5 text-[10px] font-extrabold text-cyan-400 uppercase tracking-wider">
+                  <Route className="w-3.5 h-3.5" />
+                  <span>Deviazione Pedonale Reale</span>
+                </div>
+                <h4 className="text-sm font-black text-white">{activeDetour.place.name}</h4>
+                <p className="text-[11px] text-cyan-300 font-semibold">
+                  A soli <strong>{formatDistance(activeDetour.detourDistance)}</strong> ({formatWalkingTime(activeDetour.detourDistance)}) da <em>{activeDetour.closestStop.title}</em>
+                </p>
+              </div>
 
-          {/* Cards Tappe a Scorrimento Orizzontale */}
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5">
+              <button
+                onClick={() => {
+                  setActiveDetour(null);
+                  if (detourLayerGroupRef.current) detourLayerGroupRef.current.clearLayers();
+                }}
+                className="p-1 text-slate-400 hover:text-white"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="flex items-center gap-2 pt-1">
+              <a
+                href={`https://www.google.com/maps/dir/?api=1&destination=${activeDetour.place.lat},${activeDetour.place.lng}&travelmode=walking`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 py-1.5 px-2.5 rounded-xl bg-slate-800 text-white text-xs font-bold flex items-center justify-center gap-1"
+              >
+                <Navigation className="w-3 h-3 text-sky-400" />
+                <span>Naviga a piedi</span>
+              </a>
+
+              <button
+                onClick={handleAddDetourToItinerary}
+                disabled={addedSuccess}
+                className={`flex-1 py-1.5 px-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1 transition-all ${
+                  addedSuccess
+                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                    : 'bg-cyan-600 hover:bg-cyan-500 text-white'
+                }`}
+              >
+                {addedSuccess ? <Check className="w-3 h-3" /> : <Plus className="w-3 h-3" />}
+                <span>{addedSuccess ? 'Aggiunto!' : 'Salva in Tappe'}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 6. CAROSELLO TAPPE IN BASSO */}
+      <div className="absolute bottom-3 left-3 right-3 z-20 pointer-events-auto">
+        <div className="p-2 rounded-2xl bg-[#0b0f19]/95 backdrop-blur-xl border border-slate-700/80 shadow-2xl flex items-center gap-2">
+          
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 flex-1">
             {currentDay.stops.map((stop, idx) => (
               <button
                 key={stop.id}
                 onClick={() => handleFlyToStop(stop, idx)}
-                className={`shrink-0 p-2 rounded-2xl border text-left transition-all flex items-center gap-2 min-w-[170px] max-w-[210px] ${
+                className={`shrink-0 p-1.5 px-2.5 rounded-xl border text-left transition-all flex items-center gap-1.5 min-w-[130px] max-w-[170px] ${
                   activeStopIndex === idx
-                    ? 'bg-rose-500/20 border-rose-500/60 shadow-md'
-                    : 'bg-slate-900/90 border-slate-800 hover:border-slate-700'
+                    ? 'bg-rose-500/20 border-rose-500/60 shadow-md text-white'
+                    : 'bg-slate-900/90 border-slate-800 text-slate-300 hover:border-slate-700'
                 }`}
               >
-                <span className="w-6 h-6 rounded-full bg-rose-500 text-white font-black text-xs flex items-center justify-center shrink-0">
+                <span className="w-5 h-5 rounded-full bg-rose-500 text-white font-black text-[10px] flex items-center justify-center shrink-0">
                   {idx + 1}
                 </span>
-                <div className="truncate">
-                  <div className="font-bold text-white text-xs truncate">{stop.title}</div>
-                  <div className="text-[10px] text-slate-400 truncate">{stop.time || 'Tappa'}</div>
-                </div>
+                <span className="text-xs font-bold truncate">{stop.title}</span>
               </button>
             ))}
+          </div>
+
+          <div className="shrink-0 text-[10px] text-amber-300 font-extrabold bg-amber-500/10 px-2 py-1 rounded-xl border border-amber-500/20">
+            {formatDistance(totalDistanceMeters)}
           </div>
 
         </div>
