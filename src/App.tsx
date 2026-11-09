@@ -199,7 +199,9 @@ export const App: React.FC = () => {
             {/* CONTENUTO ITINERARIO: SFOGLIA VS ELENCO */}
             {itineraryMode === 'story' ? (
               <StopStoryViewer
+                key={selectedDayId}
                 stops={currentDay.stops}
+                initialIndex={firstPendingStopIndex}
                 completedStops={completedStops}
                 onToggleComplete={handleToggleComplete}
                 onSwitchToList={() => setItineraryMode('list')}

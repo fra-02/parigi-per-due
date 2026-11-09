@@ -26,6 +26,7 @@ interface StopStoryViewerProps {
   onToggleComplete: (id: string) => void;
   onSwitchToList: () => void;
   onDeleteStop?: (id: string) => void;
+  initialIndex?: number;
 }
 
 export const StopStoryViewer: React.FC<StopStoryViewerProps> = ({
@@ -33,9 +34,15 @@ export const StopStoryViewer: React.FC<StopStoryViewerProps> = ({
   completedStops,
   onToggleComplete,
   onSwitchToList,
-  onDeleteStop
+  onDeleteStop,
+  initialIndex = 0
 }) => {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [currentIndex, setCurrentIndex] = useState<number>(() => {
+    if (initialIndex >= 0 && initialIndex < stops.length) {
+      return initialIndex;
+    }
+    return 0;
+  });
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   
   // Touch swipe handling

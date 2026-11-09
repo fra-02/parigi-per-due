@@ -11,7 +11,8 @@ import {
   Heart, 
   Camera, 
   LocateFixed,
-  Eye
+  Eye,
+  Search
 } from 'lucide-react';
 
 export const NearbyRadar: React.FC = () => {
@@ -166,6 +167,18 @@ export const NearbyRadar: React.FC = () => {
           </div>
         )}
 
+        {/* Tasto Google Maps per cercare qualunque scorcio/monumento nei dintorni stile "cose da vedere vicino a noi" */}
+        <div className="pt-2 border-t border-indigo-500/20">
+          <a
+            href={`https://www.google.com/maps/search/cose+da+vedere+e+monumenti/@${currentCoords ? `${currentCoords.lat},${currentCoords.lng},16z` : '48.8566,2.3522,15z'}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full py-2.5 px-3 rounded-2xl bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 active:scale-98 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg transition-all"
+          >
+            <Search className="w-4 h-4" />
+            <span>Cerca altri scorci nei dintorni su Google Maps</span>
+          </a>
+        </div>
       </div>
 
       {/* Categorie Filtro: Romantici, Foto, Segreti */}
