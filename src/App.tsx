@@ -3,6 +3,7 @@ import { ITINERARY_DAYS } from './data/itineraryData';
 import { Navbar } from './components/Navbar';
 import { DaySelector } from './components/DaySelector';
 import { StopCard } from './components/StopCard';
+import { StopStoryViewer } from './components/StopStoryViewer';
 import { DayMap } from './components/DayMap';
 import { WeatherWidget } from './components/WeatherWidget';
 import { NearbyRadar } from './components/NearbyRadar';
@@ -23,12 +24,15 @@ import {
   ChevronRight, 
   Heart, 
   Share2, 
-  Footprints
+  Footprints,
+  Layers,
+  List
 } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'itinerary' | 'map' | 'radar' | 'transit' | 'utilities'>('itinerary');
   const [selectedDayId, setSelectedDayId] = useState<string>('day-1');
+  const [itineraryMode, setItineraryMode] = useState<'story' | 'list'>('story');
   const [completedStops, setCompletedStops] = useState<Record<string, boolean>>({});
   
   // Modals state
@@ -110,7 +114,7 @@ export const App: React.FC = () => {
       {/* Main Container */}
       <main className="max-w-2xl mx-auto w-full px-4 pt-3 flex-1">
         
-        {/* TAB 1: ITINERARIO CON FOTO MODERNE */}
+        {/* TAB 1: ITINERARIO CON MODALITÀ SFOGLIA & ELENCO */}
         {activeTab === 'itinerary' && (
           <div className="space-y-4">
             
@@ -140,16 +144,38 @@ export const App: React.FC = () => {
               />
             </div>
 
-            {/* Intestazione del Giorno */}
+            {/* Intestazione del Giorno con Switch Modalità Sfoglia / Elenco */}
             <div className={`p-4 rounded-3xl bg-gradient-to-br ${currentDay.colorTheme} border border-slate-800/80 shadow-lg relative overflow-hidden backdrop-blur-sm`}>
               <div className="flex items-center justify-between gap-2 mb-1">
                 <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-white/10 text-white border border-white/20">
                   {currentDay.dateStr}
                 </span>
-                <span className="text-xs font-semibold text-amber-300 flex items-center gap-1">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  {currentDay.badge}
-                </span>
+
+                {/* Selettore Sfoglia Card vs Elenco */}
+                <div className="flex items-center bg-slate-950/80 p-0.5 rounded-xl border border-white/10 text-xs">
+                  <button
+                    onClick={() => setItineraryMode('story')}
+                    className={`px-2.5 py-1 rounded-lg font-bold flex items-center gap-1 transition-all ${
+                      itineraryMode === 'story'
+                        ? 'bg-rose-500 text-white shadow'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <Layers className="w-3 h-3" />
+                    <span>Sfoglia</span>
+                  </button>
+                  <button
+                    onClick={() => setItineraryMode('list')}
+                    className={`px-2.5 py-1 rounded-lg font-bold flex items-center gap-1 transition-all ${
+                      itineraryMode === 'list'
+                        ? 'bg-rose-500 text-white shadow'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <List className="w-3 h-3" />
+                    <span>Elenco</span>
+                  </button>
+                </div>
               </div>
 
               <h3 className="text-xl font-black text-white leading-tight">
@@ -161,44 +187,54 @@ export const App: React.FC = () => {
               </p>
             </div>
 
-            {/* LISTA DELLE TAPPE CON FOTO MODERNE */}
-            <div className="space-y-3">
-              {currentDay.stops.map((stop, idx) => {
-                let distanceToNext: number | null = null;
-                if (idx < currentDay.stops.length - 1) {
-                  const nextStop = currentDay.stops[idx + 1];
-                  distanceToNext = calculateDistanceMeters(
-                    stop.coordinates.lat,
-                    stop.coordinates.lng,
-                    nextStop.coordinates.lat,
-                    nextStop.coordinates.lng
-                  );
-                }
+            {/* CONTENUTO ITINERARIO: MODALITÀ SFOGLIA VS ELENCO */}
+            {itineraryMode === 'story' ? (
+              /* SFOGLIA TAPPA PER TAPPA (In grande con story bars) */
+              <StopStoryViewer
+                stops={currentDay.stops}
+                completedStops={completedStops}
+                onToggleComplete={handleToggleComplete}
+                onSwitchToList={() => setItineraryMode('list')}
+              />
+            ) : (
+              /* ELENCO COMPLETO VERTICALE */
+              <div className="space-y-3">
+                {currentDay.stops.map((stop, idx) => {
+                  let distanceToNext: number | null = null;
+                  if (idx < currentDay.stops.length - 1) {
+                    const nextStop = currentDay.stops[idx + 1];
+                    distanceToNext = calculateDistanceMeters(
+                      stop.coordinates.lat,
+                      stop.coordinates.lng,
+                      nextStop.coordinates.lat,
+                      nextStop.coordinates.lng
+                    );
+                  }
 
-                return (
-                  <React.Fragment key={stop.id}>
-                    <StopCard
-                      stop={stop}
-                      index={idx}
-                      isCompleted={!!completedStops[stop.id]}
-                      onToggleComplete={handleToggleComplete}
-                    />
+                  return (
+                    <React.Fragment key={stop.id}>
+                      <StopCard
+                        stop={stop}
+                        index={idx}
+                        isCompleted={!!completedStops[stop.id]}
+                        onToggleComplete={handleToggleComplete}
+                      />
 
-                    {/* Connessione visiva e distanza tra tappe */}
-                    {distanceToNext !== null && (
-                      <div className="flex items-center justify-center my-0.5">
-                        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-800 text-[11px] text-slate-300 font-medium shadow-sm">
-                          <Footprints className="w-3 h-3 text-rose-400" />
-                          <span>
-                            {formatDistance(distanceToNext)} • {formatWalkingTime(distanceToNext)} a piedi
-                          </span>
+                      {distanceToNext !== null && (
+                        <div className="flex items-center justify-center my-0.5">
+                          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-800 text-[11px] text-slate-300 font-medium shadow-sm">
+                            <Footprints className="w-3 h-3 text-rose-400" />
+                            <span>
+                              {formatDistance(distanceToNext)} • {formatWalkingTime(distanceToNext)} a piedi
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </React.Fragment>
-                );
-              })}
-            </div>
+                      )}
+                    </React.Fragment>
+                  );
+                })}
+              </div>
+            )}
 
             {/* Navigazione Rapida Tra Giorni */}
             <div className="mt-6 flex items-center justify-between gap-3 pt-3 border-t border-slate-800">
@@ -221,7 +257,7 @@ export const App: React.FC = () => {
                 className={`flex-1 py-2.5 px-3 rounded-2xl border text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
                   currentDayIndex === ITINERARY_DAYS.length - 1
                     ? 'opacity-40 border-slate-800 text-slate-600 cursor-not-allowed'
-                    : 'bg-gradient-to-r from-rose-600/30 to-amber-600/30 border-rose-500/40 text-amber-200 hover:from-rose-600/40 hover:to-amber-600/40 active:scale-98'
+                    : 'bg-gradient-to-r from-rose-600/30 to-amber-600/30 border-rose-500/40 text-amber-200 hover:from-rose-600/40 active:scale-98'
                 }`}
               >
                 <span>Giorno Dopo</span>
@@ -232,7 +268,7 @@ export const App: React.FC = () => {
           </div>
         )}
 
-        {/* TAB 2: MAPPA INTERATTIVA A SCHERMO INTERO (TAB DEDICATA) */}
+        {/* TAB 2: MAPPA INTERATTIVA (CON PERCORSO A PIEDI REALE & RISTORANTI VICINI) */}
         {activeTab === 'map' && (
           <DayMap initialDayId={selectedDayId} />
         )}
@@ -258,7 +294,7 @@ export const App: React.FC = () => {
 
       </main>
 
-      {/* Floating Bottom Navigation Tab Bar (5 TAB DEDICATE) */}
+      {/* Floating Bottom Navigation Tab Bar (5 TAB) */}
       <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#0b0f19]/95 backdrop-blur-xl border-t border-slate-800/80 px-2 pt-2 pb-5">
         <div className="max-w-md mx-auto grid grid-cols-5 gap-0.5">
           

@@ -15,6 +15,7 @@ import {
   MapPin
 } from 'lucide-react';
 import { Stop, getCitymapperUrl } from '../data/itineraryData';
+import { handleImageError } from '../utils/images';
 import confetti from 'canvas-confetti';
 
 interface StopCardProps {
@@ -77,6 +78,7 @@ export const StopCard: React.FC<StopCardProps> = ({ stop, index, isCompleted, on
         <img
           src={stop.image}
           alt={stop.title}
+          onError={handleImageError}
           className={`w-full h-full object-cover transition-transform duration-500 hover:scale-105 ${
             isCompleted ? 'grayscale contrast-75' : ''
           }`}
