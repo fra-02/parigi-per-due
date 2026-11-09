@@ -263,7 +263,7 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
               {formatDistance(totalDistanceMeters)}
             </span>
             <p className="text-[10px] text-slate-400">
-              {formatWalkingTime(totalDistanceMeters)}
+              {formatWalkingTime(totalDistanceMeters)} a piedi
             </p>
           </div>
         </div>

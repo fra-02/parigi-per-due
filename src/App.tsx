@@ -161,28 +161,28 @@ export const App: React.FC = () => {
         {activeTab === 'itinerary' && itineraryMode === 'list' && (
           <div className="space-y-3">
             
-            {/* Tasto Switch Torna a Sfoglia a Tutto Schermo */}
-            <div className="flex items-center justify-between gap-2 p-2.5 rounded-2xl bg-gradient-to-r from-rose-600/20 via-slate-900 to-amber-600/20 border border-rose-500/30">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-bold text-white">Visualizzazione Elenco</span>
-                <span className="text-[10px] text-slate-400">({currentDay.stops.length} tappe)</span>
+            {/* Barra Switch Torna a Sfoglia a Tutto Schermo */}
+            <div className="p-3 rounded-2xl bg-slate-900 border border-slate-700/80 shadow-lg flex items-center justify-between gap-2">
+              <div>
+                <h3 className="text-sm font-black text-white">Elenco Tappe</h3>
+                <p className="text-[11px] text-slate-400">{currentDay.dayOfWeek} • {currentDay.stops.length} tappe previste</p>
               </div>
 
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <button
                   onClick={() => setIsAddStopOpen(true)}
-                  className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-750 text-rose-300 border border-slate-700 text-xs font-bold active:scale-95 transition-all"
+                  className="p-2 rounded-xl bg-slate-800 hover:bg-slate-750 text-rose-300 border border-slate-700 active:scale-95 transition-all"
+                  title="Aggiungi tappa al volo"
                 >
-                  <Plus className="w-3.5 h-3.5 text-rose-400" />
-                  <span>Aggiungi</span>
+                  <Plus className="w-4 h-4" />
                 </button>
 
                 <button
                   onClick={() => setItineraryMode('story')}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white text-xs font-extrabold shadow-md active:scale-95 transition-all"
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 active:scale-95 text-white text-xs font-bold shadow-md transition-all border border-rose-400/40"
                 >
-                  <Layers className="w-3.5 h-3.5" />
-                  <span>📸 Sfoglia a Tutto Schermo</span>
+                  <Layers className="w-4 h-4 text-white" />
+                  <span>Sfoglia a Schermo Intero</span>
                 </button>
               </div>
             </div>

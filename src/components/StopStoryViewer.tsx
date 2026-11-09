@@ -494,26 +494,40 @@ export const StopStoryViewer: React.FC<StopStoryViewerProps> = ({
           </button>
         </div>
 
-        {/* Indicatore di Scorrimento Touch */}
-        <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1 pb-1">
+        {/* Barra di Navigazione e Indicatori a Pallini */}
+        <div className="flex items-center justify-between text-xs text-slate-400 pt-1 pb-1">
           <button
             onClick={handlePrev}
-            className="flex items-center gap-0.5 font-bold text-slate-300 active:scale-90"
+            className="flex items-center gap-1 font-bold text-slate-300 hover:text-white active:scale-90 transition-all"
           >
-            <ChevronLeft className="w-3.5 h-3.5" />
-            <span>{currentIndex === 0 ? 'Giorno prec' : 'Prec'}</span>
+            <ChevronLeft className="w-4 h-4 text-slate-400" />
+            <span>{currentIndex === 0 ? 'Giorno prec' : 'Precedente'}</span>
           </button>
 
-          <span className="text-[10px] text-slate-400 flex items-center gap-1 bg-black/50 px-2.5 py-1 rounded-full border border-white/10">
-            <span>👈 Scorri col dito 👉</span>
-          </span>
+          {/* Indicatori a pallini minimali */}
+          <div className="flex items-center gap-1.5 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+            {stops.map((_, i) => (
+              <span
+                key={i}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrentIndex(i);
+                }}
+                className={`block rounded-full transition-all duration-300 cursor-pointer ${
+                  i === currentIndex
+                    ? 'w-4 h-1.5 bg-rose-400'
+                    : 'w-1.5 h-1.5 bg-white/40 hover:bg-white/70'
+                }`}
+              />
+            ))}
+          </div>
 
           <button
             onClick={handleNext}
-            className="flex items-center gap-0.5 font-bold text-rose-400 active:scale-90"
+            className="flex items-center gap-1 font-bold text-rose-400 hover:text-rose-300 active:scale-90 transition-all"
           >
-            <span>{currentIndex === stops.length - 1 ? 'Giorno dopo' : 'Succ'}</span>
-            <ChevronRight className="w-3.5 h-3.5" />
+            <span>{currentIndex === stops.length - 1 ? 'Giorno dopo' : 'Successivo'}</span>
+            <ChevronRight className="w-4 h-4 text-rose-400" />
           </button>
         </div>
 
