@@ -5,43 +5,30 @@ import { StopCard } from './components/StopCard';
 import { StopStoryViewer } from './components/StopStoryViewer';
 import { DayMap } from './components/DayMap';
 import { WeatherWidget } from './components/WeatherWidget';
-import { NearbyRadar } from './components/NearbyRadar';
 import { TransitNavigator } from './components/TransitNavigator';
-import { UtilitiesView } from './components/UtilitiesView';
+import { NotesView } from './components/NotesView';
 import { AddStopModal } from './components/AddStopModal';
-import { MetroAssistantModal } from './components/MetroAssistantModal';
-import { RainPlanModal } from './components/RainPlanModal';
-import { Under26Modal } from './components/Under26Modal';
-import { NotesModal } from './components/NotesModal';
 import { getCustomStopsForDay, saveCustomStopForDay, deleteCustomStop } from './utils/customStops';
 import { calculateDistanceMeters, formatDistance, formatWalkingTime } from './utils/geo';
 import { 
   Calendar, 
   Map, 
-  Compass, 
   Train, 
-  Sparkles, 
+  BookHeart,
   ChevronLeft, 
   ChevronRight, 
   Plus, 
-  List, 
   Layers,
   Footprints
 } from 'lucide-react';
 
 export const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'itinerary' | 'map' | 'radar' | 'transit' | 'utilities'>('itinerary');
+  const [activeTab, setActiveTab] = useState<'itinerary' | 'map' | 'transit' | 'notes'>('itinerary');
   const [selectedDayId, setSelectedDayId] = useState<string>('day-1');
   const [itineraryMode, setItineraryMode] = useState<'story' | 'list'>('story');
   const [completedStops, setCompletedStops] = useState<Record<string, boolean>>({});
   const [isAddStopOpen, setIsAddStopOpen] = useState<boolean>(false);
   const [customStopsVersion, setCustomStopsVersion] = useState<number>(0);
-  
-  // Modals state
-  const [isMetroOpen, setIsMetroOpen] = useState<boolean>(false);
-  const [isRainOpen, setIsRainOpen] = useState<boolean>(false);
-  const [isUnder26Open, setIsUnder26Open] = useState<boolean>(false);
-  const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false);
 
   // Caricamento tappe completate da localStorage & auto-selezione intelligente del giorno
   useEffect(() => {
@@ -270,52 +257,42 @@ export const App: React.FC = () => {
           </div>
         )}
 
-        {/* TAB 2: MAPPA INTERATTIVA A SCHERMO INTERO (CON RICERCA REALE & DEVIAZIONE A PIEDI) */}
+        {/* TAB 2: MAPPA & DINTORNI (CON RICERCA DINAMICA LIVE SU GOOGLE MAPS) */}
         {activeTab === 'map' && (
           <DayMap 
             initialDayId={selectedDayId} 
-            onStopAdded={() => setCustomStopsVersion((v) => v + 1)}
           />
         )}
 
-        {/* TAB 3: RADAR NEI DINTORNI (CON SIMULATORE TEST DALL'ITALIA) */}
-        {activeTab === 'radar' && (
-          <NearbyRadar />
-        )}
-
-        {/* TAB 4: TRANSIT NAVIGATOR (CITYMAPPER & METRO & SOS HOTEL) */}
+        {/* TAB 3: TRANSIT NAVIGATOR (CITYMAPPER & METRO & SOS HOTEL) */}
         {activeTab === 'transit' && (
           <TransitNavigator />
         )}
 
-        {/* TAB 5: GUIDA, FRASARIO & UTILITY */}
-        {activeTab === 'utilities' && (
-          <UtilitiesView
-            onOpenUnder26={() => setIsUnder26Open(true)}
-            onOpenRain={() => setIsRainOpen(true)}
-            onOpenNotes={() => setIsNotesOpen(true)}
-          />
+        {/* TAB 4: NOTE PER NOI (TACCUINO PERSONALE & TRUCCHI SALVA-BUDGET) */}
+        {activeTab === 'notes' && (
+          <NotesView />
         )}
 
       </main>
 
-      {/* Floating Bottom Navigation Tab Bar (MENU PRINCIPALE IN BASSO) */}
-      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#0b0f19]/95 backdrop-blur-xl border-t border-slate-800/80 px-2 pt-2 pb-5">
-        <div className="max-w-md mx-auto grid grid-cols-5 gap-0.5">
+      {/* Floating Bottom Navigation Tab Bar (4 TAB PERFETTE E SPAZIOSE) */}
+      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#0b0f19]/95 backdrop-blur-xl border-t border-slate-800/80 px-3 pt-2 pb-5">
+        <div className="max-w-md mx-auto grid grid-cols-4 gap-1">
           
           <button
             onClick={() => {
               setActiveTab('itinerary');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className={`flex flex-col items-center justify-center py-1.5 px-0.5 rounded-2xl transition-all ${
+            className={`flex flex-col items-center justify-center py-1.5 px-1 rounded-2xl transition-all ${
               activeTab === 'itinerary'
                 ? 'text-rose-400 bg-rose-500/10 font-bold scale-102'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
             <Calendar className="w-5 h-5 mb-0.5" />
-            <span className="text-[10px]">Tappe</span>
+            <span className="text-[11px] font-bold">Tappe</span>
           </button>
 
           <button
@@ -323,29 +300,14 @@ export const App: React.FC = () => {
               setActiveTab('map');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className={`flex flex-col items-center justify-center py-1.5 px-0.5 rounded-2xl transition-all ${
+            className={`flex flex-col items-center justify-center py-1.5 px-1 rounded-2xl transition-all ${
               activeTab === 'map'
-                ? 'text-rose-400 bg-rose-500/10 font-bold scale-102'
+                ? 'text-purple-400 bg-purple-500/10 font-bold scale-102'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
             <Map className="w-5 h-5 mb-0.5" />
-            <span className="text-[10px]">Mappa</span>
-          </button>
-
-          <button
-            onClick={() => {
-              setActiveTab('radar');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            className={`flex flex-col items-center justify-center py-1.5 px-0.5 rounded-2xl transition-all ${
-              activeTab === 'radar'
-                ? 'text-emerald-400 bg-emerald-500/10 font-bold scale-102'
-                : 'text-slate-400 hover:text-slate-200'
-            }`}
-          >
-            <Compass className="w-5 h-5 mb-0.5" />
-            <span className="text-[10px]">Dintorni</span>
+            <span className="text-[11px] font-bold">Mappa</span>
           </button>
 
           <button
@@ -353,29 +315,29 @@ export const App: React.FC = () => {
               setActiveTab('transit');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className={`flex flex-col items-center justify-center py-1.5 px-0.5 rounded-2xl transition-all ${
+            className={`flex flex-col items-center justify-center py-1.5 px-1 rounded-2xl transition-all ${
               activeTab === 'transit'
                 ? 'text-[#4ade80] bg-[#288330]/20 font-bold scale-102'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
             <Train className="w-5 h-5 mb-0.5" />
-            <span className="text-[10px]">Metro</span>
+            <span className="text-[11px] font-bold">Metro</span>
           </button>
 
           <button
             onClick={() => {
-              setActiveTab('utilities');
+              setActiveTab('notes');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className={`flex flex-col items-center justify-center py-1.5 px-0.5 rounded-2xl transition-all ${
-              activeTab === 'utilities'
+            className={`flex flex-col items-center justify-center py-1.5 px-1 rounded-2xl transition-all ${
+              activeTab === 'notes'
                 ? 'text-amber-400 bg-amber-500/10 font-bold scale-102'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
-            <Sparkles className="w-5 h-5 mb-0.5" />
-            <span className="text-[10px]">Info</span>
+            <BookHeart className="w-5 h-5 mb-0.5" />
+            <span className="text-[11px] font-bold">Note</span>
           </button>
 
         </div>
@@ -387,12 +349,6 @@ export const App: React.FC = () => {
         onClose={() => setIsAddStopOpen(false)}
         onAddStop={handleAddQuickStop}
       />
-
-      {/* Modals Esistenti */}
-      <MetroAssistantModal isOpen={isMetroOpen} onClose={() => setIsMetroOpen(false)} />
-      <RainPlanModal isOpen={isRainOpen} onClose={() => setIsRainOpen(false)} />
-      <Under26Modal isOpen={isUnder26Open} onClose={() => setIsUnder26Open(false)} />
-      <NotesModal isOpen={isNotesOpen} onClose={() => setIsNotesOpen(false)} />
 
     </div>
   );

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import { ITINERARY_DAYS, Stop } from '../data/itineraryData';
+import { NEARBY_PLACES, NearbyPlace } from '../data/nearbyPlacesData';
 import { calculateDistanceMeters, formatDistance, formatWalkingTime } from '../utils/geo';
 import { fetchWalkingRoute } from '../services/routingService';
 import { 
@@ -9,22 +10,32 @@ import {
   Footprints, 
   LocateFixed, 
   MapPin,
-  Sparkles
+  Sparkles,
+  Search,
+  Coffee,
+  Croissant,
+  UtensilsCrossed,
+  Camera,
+  Heart,
+  X
 } from 'lucide-react';
 
 interface DayMapProps {
   initialDayId?: string;
-  onStopAdded?: () => void;
 }
 
 export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
   const [selectedDayId, setSelectedDayId] = useState<string>(initialDayId);
   const [activeStopIndex, setActiveStopIndex] = useState<number>(0);
   const [isLocating, setIsLocating] = useState<boolean>(false);
+  const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [carouselMode, setCarouselMode] = useState<'stops' | 'nearby'>('stops');
+  const [selectedNearbyPlace, setSelectedNearbyPlace] = useState<NearbyPlace | null>(null);
 
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
   const routeLayerGroupRef = useRef<L.LayerGroup | null>(null);
+  const nearbyLayerGroupRef = useRef<L.LayerGroup | null>(null);
   const userGpsLayerGroupRef = useRef<L.LayerGroup | null>(null);
 
   const currentDay = ITINERARY_DAYS.find((d) => d.id === selectedDayId) || ITINERARY_DAYS[0];
@@ -36,6 +47,20 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
     const to = currentDay.stops[i + 1].coordinates;
     totalDistanceMeters += calculateDistanceMeters(from.lat, from.lng, to.lat, to.lng);
   }
+
+  // Coordinate di riferimento per le ricerche: GPS reale oppure la prima tappa del giorno
+  const referenceCoords = userLocation || currentDay.stops[0]?.coordinates || { lat: 48.8566, lng: 2.3522 };
+
+  // Calcolo distanze per i luoghi nei dintorni
+  const nearbyPlacesWithDistance = NEARBY_PLACES.map((place) => {
+    const dist = calculateDistanceMeters(
+      referenceCoords.lat,
+      referenceCoords.lng,
+      place.coordinates.lat,
+      place.coordinates.lng
+    );
+    return { ...place, distanceMeters: dist };
+  }).sort((a, b) => a.distanceMeters - b.distanceMeters);
 
   // Inizializzazione Mappa pulita
   useEffect(() => {
@@ -56,12 +81,13 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
       }).addTo(map);
 
       routeLayerGroupRef.current = L.layerGroup().addTo(map);
+      nearbyLayerGroupRef.current = L.layerGroup().addTo(map);
       userGpsLayerGroupRef.current = L.layerGroup().addTo(map);
       mapInstanceRef.current = map;
     }
   }, []);
 
-  // Render Tappe & Traccia del Quartiere
+  // Render Tappe del Giorno + Traccia pedonale
   useEffect(() => {
     const map = mapInstanceRef.current;
     const routeLayer = routeLayerGroupRef.current;
@@ -88,7 +114,7 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 14px rgba(244, 63, 94, 0.6);
             border: 2px solid white;
           ">
             ${index + 1}
@@ -96,88 +122,88 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
         `,
         iconSize: [30, 30],
         iconAnchor: [15, 15],
-        popupAnchor: [0, -16],
       });
 
-      const gmapsDir = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=walking`;
-      const citymapperDir = `https://citymapper.com/directions?endcoord=${lat}%2C${lng}&endname=${encodeURIComponent(stop.title)}&endaddress=${encodeURIComponent(stop.address)}`;
-
-      const marker = L.marker([lat, lng], { icon: customIcon });
-
-      const popupContent = `
-        <div style="font-family: -apple-system, sans-serif; font-size: 12px; color: #0f172a; padding: 4px; min-width: 190px;">
-          ${stop.image ? `<img src="${stop.image}" style="width: 100%; height: 90px; object-fit: cover; border-radius: 8px; margin-bottom: 6px;" />` : ''}
-          <div style="font-size: 10px; font-weight: 800; color: #e11d48; text-transform: uppercase;">
-            Tappa ${index + 1} • ${stop.time || ''}
-          </div>
-          <div style="font-weight: 800; font-size: 13px; margin: 2px 0 4px 0; color: #0f172a;">
-            ${stop.title}
-          </div>
-          <div style="font-size: 11px; color: #64748b; margin-bottom: 8px;">
-            ${stop.address}
-          </div>
-          <div style="display: flex; gap: 4px;">
-            <a href="${gmapsDir}" target="_blank" rel="noopener noreferrer" style="
-              flex: 1;
-              background: #0f172a;
-              color: white;
-              padding: 6px 8px;
-              border-radius: 8px;
-              text-align: center;
-              text-decoration: none;
-              font-weight: 700;
-              font-size: 11px;
-              display: inline-block;
-            ">🚶 A piedi (Maps)</a>
-            <a href="${citymapperDir}" target="_blank" rel="noopener noreferrer" style="
-              flex: 1;
-              background: #288330;
-              color: white;
-              padding: 6px 8px;
-              border-radius: 8px;
-              text-align: center;
-              text-decoration: none;
-              font-weight: 700;
-              font-size: 11px;
-              display: inline-block;
-            ">🚇 Metro</a>
-          </div>
+      const marker = L.marker([lat, lng], { icon: customIcon }).addTo(routeLayer);
+      marker.bindPopup(`
+        <div style="font-family: sans-serif; padding: 4px; color: #1e293b;">
+          <strong style="font-size: 13px; display: block; color: #e11d48;">Tappa ${index + 1}: ${stop.title}</strong>
+          <span style="font-size: 11px; color: #64748b;">${stop.address}</span>
         </div>
-      `;
-
-      marker.bindPopup(popupContent);
-      routeLayer.addLayer(marker);
+      `);
+      marker.on('click', () => {
+        setActiveStopIndex(index);
+        setSelectedNearbyPlace(null);
+      });
     });
 
     // Traccia a piedi con le curve delle strade
-    fetchWalkingRoute(waypoints).then((routeCoords) => {
-      if (routeCoords.length > 1) {
-        const polyline = L.polyline(routeCoords, {
+    if (waypoints.length >= 2) {
+      fetchWalkingRoute(waypoints).then((routePoints) => {
+        if (!routeLayerGroupRef.current) return;
+        L.polyline(routePoints, {
           color: '#f43f5e',
-          weight: 4,
-          opacity: 0.9,
+          weight: 4.5,
+          opacity: 0.85,
           dashArray: '8, 8',
           lineCap: 'round',
-        });
-        routeLayer.addLayer(polyline);
-      }
-    });
-
-    if (waypoints.length > 0) {
-      const bounds = L.latLngBounds(waypoints.map((p) => [p.lat, p.lng]));
-      map.fitBounds(bounds, { padding: [40, 40], maxZoom: 16 });
+        }).addTo(routeLayerGroupRef.current);
+      });
     }
 
-    setTimeout(() => {
-      map.invalidateSize();
-    }, 200);
+    // Centra sui punti
+    if (waypoints.length > 0) {
+      const bounds = L.latLngBounds(waypoints.map((w) => [w.lat, w.lng]));
+      map.fitBounds(bounds, { padding: [55, 55], maxZoom: 15 });
+    }
+  }, [currentDay]);
 
-  }, [selectedDayId]);
+  // Render Pin Dintorni e Scorci Segreti
+  useEffect(() => {
+    const map = mapInstanceRef.current;
+    const nearbyLayer = nearbyLayerGroupRef.current;
+    if (!map || !nearbyLayer) return;
 
-  // Centra GPS su di noi
+    nearbyLayer.clearLayers();
+
+    // Mostra i primi 15 posti nei dintorni come graziose stelline viola
+    nearbyPlacesWithDistance.slice(0, 15).forEach((place) => {
+      const nearbyIcon = L.divIcon({
+        className: 'custom-nearby-pin',
+        html: `
+          <div style="
+            background: #8b5cf6;
+            color: white;
+            font-size: 11px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.6);
+            border: 2px solid white;
+          ">
+            ✨
+          </div>
+        `,
+        iconSize: [22, 22],
+        iconAnchor: [11, 11]
+      });
+
+      const marker = L.marker([place.coordinates.lat, place.coordinates.lng], { icon: nearbyIcon }).addTo(nearbyLayer);
+      marker.on('click', () => {
+        setSelectedNearbyPlace(place);
+        setCarouselMode('nearby');
+        map.flyTo([place.coordinates.lat, place.coordinates.lng], 16.5, { duration: 1 });
+      });
+    });
+  }, [referenceCoords]);
+
+  // Rilevamento GPS Reale
   const handleLocateMe = () => {
     if (!navigator.geolocation) {
-      alert('Geolocalizzazione non supportata');
+      alert('Geolocalizzazione non supportata dal browser');
       return;
     }
 
@@ -186,13 +212,16 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
       (pos) => {
         setIsLocating(false);
         const coords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+        setUserLocation(coords);
+
         const map = mapInstanceRef.current;
         const gpsLayer = userGpsLayerGroupRef.current;
+
         if (map && gpsLayer) {
           gpsLayer.clearLayers();
 
           const pulseIcon = L.divIcon({
-            className: 'user-pulse-pin',
+            className: 'user-gps-pulse',
             html: `
               <div style="
                 width: 18px;
@@ -200,7 +229,7 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
                 background: #38bdf8;
                 border: 3px solid white;
                 border-radius: 50%;
-                box-shadow: 0 0 12px #38bdf8;
+                box-shadow: 0 0 14px #38bdf8;
               "></div>
             `,
             iconSize: [18, 18],
@@ -213,7 +242,7 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
       },
       () => {
         setIsLocating(false);
-        alert('Posizione GPS non disponibile al momento.');
+        alert('Posizione GPS non rilevata. Assicurati di aver concesso i permessi di geolocalizzazione.');
       },
       { enableHighAccuracy: true, timeout: 8000 }
     );
@@ -221,16 +250,31 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
 
   const handleFlyToStop = (stop: Stop, idx: number) => {
     setActiveStopIndex(idx);
+    setSelectedNearbyPlace(null);
     const map = mapInstanceRef.current;
     if (map) {
       map.flyTo([stop.coordinates.lat, stop.coordinates.lng], 16.5, { duration: 1.2 });
     }
   };
 
+  const handleFlyToNearby = (place: NearbyPlace) => {
+    setSelectedNearbyPlace(place);
+    const map = mapInstanceRef.current;
+    if (map) {
+      map.flyTo([place.coordinates.lat, place.coordinates.lng], 16.5, { duration: 1.2 });
+    }
+  };
+
+  // Funzione per generare ricerche live dirette su Google Maps
+  const openGoogleMapsSearch = (query: string) => {
+    const url = `https://www.google.com/maps/search/${encodeURIComponent(query)}/@${referenceCoords.lat},${referenceCoords.lng},16z`;
+    window.open(url, '_blank');
+  };
+
   return (
-    <div className="relative w-full rounded-3xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-950 flex flex-col h-[calc(100vh-140px)] min-h-[500px]">
+    <div className="relative w-full rounded-3xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-950 flex flex-col h-[calc(100vh-140px)] min-h-[520px]">
       
-      {/* 1. SELETTORE GIORNO IN ALTO */}
+      {/* 1. SELETTORE DEI GIORNI IN ALTO */}
       <div className="absolute top-3 left-3 right-3 z-30 flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 pointer-events-auto">
         {ITINERARY_DAYS.map((d) => (
           <button
@@ -247,37 +291,52 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
         ))}
       </div>
 
-      {/* 2. HEADER PANORAMICA QUARTIERE */}
-      <div className="absolute top-14 left-3 right-3 z-20 pointer-events-none">
-        <div className="p-2.5 px-3.5 rounded-2xl bg-[#0b0f19]/90 backdrop-blur-md border border-slate-700/80 shadow-xl flex items-center justify-between pointer-events-auto">
-          <div>
-            <span className="text-[10px] text-rose-400 font-extrabold uppercase tracking-wider flex items-center gap-1">
-              <Sparkles className="w-3 h-3" />
-              Panoramica Quartiere
-            </span>
-            <h4 className="text-sm font-black text-white">{currentDay.title}</h4>
-          </div>
+      {/* 2. BARRA RICERCHE DINAMICHE GOOGLE MAPS IN TEMPO REALE */}
+      <div className="absolute top-14 left-3 right-3 z-20 pointer-events-auto">
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
+          <button
+            onClick={() => openGoogleMapsSearch('punti panoramici e monumenti')}
+            className="px-2.5 py-1.5 rounded-xl bg-black/75 hover:bg-black/90 backdrop-blur-md border border-white/20 text-white text-[11px] font-bold flex items-center gap-1.5 shadow-lg active:scale-95 transition-all whitespace-nowrap"
+          >
+            <Camera className="w-3.5 h-3.5 text-sky-400" />
+            <span>📸 Scorci vicini</span>
+          </button>
 
-          <div className="text-right">
-            <span className="text-xs font-black text-amber-300">
-              {formatDistance(totalDistanceMeters)}
-            </span>
-            <p className="text-[10px] text-slate-400">
-              {formatWalkingTime(totalDistanceMeters)} a piedi
-            </p>
-          </div>
+          <button
+            onClick={() => openGoogleMapsSearch('café et salons de thé')}
+            className="px-2.5 py-1.5 rounded-xl bg-black/75 hover:bg-black/90 backdrop-blur-md border border-white/20 text-white text-[11px] font-bold flex items-center gap-1.5 shadow-lg active:scale-95 transition-all whitespace-nowrap"
+          >
+            <Coffee className="w-3.5 h-3.5 text-amber-400" />
+            <span>☕ Caffè al caldo</span>
+          </button>
+
+          <button
+            onClick={() => openGoogleMapsSearch('boulangerie pâtisserie')}
+            className="px-2.5 py-1.5 rounded-xl bg-black/75 hover:bg-black/90 backdrop-blur-md border border-white/20 text-white text-[11px] font-bold flex items-center gap-1.5 shadow-lg active:scale-95 transition-all whitespace-nowrap"
+          >
+            <Croissant className="w-3.5 h-3.5 text-amber-300" />
+            <span>🥐 Boulangerie</span>
+          </button>
+
+          <button
+            onClick={() => openGoogleMapsSearch('bistrot et restaurants')}
+            className="px-2.5 py-1.5 rounded-xl bg-black/75 hover:bg-black/90 backdrop-blur-md border border-white/20 text-white text-[11px] font-bold flex items-center gap-1.5 shadow-lg active:scale-95 transition-all whitespace-nowrap"
+          >
+            <UtensilsCrossed className="w-3.5 h-3.5 text-rose-400" />
+            <span>🍽️ Ristoranti</span>
+          </button>
         </div>
       </div>
 
       {/* 3. PULSANTE GPS DOVE SIAMO */}
-      <div className="absolute top-32 right-3 z-30 pointer-events-auto">
+      <div className="absolute top-28 right-3 z-30 pointer-events-auto">
         <button
           onClick={handleLocateMe}
           disabled={isLocating}
           className={`w-10 h-10 rounded-2xl bg-[#0b0f19]/90 backdrop-blur-md border border-slate-700 shadow-xl flex items-center justify-center text-sky-400 active:scale-95 transition-all ${
             isLocating ? 'animate-pulse' : ''
           }`}
-          title="Centra su di me"
+          title="Centra su di noi (GPS Reale)"
         >
           <LocateFixed className="w-5 h-5" />
         </button>
@@ -286,34 +345,134 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
       {/* 4. MAPPA A SCHERMO INTERO */}
       <div ref={mapContainerRef} className="w-full h-full z-10" />
 
-      {/* 5. CAROSELLO TAPPE IN BASSO */}
-      <div className="absolute bottom-3 left-3 right-3 z-20 pointer-events-auto">
-        <div className="p-2 rounded-2xl bg-[#0b0f19]/95 backdrop-blur-xl border border-slate-700/80 shadow-2xl flex items-center gap-2">
-          
-          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 flex-1">
-            {currentDay.stops.map((stop, idx) => (
-              <button
-                key={stop.id}
-                onClick={() => handleFlyToStop(stop, idx)}
-                className={`shrink-0 p-1.5 px-2.5 rounded-xl border text-left transition-all flex items-center gap-1.5 min-w-[130px] max-w-[170px] ${
-                  activeStopIndex === idx
-                    ? 'bg-rose-500/20 border-rose-500/60 shadow-md text-white'
-                    : 'bg-slate-900/90 border-slate-800 text-slate-300 hover:border-slate-700'
-                }`}
-              >
-                <span className="w-5 h-5 rounded-full bg-rose-500 text-white font-black text-[10px] flex items-center justify-center shrink-0">
-                  {idx + 1}
-                </span>
-                <span className="text-xs font-bold truncate">{stop.title}</span>
-              </button>
-            ))}
+      {/* 5. CAROSELLO INTERATTIVO IN BASSO: TAPPE VS DINTORNI */}
+      <div className="absolute bottom-3 left-3 right-3 z-20 pointer-events-auto space-y-2">
+        
+        {/* Toggle Tappe vs Dintorni */}
+        <div className="flex items-center justify-between px-1">
+          <div className="flex items-center bg-black/80 backdrop-blur-md p-0.5 rounded-xl border border-white/20 text-xs">
+            <button
+              onClick={() => {
+                setCarouselMode('stops');
+                setSelectedNearbyPlace(null);
+              }}
+              className={`px-3 py-1 rounded-lg font-bold transition-all ${
+                carouselMode === 'stops'
+                  ? 'bg-rose-500 text-white shadow'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              📍 Tappe ({currentDay.stops.length})
+            </button>
+            <button
+              onClick={() => setCarouselMode('nearby')}
+              className={`px-3 py-1 rounded-lg font-bold transition-all flex items-center gap-1 ${
+                carouselMode === 'nearby'
+                  ? 'bg-purple-600 text-white shadow'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <Sparkles className="w-3 h-3 text-purple-300" />
+              <span>Dintorni & Chicche</span>
+            </button>
           </div>
 
-          <span className="text-[11px] text-slate-400 font-medium shrink-0 px-1">
-            {currentDay.stops.length} tappe
+          <span className="text-[10px] text-slate-300 font-bold bg-black/60 px-2 py-1 rounded-lg backdrop-blur-md border border-white/10">
+            {formatDistance(totalDistanceMeters)} • {formatWalkingTime(totalDistanceMeters)}
           </span>
-
         </div>
+
+        {/* Modalità 1: Carosello Tappe del Giorno */}
+        {carouselMode === 'stops' && (
+          <div className="p-2 rounded-2xl bg-[#0b0f19]/95 backdrop-blur-xl border border-slate-700/80 shadow-2xl flex items-center gap-2">
+            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 flex-1">
+              {currentDay.stops.map((stop, idx) => (
+                <button
+                  key={stop.id}
+                  onClick={() => handleFlyToStop(stop, idx)}
+                  className={`shrink-0 p-1.5 px-2.5 rounded-xl border text-left transition-all flex items-center gap-1.5 min-w-[130px] max-w-[180px] ${
+                    activeStopIndex === idx
+                      ? 'bg-rose-500/20 border-rose-500/60 shadow-md text-white'
+                      : 'bg-slate-900/90 border-slate-800 text-slate-300 hover:border-slate-700'
+                  }`}
+                >
+                  <span className="w-5 h-5 rounded-full bg-rose-500 text-white font-black text-[10px] flex items-center justify-center shrink-0">
+                    {idx + 1}
+                  </span>
+                  <span className="text-xs font-bold truncate">{stop.title}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Modalità 2: Carosello Chicche nei Dintorni */}
+        {carouselMode === 'nearby' && (
+          <div className="p-2 rounded-2xl bg-[#0b0f19]/95 backdrop-blur-xl border border-purple-500/40 shadow-2xl space-y-2">
+            {selectedNearbyPlace ? (
+              <div className="p-2 space-y-2 animate-fade-in">
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <span className="text-[10px] font-bold text-purple-300 bg-purple-950/60 px-2 py-0.5 rounded-full border border-purple-500/30">
+                      {selectedNearbyPlace.neighborhood}
+                    </span>
+                    <h4 className="text-xs font-extrabold text-white mt-1">
+                      {selectedNearbyPlace.name}
+                    </h4>
+                  </div>
+                  <button 
+                    onClick={() => setSelectedNearbyPlace(null)}
+                    className="p-1 rounded-full text-slate-400 hover:text-white"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+
+                <p className="text-[11px] text-slate-300 line-clamp-2">
+                  {selectedNearbyPlace.description}
+                </p>
+
+                {selectedNearbyPlace.tip && (
+                  <p className="text-[10px] text-rose-300 flex items-center gap-1 bg-rose-950/30 p-1.5 rounded-lg border border-rose-500/20">
+                    <Heart className="w-3 h-3 text-rose-400 shrink-0" />
+                    <span><strong>Per voi:</strong> {selectedNearbyPlace.tip}</span>
+                  </p>
+                )}
+
+                <a
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${selectedNearbyPlace.coordinates.lat},${selectedNearbyPlace.coordinates.lng}&travelmode=walking`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-2 px-3 rounded-xl bg-purple-600 hover:bg-purple-500 active:scale-95 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md"
+                >
+                  <Navigation className="w-3.5 h-3.5" />
+                  <span>Portami lì a piedi (Google Maps)</span>
+                </a>
+              </div>
+            ) : (
+              <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+                {nearbyPlacesWithDistance.slice(0, 10).map((place) => (
+                  <button
+                    key={place.id}
+                    onClick={() => handleFlyToNearby(place)}
+                    className="shrink-0 p-2 rounded-xl bg-slate-900 border border-slate-800 hover:border-purple-500 text-left transition-all min-w-[150px] max-w-[200px]"
+                  >
+                    <div className="flex items-center justify-between text-[10px] mb-0.5">
+                      <span className="text-purple-300 font-bold">{place.neighborhood}</span>
+                      <span className="text-amber-300 font-bold">{formatDistance(place.distanceMeters)}</span>
+                    </div>
+                    <span className="text-xs font-bold text-white block truncate">{place.name}</span>
+                    <span className="text-[10px] text-slate-400 flex items-center gap-0.5 mt-0.5">
+                      <Footprints className="w-2.5 h-2.5" />
+                      <span>{formatWalkingTime(place.distanceMeters)}</span>
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
       </div>
 
     </div>
