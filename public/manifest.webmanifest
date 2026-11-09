@@ -1,0 +1,18 @@
+{
+  "name": "Parigi per Due - Itinerario Romantico",
+  "short_name": "Parigi ❤️",
+  "description": "Itinerario smart e veloce per Parigi: metro, orari, tappe e Citymapper per due",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0f19",
+  "theme_color": "#0b0f19",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/eiffel.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
