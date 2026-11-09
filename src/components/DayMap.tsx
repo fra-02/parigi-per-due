@@ -1,24 +1,26 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
-import { DayItinerary, Stop } from '../data/itineraryData';
+import { ITINERARY_DAYS, DayItinerary, Stop } from '../data/itineraryData';
 import { calculateDistanceMeters, formatDistance, formatWalkingTime } from '../utils/geo';
-import { Navigation, Compass, Footprints } from 'lucide-react';
+import { Navigation, Compass, Footprints, Calendar } from 'lucide-react';
 
 interface DayMapProps {
-  day: DayItinerary;
-  onSelectStop?: (stop: Stop) => void;
+  initialDayId?: string;
 }
 
-export const DayMap: React.FC<DayMapProps> = ({ day }) => {
+export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
+  const [selectedDayId, setSelectedDayId] = useState<string>(initialDayId);
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
   const layerGroupRef = useRef<L.LayerGroup | null>(null);
 
+  const currentDay = ITINERARY_DAYS.find((d) => d.id === selectedDayId) || ITINERARY_DAYS[0];
+
   // Calcolo distanza totale a piedi tra le tappe del giorno
   let totalDistanceMeters = 0;
-  for (let i = 0; i < day.stops.length - 1; i++) {
-    const from = day.stops[i].coordinates;
-    const to = day.stops[i + 1].coordinates;
+  for (let i = 0; i < currentDay.stops.length - 1; i++) {
+    const from = currentDay.stops[i].coordinates;
+    const to = currentDay.stops[i + 1].coordinates;
     totalDistanceMeters += calculateDistanceMeters(from.lat, from.lng, to.lat, to.lng);
   }
 
@@ -32,13 +34,12 @@ export const DayMap: React.FC<DayMapProps> = ({ day }) => {
         attributionControl: false,
       });
 
-      // Aggiungi controlli zoom in basso a destra
       L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-      // Tile Layer elegante CartoDB Voyager
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      // Tile OpenStreetMap 100% gratuita (NESSUNA API KEY RICHIESTA!)
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        subdomains: 'abcd',
+        attribution: '&copy; OpenStreetMap contributors'
       }).addTo(map);
 
       const layerGroup = L.layerGroup().addTo(map);
@@ -50,17 +51,16 @@ export const DayMap: React.FC<DayMapProps> = ({ day }) => {
     const layerGroup = layerGroupRef.current;
     if (!map || !layerGroup) return;
 
-    // Pulisci i marker precedenti
+    // Pulisci i layer precedenti
     layerGroup.clearLayers();
 
     const coordinatesList: L.LatLngExpression[] = [];
 
     // Aggiungi Marker numerati per ogni tappa
-    day.stops.forEach((stop, index) => {
+    currentDay.stops.forEach((stop, index) => {
       const { lat, lng } = stop.coordinates;
       coordinatesList.push([lat, lng]);
 
-      // Icona HTML personalizzata circolare con numero
       const customIcon = L.divIcon({
         className: 'custom-day-pin',
         html: `
@@ -92,7 +92,8 @@ export const DayMap: React.FC<DayMapProps> = ({ day }) => {
       const marker = L.marker([lat, lng], { icon: customIcon });
 
       const popupContent = `
-        <div style="font-family: inherit; font-size: 12px; color: #0f172a; padding: 4px; min-width: 180px;">
+        <div style="font-family: -apple-system, sans-serif; font-size: 12px; color: #0f172a; padding: 4px; min-width: 200px;">
+          ${stop.image ? `<img src="${stop.image}" style="width: 100%; height: 90px; object-fit: cover; border-radius: 8px; margin-bottom: 6px;" />` : ''}
           <div style="font-size: 10px; font-weight: 800; color: #e11d48; text-transform: uppercase;">
             Tappa ${index + 1} • ${stop.time || ''}
           </div>
@@ -107,24 +108,24 @@ export const DayMap: React.FC<DayMapProps> = ({ day }) => {
               flex: 1;
               background: #0f172a;
               color: white;
-              padding: 5px 8px;
+              padding: 6px 8px;
               border-radius: 8px;
               text-align: center;
               text-decoration: none;
               font-weight: 600;
-              font-size: 10px;
+              font-size: 11px;
               display: inline-block;
-            ">📍 Naviga a piedi</a>
+            ">🚶 A piedi (Maps)</a>
             <a href="${citymapperDir}" target="_blank" rel="noopener noreferrer" style="
               flex: 1;
               background: #288330;
               color: white;
-              padding: 5px 8px;
+              padding: 6px 8px;
               border-radius: 8px;
               text-align: center;
               text-decoration: none;
               font-weight: 600;
-              font-size: 10px;
+              font-size: 11px;
               display: inline-block;
             ">🚇 Citymapper</a>
           </div>
@@ -135,61 +136,83 @@ export const DayMap: React.FC<DayMapProps> = ({ day }) => {
       layerGroup.addLayer(marker);
     });
 
-    // Traccia la linea del percorso (Polyline)
+    // Traccia la linea del percorso
     if (coordinatesList.length > 1) {
       const polyline = L.polyline(coordinatesList, {
         color: '#f43f5e',
-        weight: 3.5,
-        opacity: 0.85,
+        weight: 4,
+        opacity: 0.9,
         dashArray: '6, 8',
       });
       layerGroup.addLayer(polyline);
     }
 
-    // Adatta la vista a tutti i marker
+    // Centra su tutti i punti
     if (coordinatesList.length > 0) {
       const bounds = L.latLngBounds(coordinatesList);
       map.fitBounds(bounds, { padding: [40, 40], maxZoom: 16 });
     }
 
-    // Invalida dimensioni per evitare glitch su schermi mobili
     setTimeout(() => {
       map.invalidateSize();
     }, 200);
 
-  }, [day]);
+  }, [selectedDayId]);
 
   return (
-    <div className="rounded-3xl overflow-hidden border border-slate-800 shadow-xl bg-slate-900/90 flex flex-col">
+    <div className="space-y-3">
       
-      {/* Header Mappa con Distanza Totale */}
-      <div className="p-3 bg-slate-900 border-b border-slate-800 flex items-center justify-between text-xs">
-        <div className="flex items-center gap-1.5 font-bold text-white">
-          <Footprints className="w-4 h-4 text-rose-400" />
-          <span>Percorso di {day.dayOfWeek}</span>
-        </div>
-        
-        <div className="flex items-center gap-2 text-slate-300 bg-slate-950 px-2.5 py-1 rounded-xl border border-slate-800">
-          <span className="font-extrabold text-amber-300">
-            {formatDistance(totalDistanceMeters)}
-          </span>
-          <span className="text-slate-500">•</span>
-          <span className="text-slate-400">
-            {formatWalkingTime(totalDistanceMeters)}
-          </span>
-        </div>
+      {/* Selettore Giorno dedicato per la Mappa */}
+      <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
+        {ITINERARY_DAYS.map((d) => (
+          <button
+            key={d.id}
+            onClick={() => setSelectedDayId(d.id)}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border ${
+              selectedDayId === d.id
+                ? 'bg-rose-500 text-white border-rose-400 shadow-md shadow-rose-950/40'
+                : 'bg-slate-900 text-slate-400 hover:text-white border-slate-800'
+            }`}
+          >
+            <span>{d.dayOfWeek} {d.dateStr.split(' ')[1]}</span>
+          </button>
+        ))}
       </div>
 
-      {/* Mappa Container */}
-      <div 
-        ref={mapContainerRef} 
-        className="w-full h-[320px] sm:h-[380px] z-10"
-      />
+      {/* Scheda Mappa */}
+      <div className="rounded-3xl overflow-hidden border border-slate-800 shadow-xl bg-slate-900/90 flex flex-col">
+        
+        {/* Header Mappa con Distanza Totale */}
+        <div className="p-3 bg-slate-900 border-b border-slate-800 flex items-center justify-between text-xs">
+          <div>
+            <span className="font-extrabold text-white text-sm">{currentDay.title}</span>
+            <p className="text-[11px] text-rose-300">{currentDay.stops.length} Tappe collegate</p>
+          </div>
+          
+          <div className="flex items-center gap-2 text-slate-300 bg-slate-950 px-2.5 py-1.5 rounded-xl border border-slate-800">
+            <Footprints className="w-3.5 h-3.5 text-rose-400" />
+            <span className="font-extrabold text-amber-300">
+              {formatDistance(totalDistanceMeters)}
+            </span>
+            <span className="text-slate-500">•</span>
+            <span className="text-slate-400">
+              {formatWalkingTime(totalDistanceMeters)}
+            </span>
+          </div>
+        </div>
 
-      {/* Footer Mappa: Legenda rapida */}
-      <div className="p-2.5 bg-slate-950/90 text-[11px] text-slate-400 flex items-center justify-between">
-        <span>Tocca i numeri per vedere la tappa e avviare il navigatore</span>
-        <span className="text-rose-400 font-semibold">{day.stops.length} Tappe</span>
+        {/* Mappa Container */}
+        <div 
+          ref={mapContainerRef} 
+          className="w-full h-[400px] sm:h-[460px] z-10"
+        />
+
+        {/* Footer Mappa */}
+        <div className="p-2.5 bg-slate-950/90 text-[11px] text-slate-400 flex items-center justify-between">
+          <span>Tocca i cerchietti numerati per vedere la foto e aprire il navigatore</span>
+          <span className="text-emerald-400 font-semibold">100% Free OSM</span>
+        </div>
+
       </div>
 
     </div>

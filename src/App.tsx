@@ -15,6 +15,7 @@ import { NotesModal } from './components/NotesModal';
 import { calculateDistanceMeters, formatDistance, formatWalkingTime } from './utils/geo';
 import { 
   Calendar, 
+  Map, 
   Compass, 
   Train, 
   Sparkles, 
@@ -22,16 +23,12 @@ import {
   ChevronRight, 
   Heart, 
   Share2, 
-  Info,
-  Map,
-  ListFilter,
   Footprints
 } from 'lucide-react';
 
 export const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'itinerary' | 'radar' | 'transit' | 'utilities'>('itinerary');
+  const [activeTab, setActiveTab] = useState<'itinerary' | 'map' | 'radar' | 'transit' | 'utilities'>('itinerary');
   const [selectedDayId, setSelectedDayId] = useState<string>('day-1');
-  const [itineraryViewMode, setItineraryViewMode] = useState<'list' | 'map'>('list');
   const [completedStops, setCompletedStops] = useState<Record<string, boolean>>({});
   
   // Modals state
@@ -88,7 +85,7 @@ export const App: React.FC = () => {
     if (navigator.share) {
       navigator.share({
         title: 'Parigi per Due ❤️ Nostro Itinerario',
-        text: 'Il nostro itinerario completo di Parigi con mappa, meteo e Citymapper!',
+        text: 'Il nostro itinerario completo di Parigi con foto, mappa e Citymapper!',
         url: window.location.href,
       }).catch(() => {});
     } else {
@@ -113,18 +110,18 @@ export const App: React.FC = () => {
       {/* Main Container */}
       <main className="max-w-2xl mx-auto w-full px-4 pt-3 flex-1">
         
-        {/* TAB 1: ITINERARIO GIORNO PER GIORNO */}
+        {/* TAB 1: ITINERARIO CON FOTO MODERNE */}
         {activeTab === 'itinerary' && (
-          <div className="space-y-3.5">
+          <div className="space-y-4">
             
-            {/* Widget Meteo & Tramonto Parigi */}
+            {/* Widget Meteo & Orario Tramonto */}
             <WeatherWidget />
 
             {/* Selettore dei Giorni */}
             <div>
               <div className="flex items-center justify-between px-1 mb-1 text-xs text-slate-400">
                 <span className="font-semibold uppercase tracking-wider text-[11px] text-slate-300">
-                  Giorno del Viaggio
+                  Scegli il Giorno
                 </span>
                 <button
                   onClick={handleShare}
@@ -143,38 +140,16 @@ export const App: React.FC = () => {
               />
             </div>
 
-            {/* Intestazione Giorno Snella con Toggle Vista Mappa / Lista */}
+            {/* Intestazione del Giorno */}
             <div className={`p-4 rounded-3xl bg-gradient-to-br ${currentDay.colorTheme} border border-slate-800/80 shadow-lg relative overflow-hidden backdrop-blur-sm`}>
-              <div className="flex items-center justify-between gap-2 mb-1.5">
+              <div className="flex items-center justify-between gap-2 mb-1">
                 <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-white/10 text-white border border-white/20">
                   {currentDay.dateStr}
                 </span>
-
-                {/* Selettore Vista Mappa / Schede */}
-                <div className="flex items-center bg-slate-950/80 p-1 rounded-xl border border-white/10 text-xs">
-                  <button
-                    onClick={() => setItineraryViewMode('list')}
-                    className={`px-2.5 py-1 rounded-lg font-bold flex items-center gap-1 transition-colors ${
-                      itineraryViewMode === 'list' 
-                        ? 'bg-rose-500 text-white shadow' 
-                        : 'text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    <ListFilter className="w-3.5 h-3.5" />
-                    <span>Tappe</span>
-                  </button>
-                  <button
-                    onClick={() => setItineraryViewMode('map')}
-                    className={`px-2.5 py-1 rounded-lg font-bold flex items-center gap-1 transition-colors ${
-                      itineraryViewMode === 'map' 
-                        ? 'bg-rose-500 text-white shadow' 
-                        : 'text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    <Map className="w-3.5 h-3.5" />
-                    <span>Mappa</span>
-                  </button>
-                </div>
+                <span className="text-xs font-semibold text-amber-300 flex items-center gap-1">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  {currentDay.badge}
+                </span>
               </div>
 
               <h3 className="text-xl font-black text-white leading-tight">
@@ -186,50 +161,44 @@ export const App: React.FC = () => {
               </p>
             </div>
 
-            {/* VISTA MAPPA INTERATTIVA */}
-            {itineraryViewMode === 'map' ? (
-              <DayMap day={currentDay} />
-            ) : (
-              /* VISTA TAPPE SNELLE E INTUITIVE */
-              <div className="space-y-2.5">
-                {currentDay.stops.map((stop, idx) => {
-                  // Calcolo distanza dalla tappa precedente
-                  let distanceToNext: number | null = null;
-                  if (idx < currentDay.stops.length - 1) {
-                    const nextStop = currentDay.stops[idx + 1];
-                    distanceToNext = calculateDistanceMeters(
-                      stop.coordinates.lat,
-                      stop.coordinates.lng,
-                      nextStop.coordinates.lat,
-                      nextStop.coordinates.lng
-                    );
-                  }
-
-                  return (
-                    <React.Fragment key={stop.id}>
-                      <StopCard
-                        stop={stop}
-                        index={idx}
-                        isCompleted={!!completedStops[stop.id]}
-                        onToggleComplete={handleToggleComplete}
-                      />
-
-                      {/* Lineetta di connessione e distanza a piedi verso la tappa successiva */}
-                      {distanceToNext !== null && (
-                        <div className="flex items-center justify-center my-0.5">
-                          <div className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-900/90 border border-slate-800 text-[10px] text-slate-400 font-medium">
-                            <Footprints className="w-2.5 h-2.5 text-rose-400" />
-                            <span>
-                              {formatDistance(distanceToNext)} • {formatWalkingTime(distanceToNext)} alla tappa successiva
-                            </span>
-                          </div>
-                        </div>
-                      )}
-                    </React.Fragment>
+            {/* LISTA DELLE TAPPE CON FOTO MODERNE */}
+            <div className="space-y-3">
+              {currentDay.stops.map((stop, idx) => {
+                let distanceToNext: number | null = null;
+                if (idx < currentDay.stops.length - 1) {
+                  const nextStop = currentDay.stops[idx + 1];
+                  distanceToNext = calculateDistanceMeters(
+                    stop.coordinates.lat,
+                    stop.coordinates.lng,
+                    nextStop.coordinates.lat,
+                    nextStop.coordinates.lng
                   );
-                })}
-              </div>
-            )}
+                }
+
+                return (
+                  <React.Fragment key={stop.id}>
+                    <StopCard
+                      stop={stop}
+                      index={idx}
+                      isCompleted={!!completedStops[stop.id]}
+                      onToggleComplete={handleToggleComplete}
+                    />
+
+                    {/* Connessione visiva e distanza tra tappe */}
+                    {distanceToNext !== null && (
+                      <div className="flex items-center justify-center my-0.5">
+                        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-800 text-[11px] text-slate-300 font-medium shadow-sm">
+                          <Footprints className="w-3 h-3 text-rose-400" />
+                          <span>
+                            {formatDistance(distanceToNext)} • {formatWalkingTime(distanceToNext)} a piedi
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                  </React.Fragment>
+                );
+              })}
+            </div>
 
             {/* Navigazione Rapida Tra Giorni */}
             <div className="mt-6 flex items-center justify-between gap-3 pt-3 border-t border-slate-800">
@@ -263,17 +232,22 @@ export const App: React.FC = () => {
           </div>
         )}
 
-        {/* TAB 2: RADAR NEI DINTORNI (CON SIMULATORE TEST DALL'ITALIA) */}
+        {/* TAB 2: MAPPA INTERATTIVA A SCHERMO INTERO (TAB DEDICATA) */}
+        {activeTab === 'map' && (
+          <DayMap initialDayId={selectedDayId} />
+        )}
+
+        {/* TAB 3: RADAR NEI DINTORNI (CON SIMULATORE TEST DALL'ITALIA) */}
         {activeTab === 'radar' && (
           <NearbyRadar />
         )}
 
-        {/* TAB 3: TRANSIT NAVIGATOR (CITYMAPPER & METRO & HOTEL) */}
+        {/* TAB 4: TRANSIT NAVIGATOR (CITYMAPPER & METRO & HOTEL) */}
         {activeTab === 'transit' && (
           <TransitNavigator />
         )}
 
-        {/* TAB 4: GUIDA, FRASARIO & UTILITY */}
+        {/* TAB 5: GUIDA, FRASARIO & UTILITY */}
         {activeTab === 'utilities' && (
           <UtilitiesView
             onOpenUnder26={() => setIsUnder26Open(true)}
@@ -284,23 +258,38 @@ export const App: React.FC = () => {
 
       </main>
 
-      {/* Floating Bottom Navigation Tab Bar */}
+      {/* Floating Bottom Navigation Tab Bar (5 TAB DEDICATE) */}
       <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#0b0f19]/95 backdrop-blur-xl border-t border-slate-800/80 px-2 pt-2 pb-5">
-        <div className="max-w-md mx-auto grid grid-cols-4 gap-1">
+        <div className="max-w-md mx-auto grid grid-cols-5 gap-0.5">
           
           <button
             onClick={() => {
               setActiveTab('itinerary');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className={`flex flex-col items-center justify-center py-1.5 px-1 rounded-2xl transition-all ${
+            className={`flex flex-col items-center justify-center py-1.5 px-0.5 rounded-2xl transition-all ${
               activeTab === 'itinerary'
                 ? 'text-rose-400 bg-rose-500/10 font-bold scale-102'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
-            <Calendar className="w-5 h-5 mb-1" />
-            <span className="text-[11px]">Itinerario</span>
+            <Calendar className="w-5 h-5 mb-0.5" />
+            <span className="text-[10px]">Tappe</span>
+          </button>
+
+          <button
+            onClick={() => {
+              setActiveTab('map');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className={`flex flex-col items-center justify-center py-1.5 px-0.5 rounded-2xl transition-all ${
+              activeTab === 'map'
+                ? 'text-rose-400 bg-rose-500/10 font-bold scale-102'
+                : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <Map className="w-5 h-5 mb-0.5" />
+            <span className="text-[10px]">Mappa</span>
           </button>
 
           <button
@@ -308,14 +297,14 @@ export const App: React.FC = () => {
               setActiveTab('radar');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className={`flex flex-col items-center justify-center py-1.5 px-1 rounded-2xl transition-all ${
+            className={`flex flex-col items-center justify-center py-1.5 px-0.5 rounded-2xl transition-all ${
               activeTab === 'radar'
                 ? 'text-emerald-400 bg-emerald-500/10 font-bold scale-102'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
-            <Compass className="w-5 h-5 mb-1" />
-            <span className="text-[11px]">Dintorni</span>
+            <Compass className="w-5 h-5 mb-0.5" />
+            <span className="text-[10px]">Dintorni</span>
           </button>
 
           <button
@@ -323,14 +312,14 @@ export const App: React.FC = () => {
               setActiveTab('transit');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className={`flex flex-col items-center justify-center py-1.5 px-1 rounded-2xl transition-all ${
+            className={`flex flex-col items-center justify-center py-1.5 px-0.5 rounded-2xl transition-all ${
               activeTab === 'transit'
                 ? 'text-[#4ade80] bg-[#288330]/20 font-bold scale-102'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
-            <Train className="w-5 h-5 mb-1" />
-            <span className="text-[11px]">Citymapper</span>
+            <Train className="w-5 h-5 mb-0.5" />
+            <span className="text-[10px]">Metro</span>
           </button>
 
           <button
@@ -338,14 +327,14 @@ export const App: React.FC = () => {
               setActiveTab('utilities');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className={`flex flex-col items-center justify-center py-1.5 px-1 rounded-2xl transition-all ${
+            className={`flex flex-col items-center justify-center py-1.5 px-0.5 rounded-2xl transition-all ${
               activeTab === 'utilities'
                 ? 'text-amber-400 bg-amber-500/10 font-bold scale-102'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
-            <Sparkles className="w-5 h-5 mb-1" />
-            <span className="text-[11px]">Info & Extra</span>
+            <Sparkles className="w-5 h-5 mb-0.5" />
+            <span className="text-[10px]">Info</span>
           </button>
 
         </div>
