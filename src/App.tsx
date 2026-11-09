@@ -127,17 +127,67 @@ export const App: React.FC = () => {
     setCustomStopsVersion((v) => v + 1);
   };
 
+  const isStoryMode = activeTab === 'itinerary' && itineraryMode === 'story';
+
   return (
-    <div className="min-h-screen bg-[#0b0f19] text-slate-100 flex flex-col font-sans pb-24 selection:bg-rose-500 selection:text-white">
+    <div className={`min-h-screen bg-[#0b0f19] text-slate-100 flex flex-col font-sans ${isStoryMode ? 'overflow-hidden' : 'pb-24'} selection:bg-rose-500 selection:text-white`}>
       
-      {/* Main Container - SENZA TESTATA RIDONDANTE, PURO SPAZIO UTILE */}
-      <main className="max-w-2xl mx-auto w-full px-3 pt-2.5 flex-1">
+      {/* Main Container - A Tutto Schermo in modalità Sfoglia, centrato e scrollabile nelle altre */}
+      <main className={`w-full flex-1 ${isStoryMode ? 'p-0 max-w-full' : 'max-w-2xl mx-auto px-3 pt-2.5'}`}>
         
-        {/* TAB 1: ITINERARIO CON MODALITÀ SFOGLIA IMMEDIATA */}
-        {activeTab === 'itinerary' && (
+        {/* TAB 1: ITINERARIO IN MODALITÀ SFOGLIA A TUTTO SCHERMO */}
+        {activeTab === 'itinerary' && itineraryMode === 'story' && (
+          <StopStoryViewer
+            key={selectedDayId}
+            stops={currentDay.stops}
+            currentDay={currentDay}
+            allDays={ITINERARY_DAYS}
+            selectedDayId={selectedDayId}
+            onSelectDay={(id) => setSelectedDayId(id)}
+            onPrevDay={handlePrevDay}
+            onNextDay={handleNextDay}
+            hasPrevDay={currentDayIndex > 0}
+            hasNextDay={currentDayIndex < ITINERARY_DAYS.length - 1}
+            completedStops={completedStops}
+            onToggleComplete={handleToggleComplete}
+            onSwitchToList={() => setItineraryMode('list')}
+            onAddStop={() => setIsAddStopOpen(true)}
+            onDeleteStop={handleDeleteCustomStop}
+            initialIndex={firstPendingStopIndex}
+          />
+        )}
+
+        {/* TAB 1: ITINERARIO IN MODALITÀ ELENCO COMPLETO */}
+        {activeTab === 'itinerary' && itineraryMode === 'list' && (
           <div className="space-y-3">
             
-            {/* Widget Meteo in Tempo Reale & Tramonto */}
+            {/* Tasto Switch Torna a Sfoglia a Tutto Schermo */}
+            <div className="flex items-center justify-between gap-2 p-2.5 rounded-2xl bg-gradient-to-r from-rose-600/20 via-slate-900 to-amber-600/20 border border-rose-500/30">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold text-white">Visualizzazione Elenco</span>
+                <span className="text-[10px] text-slate-400">({currentDay.stops.length} tappe)</span>
+              </div>
+
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={() => setIsAddStopOpen(true)}
+                  className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-750 text-rose-300 border border-slate-700 text-xs font-bold active:scale-95 transition-all"
+                >
+                  <Plus className="w-3.5 h-3.5 text-rose-400" />
+                  <span>Aggiungi</span>
+                </button>
+
+                <button
+                  onClick={() => setItineraryMode('story')}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white text-xs font-extrabold shadow-md active:scale-95 transition-all"
+                >
+                  <Layers className="w-3.5 h-3.5" />
+                  <span>📸 Sfoglia a Tutto Schermo</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Widget Meteo in Tempo Reale */}
             <WeatherWidget />
 
             {/* Selettore dei Giorni Orizzontale a Scorrimento Rapido */}
@@ -149,110 +199,51 @@ export const App: React.FC = () => {
               completedStops={completedStops}
             />
 
-            {/* Barra Azioni Giorno: Switch Sfoglia / Elenco + Tasto Aggiungi Tappa al Volo */}
-            <div className="flex items-center justify-between gap-2 px-1">
-              <div className="flex items-center gap-1.5">
-                <span className="text-xs font-black text-white">{currentDay.title}</span>
-                <span className="text-[10px] text-slate-400">({currentDay.stops.length} tappe)</span>
-              </div>
-
-              <div className="flex items-center gap-1.5">
-                {/* Tasto Aggiungi Tappa al Volo */}
-                <button
-                  onClick={() => setIsAddStopOpen(true)}
-                  className="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-slate-750 text-rose-300 border border-slate-700/80 text-[11px] font-bold active:scale-95 transition-all shadow-sm"
-                >
-                  <Plus className="w-3.5 h-3.5 text-rose-400" />
-                  <span>Aggiungi</span>
-                </button>
-
-                {/* Switch Sfoglia vs Elenco */}
-                <div className="flex items-center bg-slate-900 p-0.5 rounded-xl border border-slate-800 text-xs">
-                  <button
-                    onClick={() => setItineraryMode('story')}
-                    className={`px-2 py-1 rounded-lg font-bold flex items-center gap-1 transition-all ${
-                      itineraryMode === 'story'
-                        ? 'bg-rose-500 text-white shadow'
-                        : 'text-slate-400 hover:text-white'
-                    }`}
-                    title="Modalità Sfoglia Scheda per Scheda"
-                  >
-                    <Layers className="w-3 h-3" />
-                    <span>Sfoglia</span>
-                  </button>
-                  <button
-                    onClick={() => setItineraryMode('list')}
-                    className={`px-2 py-1 rounded-lg font-bold flex items-center gap-1 transition-all ${
-                      itineraryMode === 'list'
-                        ? 'bg-rose-500 text-white shadow'
-                        : 'text-slate-400 hover:text-white'
-                    }`}
-                    title="Modalità Elenco Completo"
-                  >
-                    <List className="w-3 h-3" />
-                    <span>Elenco</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* CONTENUTO ITINERARIO: SFOGLIA VS ELENCO */}
-            {itineraryMode === 'story' ? (
-              <StopStoryViewer
-                key={selectedDayId}
-                stops={currentDay.stops}
-                initialIndex={firstPendingStopIndex}
-                completedStops={completedStops}
-                onToggleComplete={handleToggleComplete}
-                onSwitchToList={() => setItineraryMode('list')}
-                onDeleteStop={handleDeleteCustomStop}
-              />
-            ) : (
-              <div className="space-y-3">
-                {currentDay.stops.map((stop, idx) => {
-                  let distanceToNext: number | null = null;
-                  if (idx < currentDay.stops.length - 1) {
-                    const nextStop = currentDay.stops[idx + 1];
-                    distanceToNext = calculateDistanceMeters(
-                      stop.coordinates.lat,
-                      stop.coordinates.lng,
-                      nextStop.coordinates.lat,
-                      nextStop.coordinates.lng
-                    );
-                  }
-
-                  return (
-                    <React.Fragment key={stop.id}>
-                      <StopCard
-                        stop={stop}
-                        index={idx}
-                        isCompleted={!!completedStops[stop.id]}
-                        onToggleComplete={handleToggleComplete}
-                        onDeleteStop={handleDeleteCustomStop}
-                      />
-
-                      {distanceToNext !== null && (
-                        <div className="flex items-center justify-center my-0.5">
-                          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-800 text-[11px] text-slate-300 font-medium shadow-sm">
-                            <Footprints className="w-3 h-3 text-rose-400" />
-                            <span>
-                              {formatDistance(distanceToNext)} • {formatWalkingTime(distanceToNext)} a piedi
-                            </span>
-                          </div>
-                        </div>
-                      )}
-                    </React.Fragment>
+            {/* Lista delle Tappe */}
+            <div className="space-y-3">
+              {currentDay.stops.map((stop, idx) => {
+                let distanceToNext: number | null = null;
+                if (idx < currentDay.stops.length - 1) {
+                  const nextStop = currentDay.stops[idx + 1];
+                  distanceToNext = calculateDistanceMeters(
+                    stop.coordinates.lat,
+                    stop.coordinates.lng,
+                    nextStop.coordinates.lat,
+                    nextStop.coordinates.lng
                   );
-                })}
-              </div>
-            )}
+                }
+
+                return (
+                  <React.Fragment key={stop.id}>
+                    <StopCard
+                      stop={stop}
+                      index={idx}
+                      isCompleted={!!completedStops[stop.id]}
+                      onToggleComplete={handleToggleComplete}
+                      onDeleteStop={handleDeleteCustomStop}
+                    />
+
+                    {distanceToNext !== null && (
+                      <div className="flex items-center justify-center my-0.5">
+                        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-800 text-[11px] text-slate-300 font-medium shadow-sm">
+                          <Footprints className="w-3 h-3 text-rose-400" />
+                          <span>
+                            {formatDistance(distanceToNext)} • {formatWalkingTime(distanceToNext)} a piedi
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                  </React.Fragment>
+                );
+              })}
+            </div>
 
             {/* Navigazione Rapida Tra Giorni */}
             <div className="flex items-center justify-between gap-3 pt-2 border-t border-slate-800/80">
               <button
                 onClick={handlePrevDay}
                 disabled={currentDayIndex === 0}
-                className={`flex-1 py-2 px-3 rounded-2xl border text-xs font-bold flex items-center justify-center gap-1 transition-all ${
+                className={`flex-1 py-2.5 px-3 rounded-2xl border text-xs font-bold flex items-center justify-center gap-1 transition-all ${
                   currentDayIndex === 0
                     ? 'opacity-30 border-slate-800 text-slate-600 cursor-not-allowed'
                     : 'bg-slate-900 border-slate-700 text-slate-200 hover:bg-slate-800 active:scale-98'
@@ -265,7 +256,7 @@ export const App: React.FC = () => {
               <button
                 onClick={handleNextDay}
                 disabled={currentDayIndex === ITINERARY_DAYS.length - 1}
-                className={`flex-1 py-2 px-3 rounded-2xl border text-xs font-bold flex items-center justify-center gap-1 transition-all ${
+                className={`flex-1 py-2.5 px-3 rounded-2xl border text-xs font-bold flex items-center justify-center gap-1 transition-all ${
                   currentDayIndex === ITINERARY_DAYS.length - 1
                     ? 'opacity-30 border-slate-800 text-slate-600 cursor-not-allowed'
                     : 'bg-gradient-to-r from-rose-600/30 to-amber-600/30 border-rose-500/40 text-amber-200 hover:from-rose-600/40 active:scale-98'
