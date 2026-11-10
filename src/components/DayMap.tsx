@@ -272,10 +272,10 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
   };
 
   return (
-    <div className="relative w-full rounded-3xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-950 flex flex-col h-[calc(100vh-140px)] min-h-[520px]">
+    <div className="relative w-full overflow-hidden bg-slate-950 flex flex-col h-[calc(100dvh-max(4.25rem,calc(env(safe-area-inset-bottom)+3.5rem)))]">
       
-      {/* 1. SELETTORE DEI GIORNI IN ALTO */}
-      <div className="absolute top-3 left-3 right-3 z-30 flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 pointer-events-auto">
+      {/* 1. SELETTORE DEI GIORNI IN ALTO (ADATTATO A SAFE AREA & DYNAMIC ISLAND) */}
+      <div className="absolute top-[max(0.75rem,calc(env(safe-area-inset-top)+0.25rem))] left-3 right-3 z-30 flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 pointer-events-auto">
         {ITINERARY_DAYS.map((d) => (
           <button
             key={d.id}
@@ -292,7 +292,7 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
       </div>
 
       {/* 2. BARRA RICERCHE DINAMICHE GOOGLE MAPS IN TEMPO REALE */}
-      <div className="absolute top-14 left-3 right-3 z-20 pointer-events-auto">
+      <div className="absolute top-[max(3.5rem,calc(env(safe-area-inset-top)+2.85rem))] left-3 right-3 z-20 pointer-events-auto">
         <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
           <button
             onClick={() => openGoogleMapsSearch('punti panoramici e monumenti')}
@@ -329,7 +329,7 @@ export const DayMap: React.FC<DayMapProps> = ({ initialDayId = 'day-1' }) => {
       </div>
 
       {/* 3. PULSANTE GPS DOVE SIAMO */}
-      <div className="absolute top-28 right-3 z-30 pointer-events-auto">
+      <div className="absolute top-[max(6.75rem,calc(env(safe-area-inset-top)+6.25rem))] right-3 z-30 pointer-events-auto">
         <button
           onClick={handleLocateMe}
           disabled={isLocating}

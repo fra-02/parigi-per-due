@@ -24,7 +24,7 @@ export const AddStopModal: React.FC<AddStopModalProps> = ({ isOpen, onClose, onA
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
-      <div className="w-full sm:max-w-md bg-[#0f1422] border border-slate-800 rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden p-5 space-y-4">
+      <div className="w-full sm:max-w-md bg-[#0f1422] border border-slate-800 rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden p-5 pb-[max(1.25rem,calc(env(safe-area-inset-bottom)+1rem))] space-y-4">
         
         {/* Header */}
         <div className="flex items-center justify-between">

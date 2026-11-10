@@ -170,7 +170,7 @@ export const StopStoryViewer: React.FC<StopStoryViewerProps> = ({
     <div 
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      className="relative w-full h-[calc(100dvh-4.25rem)] overflow-hidden bg-slate-950 flex flex-col select-none"
+      className="relative w-full h-[calc(100dvh-max(4.25rem,calc(env(safe-area-inset-bottom)+3.5rem)))] overflow-hidden bg-slate-950 flex flex-col select-none"
     >
       
       {/* 1. SFONDO FOTOGRAFICO A TUTTO SCHERMO */}
@@ -183,14 +183,14 @@ export const StopStoryViewer: React.FC<StopStoryViewerProps> = ({
         }`}
       />
 
-      {/* GRADIENTE SUPERIORE (PER CONTRASTO HEADER E METEO) */}
-      <div className="absolute top-0 left-0 right-0 h-44 bg-gradient-to-b from-black/90 via-black/50 to-transparent pointer-events-none z-10" />
+      {/* GRADIENTE SUPERIORE (PER CONTRASTO DYNAMIC ISLAND, STATUS BAR & METEO) */}
+      <div className="absolute top-0 left-0 right-0 h-56 bg-gradient-to-b from-black/95 via-black/60 to-transparent pointer-events-none z-10" />
 
       {/* GRADIENTE INFERIORE (PER CONTRASTO TESTI E PULSANTI) */}
       <div className="absolute inset-x-0 bottom-0 h-4/5 bg-gradient-to-t from-[#0b0f19] via-[#0b0f19]/85 to-transparent pointer-events-none z-10" />
 
-      {/* 2. TOP OVERLAY: BARRE INSTAGRAM STORY + FLOATING BAR INTEGRATA */}
-      <div className="relative z-30 pt-2.5 px-3 space-y-2">
+      {/* 2. TOP OVERLAY: ADATTATO A DYNAMIC ISLAND & NOTCH */}
+      <div className="relative z-30 pt-[max(0.75rem,calc(env(safe-area-inset-top)+0.35rem))] px-3 space-y-2.5">
         
         {/* Barre di avanzamento Story (una per ogni tappa del giorno) */}
         <div className="flex items-center gap-1.5 px-0.5">
@@ -537,7 +537,7 @@ export const StopStoryViewer: React.FC<StopStoryViewerProps> = ({
       {isDayPickerOpen && (
         <div 
           onClick={() => setIsDayPickerOpen(false)}
-          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-end sm:items-center justify-center p-3 animate-fade-in"
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-end sm:items-center justify-center p-3 pb-[max(1rem,calc(env(safe-area-inset-bottom)+0.75rem))] animate-fade-in"
         >
           <div 
             onClick={(e) => e.stopPropagation()}
@@ -600,7 +600,7 @@ export const StopStoryViewer: React.FC<StopStoryViewerProps> = ({
       {isWeatherModalOpen && weather && (
         <div 
           onClick={() => setIsWeatherModalOpen(false)}
-          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-end sm:items-center justify-center p-3 animate-fade-in"
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-end sm:items-center justify-center p-3 pb-[max(1rem,calc(env(safe-area-inset-bottom)+0.75rem))] animate-fade-in"
         >
           <div 
             onClick={(e) => e.stopPropagation()}

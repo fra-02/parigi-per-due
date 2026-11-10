@@ -115,12 +115,13 @@ export const App: React.FC = () => {
   };
 
   const isStoryMode = activeTab === 'itinerary' && itineraryMode === 'story';
+  const isFullScreenView = isStoryMode || activeTab === 'map';
 
   return (
-    <div className={`min-h-screen bg-[#0b0f19] text-slate-100 flex flex-col font-sans ${isStoryMode ? 'overflow-hidden' : 'pb-24'} selection:bg-rose-500 selection:text-white`}>
+    <div className={`min-h-screen bg-[#0b0f19] text-slate-100 flex flex-col font-sans ${isFullScreenView ? 'overflow-hidden' : ''} selection:bg-rose-500 selection:text-white`}>
       
-      {/* Main Container - A Tutto Schermo in modalità Sfoglia, centrato e scrollabile nelle altre */}
-      <main className={`w-full flex-1 ${isStoryMode ? 'p-0 max-w-full' : 'max-w-2xl mx-auto px-3 pt-2.5'}`}>
+      {/* Main Container - A Tutto Schermo in modalità Sfoglia e Mappa, centrato e scrollabile con safe-area nelle altre */}
+      <main className={`w-full flex-1 ${isFullScreenView ? 'p-0 max-w-full' : 'max-w-2xl mx-auto px-3 pt-[max(0.85rem,calc(env(safe-area-inset-top)+0.5rem))] pb-[max(6rem,calc(env(safe-area-inset-bottom)+5.5rem))]'}`}>
         
         {/* TAB 1: ITINERARIO IN MODALITÀ SFOGLIA A TUTTO SCHERMO */}
         {activeTab === 'itinerary' && itineraryMode === 'story' && (
@@ -276,8 +277,8 @@ export const App: React.FC = () => {
 
       </main>
 
-      {/* Floating Bottom Navigation Tab Bar (4 TAB PERFETTE E SPAZIOSE) */}
-      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#0b0f19]/95 backdrop-blur-xl border-t border-slate-800/80 px-3 pt-2 pb-5">
+      {/* Floating Bottom Navigation Tab Bar (4 TAB PERFETTE E SPAZIOSE - SAFE AREA HOME INDICATOR) */}
+      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#0b0f19]/95 backdrop-blur-xl border-t border-slate-800/80 px-3 pt-2 pb-[max(1.25rem,calc(env(safe-area-inset-bottom)+0.35rem))]">
         <div className="max-w-md mx-auto grid grid-cols-4 gap-1">
           
           <button
