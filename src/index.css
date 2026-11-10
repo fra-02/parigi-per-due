@@ -48,3 +48,11 @@
 .glow-romantic {
   box-shadow: 0 0 25px -5px rgba(244, 63, 94, 0.25);
 }
+
+/* WebKit iOS Safari repaint & anti-ghosting fix */
+.webkit-repaint-fix {
+  -webkit-font-smoothing: antialiased;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}

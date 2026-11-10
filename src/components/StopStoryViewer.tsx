@@ -73,9 +73,17 @@ export const StopStoryViewer: React.FC<StopStoryViewerProps> = ({
   const [isWeatherModalOpen, setIsWeatherModalOpen] = useState<boolean>(false);
   const [weather, setWeather] = useState<WeatherData | null>(null);
 
-  // Touch swipe handling
+  // Touch swipe handling & scroll container ref
   const touchStartXRef = useRef<number | null>(null);
   const touchStartYRef = useRef<number | null>(null);
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+
+  // Reset scroll del testo quando si cambia tappa
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
+    }
+  }, [currentIndex]);
 
   // Caricamento meteo live per Parigi
   useEffect(() => {
@@ -170,7 +178,8 @@ export const StopStoryViewer: React.FC<StopStoryViewerProps> = ({
     <div 
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      className="relative w-full h-[calc(100dvh-max(4.25rem,calc(env(safe-area-inset-bottom)+3.5rem)))] overflow-hidden bg-slate-950 flex flex-col select-none"
+      style={{ touchAction: 'pan-y' }}
+      className="relative w-full h-[calc(100dvh-max(4.25rem,calc(env(safe-area-inset-bottom)+3.5rem)))] overflow-hidden bg-slate-950 flex flex-col select-none webkit-repaint-fix"
     >
       
       {/* 1. SFONDO FOTOGRAFICO A TUTTO SCHERMO */}
@@ -193,7 +202,7 @@ export const StopStoryViewer: React.FC<StopStoryViewerProps> = ({
       <div className="relative z-30 pt-[max(0.75rem,calc(env(safe-area-inset-top)+0.35rem))] px-3 space-y-2.5">
         
         {/* Barre di avanzamento Story (una per ogni tappa del giorno) */}
-        <div className="flex items-center gap-1.5 px-0.5">
+        <div className="flex items-center gap-1.5 px-0.5 webkit-repaint-fix">
           {stops.map((s, idx) => {
             const isDone = completedStops[s.id];
             const isCurrent = idx === currentIndex;
@@ -205,12 +214,12 @@ export const StopStoryViewer: React.FC<StopStoryViewerProps> = ({
                   setCurrentIndex(idx);
                   setIsExpanded(false);
                 }}
-                className="h-1.5 flex-1 rounded-full cursor-pointer transition-all duration-300 overflow-hidden bg-white/25 backdrop-blur-sm"
+                className="h-1.5 flex-1 rounded-full cursor-pointer overflow-hidden bg-white/20 webkit-repaint-fix"
               >
                 <div
-                  className={`h-full rounded-full transition-all duration-300 ${
+                  className={`h-full rounded-full transition-all duration-200 ${
                     isCurrent
-                      ? 'bg-gradient-to-r from-rose-400 to-amber-300 w-full shadow-sm shadow-amber-400'
+                      ? 'bg-gradient-to-r from-rose-400 to-amber-300 w-full'
                       : isDone
                       ? 'bg-emerald-400 w-full'
                       : idx < currentIndex
@@ -331,167 +340,175 @@ export const StopStoryViewer: React.FC<StopStoryViewerProps> = ({
       />
 
       {/* 4. CONTENUTO INFERIORE AMPIO E SUPER LEGGIBILE A TUTTO SCHERMO */}
-      <div className="relative z-30 mt-auto p-4 sm:p-5 space-y-3 max-h-[68vh] overflow-y-auto no-scrollbar">
+      <div 
+        ref={scrollContainerRef}
+        className="relative z-30 mt-auto p-4 sm:p-5 space-y-3 max-h-[68vh] overflow-y-auto no-scrollbar webkit-repaint-fix"
+      >
         
-        {/* Riga Badge: Numero Tappa + Orario + Fatto + Elimina se custom */}
-        <div className="flex items-center justify-between gap-2">
+        {/* Contenuto dinamico della tappa con chiave univoca per forzare il refresh DOM su Safari iOS */}
+        <div key={`${currentStop.id}-${currentIndex}`} className="space-y-3 animate-fade-in webkit-repaint-fix">
           
-          <div className="flex items-center gap-2">
-            <span className="px-3 py-1 rounded-full text-xs font-black bg-rose-500 text-white shadow-lg border border-white/20">
-              Tappa {currentIndex + 1} di {stops.length}
-            </span>
-
-            {currentStop.time && (
-              <span className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold backdrop-blur-md shadow-md ${
-                currentStop.isFixedTime
-                  ? 'bg-rose-500/90 text-white border border-rose-300 animate-pulse'
-                  : 'bg-black/70 text-slate-200 border border-white/20'
-              }`}>
-                <Clock className="w-3.5 h-3.5 text-amber-300" />
-                <span>{currentStop.time}</span>
-                {currentStop.isFixedTime && <span className="text-[9px] uppercase tracking-wider ml-0.5">• FISSO</span>}
+          {/* Riga Badge: Numero Tappa + Orario + Fatto + Elimina se custom */}
+          <div className="flex items-center justify-between gap-2">
+            
+            <div className="flex items-center gap-2">
+              <span className="px-3 py-1 rounded-full text-xs font-black bg-rose-500 text-white shadow-lg border border-white/20">
+                Tappa {currentIndex + 1} di {stops.length}
               </span>
+
+              {currentStop.time && (
+                <span className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold backdrop-blur-md shadow-md ${
+                  currentStop.isFixedTime
+                    ? 'bg-rose-500/90 text-white border border-rose-300 animate-pulse'
+                    : 'bg-black/70 text-slate-200 border border-white/20'
+                }`}>
+                  <Clock className="w-3.5 h-3.5 text-amber-300" />
+                  <span>{currentStop.time}</span>
+                  {currentStop.isFixedTime && <span className="text-[9px] uppercase tracking-wider ml-0.5">• FISSO</span>}
+                </span>
+              )}
+            </div>
+
+            <div className="flex items-center gap-1.5">
+              {/* Tasto Elimina per tappe custom aggiunte al volo */}
+              {currentStop.id.startsWith('custom-') && onDeleteStop && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (confirm('Vuoi rimuovere questa tappa aggiunta?')) {
+                      onDeleteStop(currentStop.id);
+                      if (currentIndex > 0) setCurrentIndex((i) => i - 1);
+                    }
+                  }}
+                  className="p-1.5 rounded-full bg-rose-600/90 hover:bg-rose-600 text-white shadow-lg active:scale-90 border border-rose-400"
+                  title="Elimina tappa aggiunta"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
+              )}
+
+              {/* Pulsante Spunta Fatto */}
+              <button
+                onClick={handleCheckboxClick}
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-black backdrop-blur-md transition-all active:scale-90 shadow-xl border ${
+                  isCompleted
+                    ? 'bg-emerald-500 text-slate-950 border-emerald-400 font-extrabold'
+                    : 'bg-black/70 text-white border-white/30 hover:border-white/50'
+                }`}
+              >
+                {isCompleted ? (
+                  <>
+                    <CheckCircle2 className="w-4 h-4 text-slate-950" />
+                    <span>Fatto! ✓</span>
+                  </>
+                ) : (
+                  <>
+                    <Circle className="w-4 h-4 text-slate-400" />
+                    <span>Segna fatto</span>
+                  </>
+                )}
+              </button>
+            </div>
+
+          </div>
+
+          {/* Titolo e Sottotitolo (Nitido e senza filtri drop-shadow che causano ghosting su Safari) */}
+          <div>
+            <h2 className={`text-2xl sm:text-3xl font-black text-white leading-tight ${
+              isCompleted ? 'line-through text-slate-400' : ''
+            }`}>
+              {currentStop.title}
+            </h2>
+            {currentStop.subtitle && (
+              <p className="text-xs sm:text-sm font-semibold text-amber-300 flex items-center gap-1.5 mt-1">
+                <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
+                <span>{currentStop.subtitle}</span>
+              </p>
             )}
           </div>
 
-          <div className="flex items-center gap-1.5">
-            {/* Tasto Elimina per tappe custom aggiunte al volo */}
-            {currentStop.id.startsWith('custom-') && onDeleteStop && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  if (confirm('Vuoi rimuovere questa tappa aggiunta?')) {
-                    onDeleteStop(currentStop.id);
-                    if (currentIndex > 0) setCurrentIndex((i) => i - 1);
-                  }
-                }}
-                className="p-1.5 rounded-full bg-rose-600/90 hover:bg-rose-600 text-white shadow-lg active:scale-90 border border-rose-400"
-                title="Elimina tappa aggiunta"
-              >
-                <Trash2 className="w-3.5 h-3.5" />
-              </button>
-            )}
+          {/* Chicca Romantica per Due */}
+          {currentStop.romanticTip && (
+            <div className="p-3 rounded-2xl bg-rose-950/60 border border-rose-500/40 text-xs sm:text-sm text-rose-100 flex items-start gap-2.5 backdrop-blur-md shadow-lg">
+              <Heart className="w-4 h-4 text-rose-400 shrink-0 mt-0.5 fill-rose-500/30" />
+              <div className="leading-relaxed">
+                <strong className="text-rose-300 font-bold">Momento per voi: </strong>
+                <span>{currentStop.romanticTip}</span>
+              </div>
+            </div>
+          )}
 
-            {/* Pulsante Spunta Fatto */}
-            <button
-              onClick={handleCheckboxClick}
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-black backdrop-blur-md transition-all active:scale-90 shadow-xl border ${
-                isCompleted
-                  ? 'bg-emerald-500 text-slate-950 border-emerald-400 font-extrabold'
-                  : 'bg-black/70 text-white border-white/30 hover:border-white/50'
-              }`}
-            >
-              {isCompleted ? (
-                <>
-                  <CheckCircle2 className="w-4 h-4 text-slate-950" />
-                  <span>Fatto! ✓</span>
-                </>
-              ) : (
-                <>
-                  <Circle className="w-4 h-4 text-slate-400" />
-                  <span>Segna fatto</span>
-                </>
+          {/* Descrizione Principale */}
+          <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
+            {currentStop.description}
+          </p>
+
+          {/* Box Dettagli / Biglietti / Under 26 (Espandibile se serve) */}
+          {isExpanded && (
+            <div className="p-3.5 rounded-2xl bg-slate-900/95 border border-slate-700 space-y-2.5 text-xs animate-fade-in shadow-2xl backdrop-blur-xl">
+              {currentStop.under26Info && (
+                <div className="text-emerald-300 flex items-start gap-1.5 font-semibold bg-emerald-950/40 p-2 rounded-xl border border-emerald-500/30">
+                  <Ticket className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <span><strong>Under 26 UE:</strong> {currentStop.under26Info}</span>
+                </div>
               )}
+              {currentStop.bookingUrl && (
+                <a
+                  href={currentStop.bookingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-2.5 px-3 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 font-bold flex items-center justify-center gap-1.5 transition-colors"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  <span>{currentStop.bookingLabel || 'Prenota / Info Ufficiali'}</span>
+                </a>
+              )}
+              {currentStop.address && (
+                <div className="text-slate-300 flex items-center gap-1.5 pt-1">
+                  <MapPin className="w-3.5 h-3.5 text-rose-400 shrink-0" />
+                  <span>{currentStop.address}</span>
+                </div>
+              )}
+              {currentStop.metroStop && (
+                <div className="text-slate-300 flex items-center gap-1.5">
+                  <Compass className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                  <span>Metro: <strong>{currentStop.metroStop}</strong></span>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* PULSANTI DI NAVIGAZIONE A PIEDI & METRO (Grandi e facili da premere col pollice) */}
+          <div className="pt-1 flex items-center gap-2">
+            <a
+              href={gmapsWalkingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 py-3 px-3 rounded-2xl bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-500 hover:to-sky-600 active:scale-95 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-xl shadow-sky-950/50"
+            >
+              <Navigation className="w-4 h-4 text-sky-200" />
+              <span>🚶 A piedi (Maps)</span>
+            </a>
+
+            <a
+              href={citymapperUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 py-3 px-3 rounded-2xl bg-[#288330] hover:bg-[#288330]/90 active:scale-95 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-xl shadow-emerald-950/50"
+            >
+              <Compass className="w-4 h-4 text-white" />
+              <span>🚇 Metro (Citymapper)</span>
+            </a>
+
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="p-3 rounded-2xl bg-black/60 hover:bg-black/80 backdrop-blur-md text-slate-200 border border-white/20 text-xs font-bold transition-all active:scale-95"
+              title="Dettagli e note"
+            >
+              {isExpanded ? <X className="w-4 h-4" /> : <Info className="w-4 h-4" />}
             </button>
           </div>
 
-        </div>
-
-        {/* Titolo e Sottotitolo (Grande e nitido) */}
-        <div>
-          <h2 className={`text-2xl sm:text-3xl font-black text-white leading-tight drop-shadow-lg ${
-            isCompleted ? 'line-through text-slate-400' : ''
-          }`}>
-            {currentStop.title}
-          </h2>
-          {currentStop.subtitle && (
-            <p className="text-xs sm:text-sm font-semibold text-amber-300 flex items-center gap-1.5 mt-1 drop-shadow">
-              <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
-              <span>{currentStop.subtitle}</span>
-            </p>
-          )}
-        </div>
-
-        {/* Chicca Romantica per Due */}
-        {currentStop.romanticTip && (
-          <div className="p-3 rounded-2xl bg-rose-950/60 border border-rose-500/40 text-xs sm:text-sm text-rose-100 flex items-start gap-2.5 backdrop-blur-md shadow-lg">
-            <Heart className="w-4 h-4 text-rose-400 shrink-0 mt-0.5 fill-rose-500/30" />
-            <div className="leading-relaxed">
-              <strong className="text-rose-300 font-bold">Momento per voi: </strong>
-              <span>{currentStop.romanticTip}</span>
-            </div>
-          </div>
-        )}
-
-        {/* Descrizione Principale */}
-        <p className="text-xs sm:text-sm text-slate-200 leading-relaxed drop-shadow-sm">
-          {currentStop.description}
-        </p>
-
-        {/* Box Dettagli / Biglietti / Under 26 (Espandibile se serve) */}
-        {isExpanded && (
-          <div className="p-3.5 rounded-2xl bg-slate-900/95 border border-slate-700 space-y-2.5 text-xs animate-fade-in shadow-2xl backdrop-blur-xl">
-            {currentStop.under26Info && (
-              <div className="text-emerald-300 flex items-start gap-1.5 font-semibold bg-emerald-950/40 p-2 rounded-xl border border-emerald-500/30">
-                <Ticket className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong>Under 26 UE:</strong> {currentStop.under26Info}</span>
-              </div>
-            )}
-            {currentStop.bookingUrl && (
-              <a
-                href={currentStop.bookingUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-2.5 px-3 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 font-bold flex items-center justify-center gap-1.5 transition-colors"
-              >
-                <ExternalLink className="w-4 h-4" />
-                <span>{currentStop.bookingLabel || 'Prenota / Info Ufficiali'}</span>
-              </a>
-            )}
-            {currentStop.address && (
-              <div className="text-slate-300 flex items-center gap-1.5 pt-1">
-                <MapPin className="w-3.5 h-3.5 text-rose-400 shrink-0" />
-                <span>{currentStop.address}</span>
-              </div>
-            )}
-            {currentStop.metroStop && (
-              <div className="text-slate-300 flex items-center gap-1.5">
-                <Compass className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span>Metro: <strong>{currentStop.metroStop}</strong></span>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* PULSANTI DI NAVIGAZIONE A PIEDI & METRO (Grandi e facili da premere col pollice) */}
-        <div className="pt-1 flex items-center gap-2">
-          <a
-            href={gmapsWalkingUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-1 py-3 px-3 rounded-2xl bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-500 hover:to-sky-600 active:scale-95 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-xl shadow-sky-950/50"
-          >
-            <Navigation className="w-4 h-4 text-sky-200" />
-            <span>🚶 A piedi (Maps)</span>
-          </a>
-
-          <a
-            href={citymapperUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-1 py-3 px-3 rounded-2xl bg-[#288330] hover:bg-[#288330]/90 active:scale-95 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-xl shadow-emerald-950/50"
-          >
-            <Compass className="w-4 h-4 text-white" />
-            <span>🚇 Metro (Citymapper)</span>
-          </a>
-
-          <button
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="p-3 rounded-2xl bg-black/60 hover:bg-black/80 backdrop-blur-md text-slate-200 border border-white/20 text-xs font-bold transition-all active:scale-95"
-            title="Dettagli e note"
-          >
-            {isExpanded ? <X className="w-4 h-4" /> : <Info className="w-4 h-4" />}
-          </button>
         </div>
 
         {/* Barra di Navigazione e Indicatori a Pallini */}
