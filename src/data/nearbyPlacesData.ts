@@ -22,9 +22,20 @@ export const NEARBY_PLACES: NearbyPlace[] = [
     neighborhood: 'Montmartre',
     coordinates: { lat: 48.8879, lng: 2.3398 },
     address: '2 Rue de l\'Abreuvoir, 75018 Paris',
-    description: 'La celebre casetta rosa all\'angolo tra Rue de l\'Abreuvoir e Rue des Saules, dipinta da Utrillo.',
-    tip: 'Scatto perfetto dall\'inizio di Rue de l\'Abreuvoir.',
+    description: 'La celebre casetta rosa all\'angolo tra Rue de l\'Abreuvoir e Rue des Saules, dipinta da Maurice Utrillo.',
+    tip: 'Scatto perfetto dall\'inizio della curva acciottolata di Rue de l\'Abreuvoir.',
     metro: 'Lamarck-Caulaincourt (M12)'
+  },
+  {
+    id: 'nb-montmartre-fred',
+    name: 'Aux Merveilleux de Fred (Montmartre)',
+    category: 'food',
+    neighborhood: 'Montmartre',
+    coordinates: { lat: 48.8837, lng: 2.3338 },
+    address: '2 Rue Lepic, 75018 Paris',
+    description: 'Il tempio del cramique al cioccolato: brioche soffice calda sfornata a vista tempestata di gocce di cioccolato.',
+    tip: 'Prendetene uno da dividere passeggiando tra le botteghe di Rue Lepic!',
+    metro: 'Blanche (M2) o Abbesses (M12)'
   },
   {
     id: 'nb-montmartre-2',
@@ -55,23 +66,34 @@ export const NEARBY_PLACES: NearbyPlace[] = [
     neighborhood: 'Montmartre',
     coordinates: { lat: 48.8826, lng: 2.3372 },
     address: '22 Bd de Clichy, 75018 Paris',
-    description: 'Il bouillon più trendy e amato di Parigi: piatti tradizionali francesi serviti velocemente a prezzi imbattibili.',
+    description: 'Il bouillon più trendy e amato di Parigi: piatti tradizionali francesi serviti velocemente a prezzi imbattibili (12-15€ a testa). Ottimi sciroppi e bevande analcoliche.',
     tip: 'Ottima zuppa di cipolle e profiterole gigante!',
     metro: 'Pigalle (M2, M12)'
   },
   {
     id: 'nb-montmartre-5',
-    name: 'Moulin Rouge (Vista Esterna & Brindisi)',
+    name: 'Moulin Rouge (Vista Esterna)',
     category: 'photo',
     neighborhood: 'Montmartre',
     coordinates: { lat: 48.8841, lng: 2.3323 },
     address: '82 Bd de Clichy, 75018 Paris',
-    description: 'Il cabaret più famoso del mondo con le sue pale rosse al neon che illuminano il viale.',
-    tip: 'Scattate la foto dal marciapiede opposto con le auto che passano.',
+    description: 'Il cabaret più famoso del mondo con le sue iconiche pale rosse al neon che illuminano il viale.',
+    tip: 'Scattate la foto dal marciapiede opposto con le luci serali accese.',
     metro: 'Blanche (M2)'
   },
 
-  // --- LE MARAIS & HOTEL DE VILLE ---
+  // --- LE MARAIS & JAZZ CHÂTELET ---
+  {
+    id: 'nb-marais-fred',
+    name: 'Aux Merveilleux de Fred (Marais)',
+    category: 'food',
+    neighborhood: 'Le Marais',
+    coordinates: { lat: 48.8550, lng: 2.3551 },
+    address: '24 Rue du Pont Louis-Philippe, 75004 Paris',
+    description: 'Boutique raffinata subito dopo Île Saint-Louis. Famosa per i cramique al cioccolato e i dolci merveilleux (meringa e panna).',
+    tip: 'Tappa perfetta per il secondo cramique del viaggio mercoledì pomeriggio!',
+    metro: 'Pont Marie (M7)'
+  },
   {
     id: 'nb-marais-1',
     name: 'Place des Vosges',
@@ -90,42 +112,31 @@ export const NEARBY_PLACES: NearbyPlace[] = [
     neighborhood: 'Le Marais',
     coordinates: { lat: 48.8576, lng: 2.3592 },
     address: '34 Rue des Rosiers, 75004 Paris',
-    description: 'Il falafel più celebre d\'Europa: pita ripiena di falafel croccanti, melanzane fritte e salsa tahina indimenticabile.',
-    tip: 'Prendetelo da asporto alla cassa esterna per evitare la fila al tavolo.',
+    description: 'Il falafel più celebre d\'Europa: pita calda ripiena di falafel croccanti, melanzane e salsa tahina a prezzi convenienti.',
+    tip: 'Prendetelo da asporto alla cassa esterna per evitare le attese.',
     metro: 'Saint-Paul (M1)'
   },
   {
-    id: 'nb-marais-3',
-    name: 'Carette a Place des Vosges',
-    category: 'food',
-    neighborhood: 'Le Marais',
-    coordinates: { lat: 48.8558, lng: 2.3662 },
-    address: '25 Place des Vosges, 75004 Paris',
-    description: 'Famosissimo per la cioccolata calda più densa e ricca di Parigi, servita con una ciotola di panna montata freschissima.',
-    tip: 'Perfetto per una merenda speciale dopo aver camminato al freddo!',
-    metro: 'Saint-Paul (M1)'
-  },
-  {
-    id: 'nb-marais-4',
-    name: 'Hôtel de Sully (Cortile Segreto)',
-    category: 'curiosity',
-    neighborhood: 'Le Marais',
-    coordinates: { lat: 48.8549, lng: 2.3638 },
-    address: '62 Rue Saint-Antoine, 75004 Paris',
-    description: 'Magnifico palazzo rinascimentale con un cortile interno segreto che permette di sbucare direttamente in Place des Vosges da una porticina!',
-    tip: 'Un passaggio romantico poco conosciuto dai turisti.',
-    metro: 'Saint-Paul (M1)'
-  },
-  {
-    id: 'nb-marais-5',
-    name: 'Villaggio Saint-Paul (Cour des Artisans)',
+    id: 'nb-jazz-duc',
+    name: 'Le Duc des Lombards (Jazz Club con posti a sedere)',
     category: 'romantic',
-    neighborhood: 'Le Marais',
-    coordinates: { lat: 48.8533, lng: 2.3615 },
-    address: 'Rue Saint-Paul, 75004 Paris',
-    description: 'Labirinto silenzioso di cortili collegati tra loro, con atelier di antiquari, gallerie d\'arte e fiori.',
-    tip: 'Un\'oasi di pace lontana dal traffico.',
-    metro: 'Pont Marie (M7) o Saint-Paul (M1)'
+    neighborhood: 'Châtelet & Pont Neuf',
+    coordinates: { lat: 48.8598, lng: 2.3486 },
+    address: '42 Rue des Lombards, 75001 Paris',
+    description: 'Il tempio del jazz parigino: club elegante e raccolto dove ascoltare musica dal vivo comodamente seduti al tavolo, con ottima acustica e servizio bar analcolico (mocktails d\'autore, tisane e succhi artigianali). A soli 6 min a piedi da Pont Neuf!',
+    tip: 'Consigliata la prenotazione del tavolo per il concerto delle 20:00 o delle 22:00.',
+    metro: 'Châtelet (M1, M4, M7, M11, M14)'
+  },
+  {
+    id: 'nb-jazz-sunset',
+    name: 'Sunset / Sunside Jazz Club',
+    category: 'romantic',
+    neighborhood: 'Châtelet & Pont Neuf',
+    coordinates: { lat: 48.8601, lng: 2.3482 },
+    address: '60 Rue des Lombards, 75001 Paris',
+    description: 'Storico jazz club con due sale intime con posti a sedere (Sunside al piano terra e Sunset nella suggestiva cantina a volta). Posti al tavolo e ottima atmosfera.',
+    tip: 'Sulla leggendaria Rue des Lombards, la via del jazz di Parigi.',
+    metro: 'Châtelet (M1, M4, M7, M11, M14)'
   },
 
   // --- ÎLE DE LA CITÉ & SENNA ---
@@ -136,8 +147,8 @@ export const NEARBY_PLACES: NearbyPlace[] = [
     neighborhood: 'Centro & Senna',
     coordinates: { lat: 48.8566, lng: 2.3427 },
     address: 'Place Dauphine, 75001 Paris',
-    description: 'Nascosta sulla punta dell\'Île de la Cité dietro il Palais de Justice. Piazza triangolare alberata e silenziosa, considerata tra le più romantiche di Francia.',
-    tip: 'Ottimo posto per sedersi su una panchina lontano dal caos del turismo di massa.',
+    description: 'Nascosta sulla punta dell\'Île de la Cité dietro il Palais de Justice. Piazza triangolare alberata e silenziosa, tra le più romantiche di Francia.',
+    tip: 'A due passi dall\'imbarco della crociera al Pont Neuf.',
     metro: 'Pont Neuf (M7)'
   },
   {
@@ -146,158 +157,127 @@ export const NEARBY_PLACES: NearbyPlace[] = [
     category: 'romantic',
     neighborhood: 'Centro & Senna',
     coordinates: { lat: 48.8574, lng: 2.3400 },
-    address: 'Square du Vert-Galant, 75001 Paris',
-    description: 'Il giardino a forma di prua di nave all\'estremità dell\'Île de la Cité, proprio sotto il Pont Neuf.',
-    tip: 'Da qui partono i battelli della crociera e la vista sui ponti e sul Louvre al tramonto è unica.',
+    address: 'Square du Vert-Galant, Pont Neuf, 75001 Paris',
+    description: 'Il giardino a forma di prua di nave all\'estremità dell\'Île de la Cité, proprio sotto il Pont Neuf da cui partono i battelli.',
+    tip: 'Vista incantevole sulla Senna al tramonto.',
     metro: 'Pont Neuf (M7)'
   },
   {
-    id: 'nb-cite-3',
-    name: 'Pont des Arts (Ponte Pedonale)',
-    category: 'photo',
+    id: 'nb-cite-bistro-augustins',
+    name: 'Le Bistro des Augustins (Pranzo Caldo)',
+    category: 'food',
     neighborhood: 'Centro & Senna',
-    coordinates: { lat: 48.8583, lng: 2.3375 },
-    address: 'Pont des Arts, 75006 Paris',
-    description: 'Il celebre ponte in legno e ferro pedonale che collega l\'Institut de France al Louvre.',
-    tip: 'Uno dei migliori punti panoramici sulla Senna per foto di coppia.',
-    metro: 'Louvre-Rivoli (M1) o Pont Neuf (M7)'
-  },
-  {
-    id: 'nb-cite-4',
-    name: 'Libreria Shakespeare and Company',
-    category: 'curiosity',
-    neighborhood: 'Centro & Senna',
-    coordinates: { lat: 48.8526, lng: 2.3471 },
-    address: '37 Rue de la Bûcherie, 75005 Paris',
-    description: 'La leggendaria libreria anglofona frequentata da Hemingway e Fitzgerald, proprio di fronte a Notre-Dame.',
-    tip: 'Salite al primo piano dove c\'è il pianoforte e la vista sulla cattedrale.',
+    coordinates: { lat: 48.8538, lng: 2.3435 },
+    address: '39 Quai des Grands Augustins, 75006 Paris',
+    description: 'Bistrot caloroso affacciato sulla Senna, celebre per i sontuosi gratin al formaggio caldi serviti in cocotte (comfort food a 12-14€) e accoglienza super.',
+    tip: 'Ideale per il pranzo del mercoledì dopo Notre-Dame.',
     metro: 'Saint-Michel (M4)'
   },
 
-  // --- SAINT-GERMAIN & QUARTIERE LATINO ---
+  // --- TUILERIES, CONCORDE & ORANGERIE ---
   {
-    id: 'nb-stgermain-1',
-    name: 'Rue de Buci (La Via Gastronomica)',
+    id: 'nb-orangerie-art',
+    name: 'Musée de l\'Orangerie (Le Ninfee di Monet)',
+    category: 'museum',
+    neighborhood: 'Concorde & Tuileries',
+    coordinates: { lat: 48.8638, lng: 2.3227 },
+    address: 'Jardin des Tuileries (lato Concorde), 75001 Paris',
+    description: 'Le due celebri sale ovali illuminate da luce naturale che ospitano gli 8 grandiosi pannelli delle Ninfee di Claude Monet. Gratuito Under 26 UE!',
+    tip: 'L\'esperienza artistica più intima e poetica di Parigi.',
+    metro: 'Concorde (M1, M8, M12)'
+  },
+  {
+    id: 'nb-champs-marche',
+    name: 'Mercatino di Natale degli Champs-Élysées',
     category: 'food',
-    neighborhood: 'Saint-Germain & Quartiere Latino',
-    coordinates: { lat: 48.8534, lng: 2.3364 },
-    address: 'Rue de Buci, 75006 Paris',
-    description: 'La via pedonale più vivace di Saint-Germain con café, forni, fiorai e bistrot con tavolini all\'aperto.',
-    tip: 'Perfetta per passeggiare e scegliere dove fermarsi a mangiare o prendere un dolce.',
-    metro: 'Mabillon (M10) o Odéon (M4/M10)'
+    neighborhood: 'Champs-Élysées',
+    coordinates: { lat: 48.8675, lng: 2.3135 },
+    address: 'Avenue des Champs-Élysées, 75008 Paris',
+    description: 'Il maestoso mercatino natalizio nella parte bassa del viale, dal Rond-Point a Place de la Concorde: chalet in legno, vin chaud, raclette e dolci.',
+    tip: 'Perfetto per cenare passeggiando tra le luminarie giovedì sera.',
+    metro: 'Champs-Élysées - Clemenceau (M1, M13) o Concorde'
   },
   {
-    id: 'nb-stgermain-2',
-    name: 'Café de Flore & Les Deux Magots',
-    category: 'food',
-    neighborhood: 'Saint-Germain & Quartiere Latino',
-    coordinates: { lat: 48.8542, lng: 2.3326 },
-    address: '172 Bd Saint-Germain, 75006 Paris',
-    description: 'I due caffè letterari più storici di Francia, ritrovo di Sartre, Simone de Beauvoir e Picasso.',
-    tip: 'Prendere un espresso o un cioccolato al banco o ai tavolini storici.',
-    metro: 'Saint-Germain-des-Prés (M4)'
-  },
-  {
-    id: 'nb-stgermain-3',
-    name: 'Place Saint-Sulpice & Fontana dei Quattro Vescovi',
-    category: 'curiosity',
-    neighborhood: 'Saint-Germain & Quartiere Latino',
-    coordinates: { lat: 48.8509, lng: 2.3340 },
-    address: 'Place Saint-Sulpice, 75006 Paris',
-    description: 'La grande chiesa di Saint-Sulpice resa celebre anche da Il Codice Da Vinci per la meridiana astronomica (Gnomone).',
-    tip: 'L\'interno della chiesa ospita due capolavori dipinti da Eugène Delacroix.',
-    metro: 'Saint-Sulpice (M4)'
-  },
-  {
-    id: 'nb-stgermain-4',
-    name: 'Caveau de la Huchette',
-    category: 'romantic',
-    neighborhood: 'Saint-Germain & Quartiere Latino',
-    coordinates: { lat: 48.8529, lng: 2.3458 },
-    address: '5 Rue de la Huchette, 75005 Paris',
-    description: 'Storico jazz club sotterraneo del Quartiere Latino (comparso anche nel film La La Land).',
-    tip: 'Musica jazz e swing dal vivo in un\'antica cantina medievale.',
-    metro: 'Saint-Michel (M4)'
+    id: 'nb-avenue-montaigne',
+    name: 'Avenue Montaigne (Vetrine Alta Moda)',
+    category: 'photo',
+    neighborhood: 'Champs-Élysées',
+    coordinates: { lat: 48.8661, lng: 2.3075 },
+    address: 'Avenue Montaigne, 75008 Paris',
+    description: 'Il viale parigino del lusso che a Natale diventa un bosco incantato con abeti illuminati e facciate scintillanti (Dior, Plaza Athénée).',
+    tip: 'La facciata della Maison Dior è un\'opera d\'arte natalizia da fotografare.',
+    metro: 'Alma - Marceau (M9)'
   },
 
   // --- TOUR EIFFEL & TROCADÉRO ---
   {
-    id: 'nb-eiffel-1',
-    name: 'Ponte Alessandro III (Pont Alexandre III)',
-    category: 'romantic',
-    neighborhood: 'Tour Eiffel & Ovest',
-    coordinates: { lat: 48.8638, lng: 2.3136 },
-    address: 'Pont Alexandre III, 75008 Paris',
-    description: 'Il ponte più sontuoso e scenografico di Parigi, in stile Beaux-Arts con candelabri dorati, ninfe e cavalli alati.',
-    tip: 'Lo scorcio con la Torre Eiffel sullo sfondo al tramonto è una cartolina pura.',
-    metro: 'Invalides (M8, M13) o Champs-Élysées-Clemenceau (M1)'
+    id: 'nb-trocadero-carette',
+    name: 'Carette Trocadéro (Cioccolata & Dolci)',
+    category: 'food',
+    neighborhood: 'Tour Eiffel & Trocadéro',
+    coordinates: { lat: 48.8632, lng: 2.2872 },
+    address: '4 Place du Trocadéro, 75016 Paris',
+    description: 'Pasticceria parigina storica sulla piazza del Trocadéro. Famosa per la cioccolata calda densa con ciotola di panna chantilly fresca.',
+    tip: 'Ideale per scaldarsi dopo aver ammirato lo scintillio della Torre al freddo!',
+    metro: 'Trocadéro (M6, M9)'
   },
   {
-    id: 'nb-eiffel-2',
-    name: 'Passerella Debilly (Vista Torre Eiffel Senza Folla)',
+    id: 'nb-eiffel-pont-iena',
+    name: 'Pont d\'Iéna & Banchina Senna',
     category: 'photo',
-    neighborhood: 'Tour Eiffel & Ovest',
-    coordinates: { lat: 48.8617, lng: 2.2968 },
-    address: 'Passerelle Debilly, 75007 Paris',
-    description: 'Passerella pedonale in ferro sulla Senna a pochi passi dalla Torre Eiffel, molto meno affollata del Pont d\'Iéna.',
-    tip: 'Perfetta per fare foto insieme alla Torre senza persone che vi urtano.',
-    metro: 'Alma-Marceau (M9) o Iéna (M9)'
-  },
-  {
-    id: 'nb-eiffel-3',
-    name: 'Rue Saint-Dominique (Scorcio Torre tra i Bistrot)',
-    category: 'photo',
-    neighborhood: 'Tour Eiffel & Ovest',
-    coordinates: { lat: 48.8587, lng: 2.3082 },
-    address: 'Rue Saint-Dominique, 75007 Paris',
-    description: 'La via tipica parigina da cui la Torre Eiffel spunta maestosa tra le facciate ottocentesche dei palazzi.',
-    tip: 'Scattate la foto all\'incrocio con Rue de l\'Exposition!',
-    metro: 'La Tour-Maubourg (M8)'
+    neighborhood: 'Tour Eiffel & Trocadéro',
+    coordinates: { lat: 48.8598, lng: 2.2932 },
+    address: 'Pont d\'Iéna, 75007 Paris',
+    description: 'Il ponte che collega i giardini del Trocadéro ai piedi della Torre Eiffel, con vista grandangolare dal basso verso l\'alto.',
+    tip: 'Passeggiate sul marciapiede pedonale per foto panoramiche senza salire sulla torre.',
+    metro: 'Bir-Hakeim (M6) o Iéna (M9)'
   },
 
-  // --- LOUVRE, OPÉRA & GRANDI MAGAZZINI ---
+  // --- LOUVRE, OPÉRA & JUNGLE PALACE ---
   {
-    id: 'nb-opera-1',
-    name: 'Palais Royal & Colonne di Buren',
-    category: 'photo',
-    neighborhood: 'Opéra & Grandi Magazzini',
-    coordinates: { lat: 48.8637, lng: 2.3371 },
-    address: '8 Rue de Montpensier, 75001 Paris',
-    description: 'Il cortile d\'onore del Palais Royal con le famose colonne a strisce bianche e nere di diverse altezze e i giardini silenziosi.',
-    tip: 'Divertitevi a salire sulle colonne per foto creative!',
-    metro: 'Palais Royal - Musée du Louvre (M1/M7)'
-  },
-  {
-    id: 'nb-opera-2',
-    name: 'Galeries Lafayette (Terrazza Panoramica Gratuita)',
+    id: 'nb-opera-printemps',
+    name: 'Printemps Haussmann & Galeries Lafayette',
     category: 'romantic',
     neighborhood: 'Opéra & Grandi Magazzini',
-    coordinates: { lat: 48.8737, lng: 2.3321 },
-    address: '40 Bd Haussmann, 75009 Paris',
-    description: 'Salite al 7° piano del grande magazzino per accedere alla terrazza panoramica all\'aperto con vista su Opéra e Torre Eiffel.',
-    tip: 'Accesso completamente gratuito, non serve consumare nulla!',
-    metro: 'Chaussée d\'Antin - La Fayette (M7/M9)'
+    coordinates: { lat: 48.8738, lng: 2.3283 },
+    address: '64 Bd Haussmann, 75009 Paris',
+    description: 'Le vetrine animate meccaniche di Printemps e la cupola con l\'albero gigante delle Galeries Lafayette: la massima espressione del Natale parigino.',
+    tip: 'La terrazza al 7° piano è aperta e gratuita se il meteo è favorevole.',
+    metro: 'Havre - Caumartin (M3, M9) o Chaussée d\'Antin (M7, M9)'
   },
   {
-    id: 'nb-opera-3',
-    name: 'Place Vendôme (I Gioiellieri & Gli Alberi di Natale)',
-    category: 'romantic',
-    neighborhood: 'Opéra & Grandi Magazzini',
-    coordinates: { lat: 48.8675, lng: 2.3294 },
-    address: 'Place Vendôme, 75001 Paris',
-    description: 'La piazza dell\'alta gioielleria e dell\'Hotel Ritz, dominata dalla colonna bronzea e decorata a dicembre con maestosi pini di Natale illuminati.',
-    tip: 'Un\'atmosfera elegante e magica soprattutto dopo le 17:30.',
-    metro: 'Tuileries (M1) o Madeleine (M8/M12/M14)'
-  },
-  {
-    id: 'nb-opera-4',
-    name: 'Cédric Grolet Opéra (Alta Pasticceria)',
+    id: 'nb-jungle-palace',
+    name: 'Jungle Palace (Ephemera)',
     category: 'food',
-    neighborhood: 'Opéra & Grandi Magazzini',
-    coordinates: { lat: 48.8687, lng: 2.3341 },
-    address: '35 Av. de l\'Opéra, 75002 Paris',
-    description: 'La pasticceria-boutique del pasticciere più virale e famoso del pianeta, noto per i dolci trompe-l\'œil a forma di frutta e croissant giganti.',
-    tip: 'Spesso c\'è fila, ma anche solo vedere le creazioni in vetrina è uno spettacolo.',
-    metro: 'Pyramides (M7/M14) o Opéra (M3/M7/M8)'
+    neighborhood: 'Grands Boulevards & 10°',
+    coordinates: { lat: 48.8757, lng: 2.3571 },
+    address: '12 Rue de la Fidélité, 75010 Paris',
+    description: 'Ristorante immersivo spettacolare con video mapping a 360°, suoni della foresta equatoriale e deliziosa cucina con ottimi mocktail analcolici.',
+    tip: 'La prenotazione per venerdì 11 alle 20:00 è il gran finale scenografico del viaggio!',
+    metro: 'Gare de l\'Est (M4, M5, M7) o Château d\'Eau (M4)'
+  },
+
+  // --- SAINT-GERMAIN & PIANO PIOGGIA ---
+  {
+    id: 'nb-bon-marche',
+    name: 'Le Bon Marché Rive Gauche',
+    category: 'romantic',
+    neighborhood: 'Saint-Germain',
+    coordinates: { lat: 48.8509, lng: 2.3256 },
+    address: '24 Rue de Sèvres, 75007 Paris',
+    description: 'Il tempio dell\'eleganza sulla Rive Gauche. A Natale le scale mobili centrali e i soffitti si riempiono di installazioni luminose poetiche al coperto.',
+    tip: 'Piano perfetto per giovedì pomeriggio in caso di pioggia battente.',
+    metro: 'Sèvres - Babylone (M10, M12)'
+  },
+  {
+    id: 'nb-orsay-antiquaires',
+    name: 'Les Antiquaires (Bistrot vicino a Orsay)',
+    category: 'food',
+    neighborhood: 'Saint-Germain & Orsay',
+    coordinates: { lat: 48.8577, lng: 2.3298 },
+    address: '36 Rue du Bac, 75007 Paris',
+    description: 'Autentico bistrot parigino a 3 minuti a piedi dal Musée d\'Orsay: velluti rossi, piatti caldi del giorno e atmosfera intima e raccolta.',
+    tip: 'Ottima sosta pranzo giovedì tra Orsay e la Torre.',
+    metro: 'Rue du Bac (M12)'
   }
 ];

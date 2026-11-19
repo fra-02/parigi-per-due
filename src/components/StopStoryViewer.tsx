@@ -23,7 +23,8 @@ import {
   Calendar,
   Plus,
   X,
-  Info
+  Info,
+  CloudRain
 } from 'lucide-react';
 
 interface StopStoryViewerProps {
@@ -473,6 +474,15 @@ export const StopStoryViewer: React.FC<StopStoryViewerProps> = ({
                 <div className="text-slate-300 flex items-center gap-1.5">
                   <Compass className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                   <span>Metro: <strong>{currentStop.metroStop}</strong></span>
+                </div>
+              )}
+              {currentDay.rainPlan && (
+                <div className="text-sky-300 flex items-start gap-1.5 font-medium bg-sky-950/40 p-2.5 rounded-xl border border-sky-500/30">
+                  <CloudRain className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
+                  <div className="leading-relaxed text-[11px]">
+                    <strong className="text-sky-200 block font-bold mb-0.5">Se piove forte oggi:</strong>
+                    <span>{currentDay.rainPlan}</span>
+                  </div>
                 </div>
               )}
             </div>

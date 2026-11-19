@@ -14,7 +14,10 @@ import {
   ChevronDown, 
   ChevronUp, 
   AlertCircle,
-  PhoneCall
+  PhoneCall,
+  Music,
+  UtensilsCrossed,
+  Compass
 } from 'lucide-react';
 
 interface NoteItem {
@@ -28,27 +31,41 @@ interface NoteItem {
 const DEFAULT_NOTES: NoteItem[] = [
   {
     id: 'note-1',
-    text: '🎁 Macarons da Ladurée o Pierre Hermé per mamma',
-    category: 'gift',
+    text: '🥐 Provare il Cramique al cioccolato da Aux Merveilleux de Fred (2 Rue Lepic o 24 Rue du Pont Louis-Philippe)',
+    category: 'todo',
     isDone: false,
-    createdAt: 'Pre-viaggio'
+    createdAt: 'Dolce iconico'
   },
   {
     id: 'note-2',
-    text: '🏰 Cerchietto con orecchie a Disneyland Paris',
+    text: '🎷 Serata Jazz Mercoledì sera: Le Duc des Lombards (42 Rue des Lombards - seduti al tavolo con mocktail)',
+    category: 'todo',
+    isDone: false,
+    createdAt: 'Mercoledì sera'
+  },
+  {
+    id: 'note-3',
+    text: '🏛️ Louvre: Saloni Napoleone III (ala Richelieu) prima di Amore e Psiche e Gioconda',
+    category: 'memo',
+    isDone: false,
+    createdAt: 'Venerdì mattina'
+  },
+  {
+    id: 'note-4',
+    text: '🌺 Cena immersiva Jungle Palace alle 20:00 (12 Rue de la Fidélité)',
+    category: 'memo',
+    isDone: false,
+    createdAt: 'Venerdì sera'
+  },
+  {
+    id: 'note-5',
+    text: '🏰 Cerchietto natalizio con orecchie a Disneyland Paris',
     category: 'gift',
     isDone: false,
     createdAt: 'Anniversario'
   },
   {
-    id: 'note-3',
-    text: '🗝️ Codice portone hotel / Numero camera: (scrivi qui)',
-    category: 'memo',
-    isDone: false,
-    createdAt: 'Check-in'
-  },
-  {
-    id: 'note-4',
+    id: 'note-6',
     text: '📸 Foto bacio romantico al tramonto con la Torre Eiffel che scintilla',
     category: 'memory',
     isDone: false,
@@ -62,6 +79,7 @@ export const NotesView: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<'todo' | 'gift' | 'memo' | 'memory'>('todo');
   const [filterCategory, setFilterCategory] = useState<string>('all');
   const [showTips, setShowTips] = useState<boolean>(false);
+  const [showDecisions, setShowDecisions] = useState<boolean>(false);
 
   // Caricamento da localStorage
   useEffect(() => {
@@ -340,6 +358,95 @@ export const NotesView: React.FC = () => {
               <p className="text-[11px] text-slate-300">
                 Numero Unico Europeo: <strong>112</strong> • Consolato Generale d'Italia a Parigi: <strong>+33 1 44 30 47 00</strong>
               </p>
+            </div>
+
+          </div>
+        )}
+      </div>
+
+      {/* SEZIONE GUIDA SCELTE: RISTORANTI, JAZZ & SAINT-GERMAIN (A SCOMPARSA) */}
+      <div className="pt-1">
+        <button
+          onClick={() => setShowDecisions(!showDecisions)}
+          className="w-full p-3.5 rounded-2xl bg-gradient-to-r from-amber-950/30 via-slate-900 to-slate-900 border border-amber-500/30 flex items-center justify-between text-left transition-all active:scale-98 shadow-md"
+        >
+          <div className="flex items-center gap-2">
+            <Compass className="w-4 h-4 text-amber-400" />
+            <div>
+              <h4 className="text-xs font-bold text-white">🧭 Guida Scelte: Ristoranti, Jazz & Saint-Germain</h4>
+              <p className="text-[10px] text-amber-300/80">I consigli su misura senza attraversare la città</p>
+            </div>
+          </div>
+          {showDecisions ? <ChevronUp className="w-4 h-4 text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
+        </button>
+
+        {showDecisions && (
+          <div className="mt-2.5 p-4 rounded-2xl bg-slate-900/95 border border-slate-800 space-y-3.5 text-xs text-slate-300 animate-fade-in shadow-xl">
+            
+            {/* 1. Jazz Club con Posti a Sedere & Mocktail */}
+            <div className="space-y-1.5 border-b border-slate-800 pb-3">
+              <span className="font-bold text-amber-300 flex items-center gap-1.5">
+                <Music className="w-3.5 h-3.5 text-amber-400" />
+                Mercoledì Sera Jazz: Le Duc des Lombards (Châtelet)
+              </span>
+              <p className="text-[11px] text-slate-300 leading-relaxed">
+                Dopo la crociera a Pont Neuf, evitate i jazz club caotici in cantina dove si sta in piedi. A soli <strong>6 minuti a piedi da Pont Neuf</strong> c'è <strong>Le Duc des Lombards (42 Rue des Lombards)</strong>:
+              </p>
+              <ul className="list-disc list-inside text-[11px] text-slate-300 space-y-0.5">
+                <li>Si ascolta musica <strong>comodamente seduti al tavolo</strong> in un'atmosfera elegante e raccolta.</li>
+                <li>Hanno ottimi <strong>mocktail analcolici</strong>, succhi freschi e tè caldi.</li>
+                <li>In alternativa, sulla stessa via c'è lo storico <strong>Sunset/Sunside (60 Rue des Lombards)</strong>.</li>
+              </ul>
+            </div>
+
+            {/* 2. Ristoranti quotidiani convenienti e senza alcol */}
+            <div className="space-y-1.5 border-b border-slate-800 pb-3">
+              <span className="font-bold text-rose-300 flex items-center gap-1.5">
+                <UtensilsCrossed className="w-3.5 h-3.5 text-rose-400" />
+                Ristoranti Quotidiani Convenienti lungo il percorso:
+              </span>
+              <ul className="list-disc list-inside text-[11px] text-slate-300 space-y-1">
+                <li>
+                  <strong>Lunedì sera (Montmartre/Pigalle):</strong> <em>Bouillon Pigalle</em> (22 Bd de Clichy) — piatti francesi caldi a 10-14€ a testa, purée maison sublime, carafe d'eau gratis e sciroppi francesi analcolici (menta, granatina).
+                </li>
+                <li>
+                  <strong>Mercoledì pranzo (Quartiere Latino):</strong> <em>Le Bistro des Augustins</em> (Quai des Grands Augustins) per i leggendari gratin caldi al formaggio in cocotte a 12€, o una crêperie bretone.
+                </li>
+                <li>
+                  <strong>Giovedì pranzo (vicino a Orsay):</strong> <em>Les Antiquaires</em> (Rue du Bac a 3 min dal museo) con piatti del giorno caldi, oppure il <em>Café Campana</em> direttamente dentro il museo dietro l'orologio.
+                </li>
+                <li>
+                  <strong>Giovedì sera (Champs-Élysées):</strong> Stand del mercatino natalizio degli Champs-Élysées (raclette calda, crêpe e zuppe fumanti) per mangiare passeggiando tra le luminarie.
+                </li>
+                <li>
+                  <strong>Venerdì sera (Cena speciale):</strong> <em>Jungle Palace</em> (12 Rue de la Fidélité) ore 20:00 — la cena immersiva nella giungla con mocktail botanici spettacolari.
+                </li>
+              </ul>
+            </div>
+
+            {/* 3. Scelta Marais vs Saint-Germain */}
+            <div className="space-y-1.5">
+              <span className="font-bold text-sky-300 flex items-center gap-1.5">
+                <Compass className="w-3.5 h-3.5 text-sky-400" />
+                Mercoledì pomeriggio: Come scegliere tra Marais e Saint-Germain?
+              </span>
+              <p className="text-[11px] text-slate-300 leading-relaxed">
+                Non dovete farli entrambi per forza! Decidete in base a cosa vi ispira sul momento:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                <div className="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800">
+                  <strong className="text-amber-200 block text-xs mb-1">🏰 Opzione A: Le Marais</strong>
+                  <p className="text-[10px] text-slate-300 leading-relaxed">
+                    Vicoli acciottolati medievali, storia ebraica di Rue des Rosiers, Place des Vosges e sosta comoda per il cramique da Fred a Rue du Pont Louis-Philippe.
+                  </p>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800">
+                  <strong className="text-purple-200 block text-xs mb-1">☕ Opzione B: Saint-Germain</strong>
+                  <p className="text-[10px] text-slate-300 leading-relaxed">
+                    Caffè storici (Café de Flore, Deux Magots), mercatino di Natale raccolto accanto alla chiesa abbaziale, cioccolaterie e librerie vintage.
+                  </p>
+                </div>
+              </div>
             </div>
 
           </div>

@@ -19,7 +19,8 @@ import {
   ChevronRight, 
   Plus, 
   Layers,
-  Footprints
+  Footprints,
+  CloudRain
 } from 'lucide-react';
 
 export const App: React.FC = () => {
@@ -186,6 +187,27 @@ export const App: React.FC = () => {
               }}
               completedStops={completedStops}
             />
+
+            {/* Scheda Sintesi del Giorno & Piano Pioggia */}
+            <div className="p-4 rounded-3xl bg-slate-900/90 border border-slate-800 space-y-2 shadow-lg backdrop-blur-md">
+              <div className="flex items-center justify-between gap-2">
+                <h4 className="text-sm font-black text-white">{currentDay.title}</h4>
+                <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-amber-300 border border-slate-700 shrink-0">
+                  {currentDay.badge}
+                </span>
+              </div>
+              <p className="text-xs text-amber-300 font-semibold">{currentDay.tagline}</p>
+              <p className="text-xs text-slate-300 leading-relaxed">{currentDay.summary}</p>
+              {currentDay.rainPlan && (
+                <div className="mt-2 p-2.5 rounded-2xl bg-sky-950/40 border border-sky-500/25 text-xs text-sky-200 flex items-start gap-2 shadow-sm">
+                  <CloudRain className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
+                  <div className="leading-relaxed text-[11px]">
+                    <strong className="text-sky-300 font-bold block mb-0.5">Se piove forte oggi:</strong>
+                    <span>{currentDay.rainPlan}</span>
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* Lista delle Tappe */}
             <div className="space-y-3">
