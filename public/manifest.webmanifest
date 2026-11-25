@@ -1,15 +1,17 @@
 {
-  "name": "Parigi per Due - Itinerario Romantico",
-  "short_name": "Parigi ❤️",
-  "description": "Itinerario smart e veloce per Parigi: metro, orari, tappe e Citymapper per due",
-  "start_url": "/",
+  "name": "Paris à deux — Six jours, deux cœurs, mille souvenirs.",
+  "short_name": "Paris à deux",
+  "description": "Guida personale e offline per una coppia a Parigi dal 7 al 12 dicembre 2026.",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#0b0f19",
-  "theme_color": "#0b0f19",
+  "background_color": "#FAF7F2",
+  "theme_color": "#7A1E2E",
   "orientation": "portrait-primary",
+  "lang": "it",
   "icons": [
     {
-      "src": "/eiffel.svg",
+      "src": "./eiffel.svg",
       "sizes": "192x192 512x512",
       "type": "image/svg+xml",
       "purpose": "any maskable"

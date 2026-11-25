@@ -1,0 +1,1853 @@
+{
+  "title": "Paris à deux",
+  "timezone": "Europe/Paris",
+  "currency": "EUR",
+  "travelers": 2,
+  "budgetTarget": {
+    "min": 400,
+    "max": 500,
+    "scope": "spese residue per due; costi già pagati esclusi, Navigo da includere se non acquistato"
+  },
+  "days": [
+    {
+      "date": "2026-12-07",
+      "title": "Arrivo a Montmartre",
+      "activities": [
+        {
+          "name": "Aéroport Beauvais",
+          "address": "Aéroport Paris Beauvais, Tillé",
+          "maps": "https://www.google.com/maps/search/?api=1&query=A%C3%A9roport%20Beauvais%20A%C3%A9roport%20Paris%20Beauvais%2C%20Till%C3%A9",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=A%C3%A9roport%20Beauvais%20A%C3%A9roport%20Paris%20Beauvais%2C%20Till%C3%A9&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=A%C3%A9roport%20Beauvais%20A%C3%A9roport%20Paris%20Beauvais%2C%20Till%C3%A9&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=A%C3%A9roport%20Beauvais&endaddress=A%C3%A9roport%20Paris%20Beauvais%2C%20Till%C3%A9",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Aéroport Beauvais Aéroport Paris Beauvais, Tillé",
+            "url": null,
+            "license": null
+          },
+          "id": "d1-1",
+          "time": "12:50",
+          "description": "Atterraggio; controlli e bagagli.",
+          "weather": "mixed",
+          "status": "confirmed",
+          "durationMinutes": 60,
+          "timeStatus": "user_confirmed"
+        },
+        {
+          "name": "Aérobus A01",
+          "address": "Aéroport Paris Beauvais, Tillé",
+          "maps": "https://www.google.com/maps/search/?api=1&query=A%C3%A9robus%20A01%20A%C3%A9roport%20Paris%20Beauvais%2C%20Till%C3%A9",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=A%C3%A9robus%20A01%20A%C3%A9roport%20Paris%20Beauvais%2C%20Till%C3%A9&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=A%C3%A9robus%20A01%20A%C3%A9roport%20Paris%20Beauvais%2C%20Till%C3%A9&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=A%C3%A9robus%20A01&endaddress=A%C3%A9roport%20Paris%20Beauvais%2C%20Till%C3%A9",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Aérobus A01 Aéroport Paris Beauvais, Tillé",
+            "url": null,
+            "license": null
+          },
+          "id": "d1-2",
+          "time": "15:00",
+          "description": "Navetta prenotata verso Porte Maillot; chiedere se possibile anticipare, non garantito.",
+          "weather": "indoor",
+          "status": "confirmed",
+          "durationMinutes": 90,
+          "timeStatus": "user_confirmed"
+        },
+        {
+          "name": "Hôtel Jardins de Montmartre",
+          "address": "131 Rue Ordener, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=H%C3%B4tel%20Jardins%20de%20Montmartre%20131%20Rue%20Ordener%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=H%C3%B4tel%20Jardins%20de%20Montmartre%20131%20Rue%20Ordener%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=H%C3%B4tel%20Jardins%20de%20Montmartre%20131%20Rue%20Ordener%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=H%C3%B4tel%20Jardins%20de%20Montmartre&endaddress=131%20Rue%20Ordener%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Hôtel Jardins de Montmartre 131 Rue Ordener, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d1-3",
+          "time": "17:15",
+          "description": "Check-in; arrivo stimato 17–18, non contare sul tramonto.",
+          "weather": "indoor",
+          "status": "planned",
+          "durationMinutes": 30,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Place Dalida",
+          "address": "Place Dalida, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Place%20Dalida%20Place%20Dalida%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Place%20Dalida%20Place%20Dalida%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Place%20Dalida%20Place%20Dalida%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Place%20Dalida&endaddress=Place%20Dalida%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Place Dalida Place Dalida, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d1-4",
+          "time": "18:00",
+          "description": "Scorcio romantico verso rue de l’Abreuvoir; facoltativo.",
+          "weather": "outdoor",
+          "status": "optional",
+          "durationMinutes": 10,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "La Maison Rose",
+          "address": "2 Rue de l’Abreuvoir, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=La%20Maison%20Rose%202%20Rue%20de%20l%E2%80%99Abreuvoir%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=La%20Maison%20Rose%202%20Rue%20de%20l%E2%80%99Abreuvoir%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=La%20Maison%20Rose%202%20Rue%20de%20l%E2%80%99Abreuvoir%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=La%20Maison%20Rose&endaddress=2%20Rue%20de%20l%E2%80%99Abreuvoir%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "La Maison Rose 2 Rue de l’Abreuvoir, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d1-5",
+          "time": "18:15",
+          "description": "Facciata rosa e persiane verdi; foto dall’esterno.",
+          "weather": "outdoor",
+          "status": "optional",
+          "durationMinutes": 10,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Sacré-Cœur",
+          "address": "35 Rue du Chevalier de la Barre, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Sacr%C3%A9-C%C5%93ur%2035%20Rue%20du%20Chevalier%20de%20la%20Barre%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Sacr%C3%A9-C%C5%93ur%2035%20Rue%20du%20Chevalier%20de%20la%20Barre%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Sacr%C3%A9-C%C5%93ur%2035%20Rue%20du%20Chevalier%20de%20la%20Barre%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Sacr%C3%A9-C%C5%93ur&endaddress=35%20Rue%20du%20Chevalier%20de%20la%20Barre%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Sacré-Cœur 35 Rue du Chevalier de la Barre, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d1-6",
+          "time": "18:30",
+          "description": "Basilica bianca sulla collina; mosaico e panorama, ingresso basilica gratuito.",
+          "weather": "mixed",
+          "status": "planned",
+          "durationMinutes": 35,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Moulin de la Galette",
+          "address": "83 Rue Lepic, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Moulin%20de%20la%20Galette%2083%20Rue%20Lepic%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Moulin%20de%20la%20Galette%2083%20Rue%20Lepic%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Moulin%20de%20la%20Galette%2083%20Rue%20Lepic%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Moulin%20de%20la%20Galette&endaddress=83%20Rue%20Lepic%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Moulin de la Galette 83 Rue Lepic, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d1-7",
+          "time": "19:10",
+          "description": "Antico mulino legato alla storia artistica del quartiere; esterno.",
+          "weather": "outdoor",
+          "status": "optional",
+          "durationMinutes": 10,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Alexine",
+          "address": "40 Rue Lepic, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Alexine%2040%20Rue%20Lepic%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Alexine%2040%20Rue%20Lepic%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Alexine%2040%20Rue%20Lepic%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Alexine&endaddress=40%20Rue%20Lepic%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Alexine 40 Rue Lepic, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d1-8",
+          "time": "19:20",
+          "description": "Boulangerie: flan, éclair, pain au chocolat; sede e orari da verificare.",
+          "weather": "indoor",
+          "status": "optional",
+          "durationMinutes": 15,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Abbesses",
+          "address": "Place des Abbesses, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Abbesses%20Place%20des%20Abbesses%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Abbesses%20Place%20des%20Abbesses%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Abbesses%20Place%20des%20Abbesses%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Abbesses&endaddress=Place%20des%20Abbesses%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Abbesses Place des Abbesses, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d1-9",
+          "time": "19:40",
+          "description": "Quartiere vivace, ingresso metro Art Nouveau.",
+          "weather": "outdoor",
+          "status": "optional",
+          "durationMinutes": 10,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Moulin Rouge",
+          "address": "82 Boulevard de Clichy, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Moulin%20Rouge%2082%20Boulevard%20de%20Clichy%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Moulin%20Rouge%2082%20Boulevard%20de%20Clichy%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Moulin%20Rouge%2082%20Boulevard%20de%20Clichy%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Moulin%20Rouge&endaddress=82%20Boulevard%20de%20Clichy%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Moulin Rouge 82 Boulevard de Clichy, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d1-10",
+          "time": "19:55",
+          "description": "Storico cabaret, fotografia esterna senza spettacolo.",
+          "weather": "outdoor",
+          "status": "optional",
+          "durationMinutes": 10,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Bouillon Pigalle",
+          "address": "22 Boulevard de Clichy, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Bouillon%20Pigalle%2022%20Boulevard%20de%20Clichy%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Bouillon%20Pigalle%2022%20Boulevard%20de%20Clichy%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Bouillon%20Pigalle%2022%20Boulevard%20de%20Clichy%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Bouillon%20Pigalle&endaddress=22%20Boulevard%20de%20Clichy%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Bouillon Pigalle 22 Boulevard de Clichy, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d1-11",
+          "time": "20:15",
+          "description": "Cena francese accessibile; alternative sotto.",
+          "weather": "indoor",
+          "status": "optional",
+          "durationMinutes": 60,
+          "timeStatus": "indicative"
+        }
+      ],
+      "transport": "A01 verso Porte Maillot (fermata effettiva sul voucher); metro 1 direzione Château de Vincennes fino a Concorde, metro 12 Mairie d’Aubervilliers fino a Jules Joffrin.",
+      "rain": {
+        "light": "Accorciare la camminata, basilica e cena",
+        "heavy": "Basilica se raggiungibile, cena al chiuso; recuperare Montmartre sabato"
+      },
+      "nearby": [
+        {
+          "name": "Villa Léandre",
+          "address": "Villa Léandre, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Villa%20L%C3%A9andre%20Villa%20L%C3%A9andre%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Villa%20L%C3%A9andre%20Villa%20L%C3%A9andre%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Villa%20L%C3%A9andre%20Villa%20L%C3%A9andre%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Villa%20L%C3%A9andre&endaddress=Villa%20L%C3%A9andre%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Villa Léandre Villa Léandre, Paris",
+            "url": null,
+            "license": null
+          }
+        },
+        {
+          "name": "Place du Tertre",
+          "address": "Place du Tertre, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Place%20du%20Tertre%20Place%20du%20Tertre%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Place%20du%20Tertre%20Place%20du%20Tertre%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Place%20du%20Tertre%20Place%20du%20Tertre%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Place%20du%20Tertre&endaddress=Place%20du%20Tertre%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Place du Tertre Place du Tertre, Paris",
+            "url": null,
+            "license": null
+          }
+        },
+        {
+          "name": "Musée de Montmartre",
+          "address": "12 Rue Cortot, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Mus%C3%A9e%20de%20Montmartre%2012%20Rue%20Cortot%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Mus%C3%A9e%20de%20Montmartre%2012%20Rue%20Cortot%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Mus%C3%A9e%20de%20Montmartre%2012%20Rue%20Cortot%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Mus%C3%A9e%20de%20Montmartre&endaddress=12%20Rue%20Cortot%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Musée de Montmartre 12 Rue Cortot, Paris",
+            "url": null,
+            "license": null
+          }
+        }
+      ],
+      "foodIdeas": [
+        "Bouillon Pigalle: 35–48 € in due; zuppa cipolle, bourguignon, crème brûlée",
+        "Le Relais Gascon: 40–65 € in due",
+        "Le Ruisseau: 30–45 € in due, hamburger"
+      ]
+    },
+    {
+      "date": "2026-12-08",
+      "title": "Anniversario Disney",
+      "activities": [
+        {
+          "name": "Hôtel Jardins de Montmartre",
+          "address": "131 Rue Ordener, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=H%C3%B4tel%20Jardins%20de%20Montmartre%20131%20Rue%20Ordener%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=H%C3%B4tel%20Jardins%20de%20Montmartre%20131%20Rue%20Ordener%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=H%C3%B4tel%20Jardins%20de%20Montmartre%20131%20Rue%20Ordener%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=H%C3%B4tel%20Jardins%20de%20Montmartre&endaddress=131%20Rue%20Ordener%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Hôtel Jardins de Montmartre 131 Rue Ordener, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d2-1",
+          "time": "07:00",
+          "description": "Partenza per Disneyland; colazione da asporto.",
+          "weather": "indoor",
+          "status": "planned",
+          "durationMinutes": 15,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Disneyland Park",
+          "address": "Disneyland Park, Chessy, France",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Disneyland%20Park%20Disneyland%20Park%2C%20Chessy%2C%20France",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Disneyland%20Park%20Disneyland%20Park%2C%20Chessy%2C%20France&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Disneyland%20Park%20Disneyland%20Park%2C%20Chessy%2C%20France&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Disneyland%20Park&endaddress=Disneyland%20Park%2C%20Chessy%2C%20France",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Disneyland Park Disneyland Park, Chessy, France",
+            "url": null,
+            "license": null
+          },
+          "id": "d2-2",
+          "time": "09:00",
+          "description": "Solo primo parco; prima visita e anniversario. Apertura da riconfermare.",
+          "weather": "mixed",
+          "status": "confirmed",
+          "durationMinutes": 720,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Peter Pan’s Flight",
+          "address": "Peter Pan’s Flight, Disneyland Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Peter%20Pan%E2%80%99s%20Flight%20Peter%20Pan%E2%80%99s%20Flight%2C%20Disneyland%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Peter%20Pan%E2%80%99s%20Flight%20Peter%20Pan%E2%80%99s%20Flight%2C%20Disneyland%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Peter%20Pan%E2%80%99s%20Flight%20Peter%20Pan%E2%80%99s%20Flight%2C%20Disneyland%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Peter%20Pan%E2%80%99s%20Flight&endaddress=Peter%20Pan%E2%80%99s%20Flight%2C%20Disneyland%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Peter Pan’s Flight Peter Pan’s Flight, Disneyland Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d2-3",
+          "time": "09:10",
+          "description": "Volo fiabesco su Londra e Neverland; priorità appena aperto.",
+          "weather": "indoor",
+          "status": "planned",
+          "durationMinutes": 45,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "It’s a Small World",
+          "address": "It’s a Small World, Disneyland Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=It%E2%80%99s%20a%20Small%20World%20It%E2%80%99s%20a%20Small%20World%2C%20Disneyland%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=It%E2%80%99s%20a%20Small%20World%20It%E2%80%99s%20a%20Small%20World%2C%20Disneyland%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=It%E2%80%99s%20a%20Small%20World%20It%E2%80%99s%20a%20Small%20World%2C%20Disneyland%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=It%E2%80%99s%20a%20Small%20World&endaddress=It%E2%80%99s%20a%20Small%20World%2C%20Disneyland%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "It’s a Small World It’s a Small World, Disneyland Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d2-4",
+          "time": "10:00",
+          "description": "Barche e personaggi dei diversi paesi.",
+          "weather": "indoor",
+          "status": "optional",
+          "durationMinutes": 30,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Castello della Bella Addormentata",
+          "address": "Le Château de la Belle au Bois Dormant, Disneyland Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Castello%20della%20Bella%20Addormentata%20Le%20Ch%C3%A2teau%20de%20la%20Belle%20au%20Bois%20Dormant%2C%20Disneyland%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Castello%20della%20Bella%20Addormentata%20Le%20Ch%C3%A2teau%20de%20la%20Belle%20au%20Bois%20Dormant%2C%20Disneyland%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Castello%20della%20Bella%20Addormentata%20Le%20Ch%C3%A2teau%20de%20la%20Belle%20au%20Bois%20Dormant%2C%20Disneyland%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Castello%20della%20Bella%20Addormentata&endaddress=Le%20Ch%C3%A2teau%20de%20la%20Belle%20au%20Bois%20Dormant%2C%20Disneyland%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Castello della Bella Addormentata Le Château de la Belle au Bois Dormant, Disneyland Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d2-5",
+          "time": "10:40",
+          "description": "Galleria con arazzi e vetrate; drago animatronico sotto il castello.",
+          "weather": "mixed",
+          "status": "planned",
+          "durationMinutes": 40,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Pirates of the Caribbean",
+          "address": "Pirates of the Caribbean, Disneyland Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Pirates%20of%20the%20Caribbean%20Pirates%20of%20the%20Caribbean%2C%20Disneyland%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Pirates%20of%20the%20Caribbean%20Pirates%20of%20the%20Caribbean%2C%20Disneyland%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Pirates%20of%20the%20Caribbean%20Pirates%20of%20the%20Caribbean%2C%20Disneyland%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Pirates%20of%20the%20Caribbean&endaddress=Pirates%20of%20the%20Caribbean%2C%20Disneyland%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Pirates of the Caribbean Pirates of the Caribbean, Disneyland Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d2-6",
+          "time": "11:30",
+          "description": "Barca tra pirati e scenografie; piccole discese.",
+          "weather": "indoor",
+          "status": "planned",
+          "durationMinutes": 45,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Pizzeria Bella Notte",
+          "address": "Pizzeria Bella Notte, Disneyland Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Pizzeria%20Bella%20Notte%20Pizzeria%20Bella%20Notte%2C%20Disneyland%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Pizzeria%20Bella%20Notte%20Pizzeria%20Bella%20Notte%2C%20Disneyland%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Pizzeria%20Bella%20Notte%20Pizzeria%20Bella%20Notte%2C%20Disneyland%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Pizzeria%20Bella%20Notte&endaddress=Pizzeria%20Bella%20Notte%2C%20Disneyland%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Pizzeria Bella Notte Pizzeria Bella Notte, Disneyland Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d2-7",
+          "time": "12:30",
+          "description": "Pranzo a tema Lilli e il Vagabondo; alternativa Casa de Coco.",
+          "weather": "indoor",
+          "status": "optional",
+          "durationMinutes": 45,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Phantom Manor",
+          "address": "Phantom Manor, Disneyland Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Phantom%20Manor%20Phantom%20Manor%2C%20Disneyland%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Phantom%20Manor%20Phantom%20Manor%2C%20Disneyland%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Phantom%20Manor%20Phantom%20Manor%2C%20Disneyland%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Phantom%20Manor&endaddress=Phantom%20Manor%2C%20Disneyland%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Phantom Manor Phantom Manor, Disneyland Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d2-8",
+          "time": "13:30",
+          "description": "Dimora gotica, movimento tranquillo ma atmosfera inquietante.",
+          "weather": "indoor",
+          "status": "optional",
+          "durationMinutes": 40,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Buzz Lightyear Laser Blast",
+          "address": "Buzz Lightyear Laser Blast, Disneyland Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Buzz%20Lightyear%20Laser%20Blast%20Buzz%20Lightyear%20Laser%20Blast%2C%20Disneyland%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Buzz%20Lightyear%20Laser%20Blast%20Buzz%20Lightyear%20Laser%20Blast%2C%20Disneyland%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Buzz%20Lightyear%20Laser%20Blast%20Buzz%20Lightyear%20Laser%20Blast%2C%20Disneyland%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Buzz%20Lightyear%20Laser%20Blast&endaddress=Buzz%20Lightyear%20Laser%20Blast%2C%20Disneyland%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Buzz Lightyear Laser Blast Buzz Lightyear Laser Blast, Disneyland Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d2-9",
+          "time": "15:00",
+          "description": "Sfida di coppia a bersagli laser.",
+          "weather": "indoor",
+          "status": "planned",
+          "durationMinutes": 45,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Main Street USA",
+          "address": "Main Street USA, Disneyland Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Main%20Street%20USA%20Main%20Street%20USA%2C%20Disneyland%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Main%20Street%20USA%20Main%20Street%20USA%2C%20Disneyland%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Main%20Street%20USA%20Main%20Street%20USA%2C%20Disneyland%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Main%20Street%20USA&endaddress=Main%20Street%20USA%2C%20Disneyland%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Main Street USA Main Street USA, Disneyland Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d2-10",
+          "time": "16:00",
+          "description": "Merenda, negozi, albero, fotografie. Parata secondo app ufficiale, non questo orario fisso.",
+          "weather": "mixed",
+          "status": "planned",
+          "durationMinutes": 60,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Spettacolo finale Disney",
+          "address": "Central Plaza, Disneyland Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Spettacolo%20finale%20Disney%20Central%20Plaza%2C%20Disneyland%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Spettacolo%20finale%20Disney%20Central%20Plaza%2C%20Disneyland%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Spettacolo%20finale%20Disney%20Central%20Plaza%2C%20Disneyland%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Spettacolo%20finale%20Disney&endaddress=Central%20Plaza%2C%20Disneyland%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Spettacolo finale Disney Central Plaza, Disneyland Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d2-11",
+          "time": "20:15",
+          "description": "Posizionarsi prima dello spettacolo; orario indicativo, verificare programma.",
+          "weather": "outdoor",
+          "status": "planned",
+          "durationMinutes": 60,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "LEGO Store",
+          "address": "LEGO Store Disney Village, Chessy",
+          "maps": "https://www.google.com/maps/search/?api=1&query=LEGO%20Store%20LEGO%20Store%20Disney%20Village%2C%20Chessy",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=LEGO%20Store%20LEGO%20Store%20Disney%20Village%2C%20Chessy&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=LEGO%20Store%20LEGO%20Store%20Disney%20Village%2C%20Chessy&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=LEGO%20Store&endaddress=LEGO%20Store%20Disney%20Village%2C%20Chessy",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "LEGO Store LEGO Store Disney Village, Chessy",
+            "url": null,
+            "license": null
+          },
+          "id": "d2-12",
+          "time": "21:30",
+          "description": "Passaporto e timbro; chiedere eventuale timbro natalizio. Verificare chiusura prima di entrare al parco.",
+          "weather": "indoor",
+          "status": "planned",
+          "durationMinutes": 30,
+          "timeStatus": "indicative"
+        }
+      ],
+      "transport": "Metro 12 Mairie d’Issy fino a Saint-Lazare, collegamento pedonale Auber, RER A direzione Marne-la-Vallée–Chessy; ritorno inverso, verificare ultimo treno e ramo corretto.",
+      "rain": {
+        "light": "Attrazioni interne e parata se attiva",
+        "heavy": "Peter Pan, Pirates, Buzz, galleria, drago, spettacoli interni se attivi; parata/finale non garantiti"
+      },
+      "nearby": [
+        {
+          "name": "Le Passage Enchanté d’Aladdin",
+          "address": "Disneyland Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Le%20Passage%20Enchant%C3%A9%20d%E2%80%99Aladdin%20Disneyland%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Le%20Passage%20Enchant%C3%A9%20d%E2%80%99Aladdin%20Disneyland%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Le%20Passage%20Enchant%C3%A9%20d%E2%80%99Aladdin%20Disneyland%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Le%20Passage%20Enchant%C3%A9%20d%E2%80%99Aladdin&endaddress=Disneyland%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Le Passage Enchanté d’Aladdin Disneyland Paris",
+            "url": null,
+            "license": null
+          }
+        },
+        {
+          "name": "Le Pays des Contes de Fées",
+          "address": "Disneyland Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Le%20Pays%20des%20Contes%20de%20F%C3%A9es%20Disneyland%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Le%20Pays%20des%20Contes%20de%20F%C3%A9es%20Disneyland%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Le%20Pays%20des%20Contes%20de%20F%C3%A9es%20Disneyland%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Le%20Pays%20des%20Contes%20de%20F%C3%A9es&endaddress=Disneyland%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Le Pays des Contes de Fées Disneyland Paris",
+            "url": null,
+            "license": null
+          }
+        },
+        {
+          "name": "Alice’s Curious Labyrinth",
+          "address": "Disneyland Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Alice%E2%80%99s%20Curious%20Labyrinth%20Disneyland%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Alice%E2%80%99s%20Curious%20Labyrinth%20Disneyland%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Alice%E2%80%99s%20Curious%20Labyrinth%20Disneyland%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Alice%E2%80%99s%20Curious%20Labyrinth&endaddress=Disneyland%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Alice’s Curious Labyrinth Disneyland Paris",
+            "url": null,
+            "license": null
+          }
+        },
+        {
+          "name": "Les Voyages de Pinocchio",
+          "address": "Disneyland Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Les%20Voyages%20de%20Pinocchio%20Disneyland%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Les%20Voyages%20de%20Pinocchio%20Disneyland%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Les%20Voyages%20de%20Pinocchio%20Disneyland%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Les%20Voyages%20de%20Pinocchio&endaddress=Disneyland%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Les Voyages de Pinocchio Disneyland Paris",
+            "url": null,
+            "license": null
+          }
+        },
+        {
+          "name": "Blanche-Neige",
+          "address": "Disneyland Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Blanche-Neige%20Disneyland%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Blanche-Neige%20Disneyland%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Blanche-Neige%20Disneyland%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Blanche-Neige&endaddress=Disneyland%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Blanche-Neige Disneyland Paris",
+            "url": null,
+            "license": null
+          }
+        },
+        {
+          "name": "Thunder Mesa Riverboat",
+          "address": "Disneyland Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Thunder%20Mesa%20Riverboat%20Disneyland%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Thunder%20Mesa%20Riverboat%20Disneyland%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Thunder%20Mesa%20Riverboat%20Disneyland%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Thunder%20Mesa%20Riverboat&endaddress=Disneyland%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Thunder Mesa Riverboat Disneyland Paris",
+            "url": null,
+            "license": null
+          }
+        },
+        {
+          "name": "La Cabane des Robinson",
+          "address": "Disneyland Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=La%20Cabane%20des%20Robinson%20Disneyland%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=La%20Cabane%20des%20Robinson%20Disneyland%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=La%20Cabane%20des%20Robinson%20Disneyland%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=La%20Cabane%20des%20Robinson&endaddress=Disneyland%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "La Cabane des Robinson Disneyland Paris",
+            "url": null,
+            "license": null
+          }
+        },
+        {
+          "name": "Rhythms of the Pride Lands",
+          "address": "Disneyland Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Rhythms%20of%20the%20Pride%20Lands%20Disneyland%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Rhythms%20of%20the%20Pride%20Lands%20Disneyland%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Rhythms%20of%20the%20Pride%20Lands%20Disneyland%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Rhythms%20of%20the%20Pride%20Lands&endaddress=Disneyland%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Rhythms of the Pride Lands Disneyland Paris",
+            "url": null,
+            "license": null
+          }
+        },
+        {
+          "name": "Let’s Sing Christmas",
+          "address": "Disneyland Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Let%E2%80%99s%20Sing%20Christmas%20Disneyland%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Let%E2%80%99s%20Sing%20Christmas%20Disneyland%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Let%E2%80%99s%20Sing%20Christmas%20Disneyland%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Let%E2%80%99s%20Sing%20Christmas&endaddress=Disneyland%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Let’s Sing Christmas Disneyland Paris",
+            "url": null,
+            "license": null
+          }
+        }
+      ],
+      "foodIdeas": [
+        "Bella Notte, Casa de Coco, Hakuna Matata: 12–22 € a persona",
+        "Victoria’s Home-Style: 8–15 € a persona, merenda",
+        "Captain Jack’s: 45–65 € a persona, extra con prenotazione"
+      ]
+    },
+    {
+      "date": "2026-12-09",
+      "title": "Parigi medievale e Senna",
+      "activities": [
+        {
+          "name": "Sainte-Chapelle",
+          "address": "10 Boulevard du Palais, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Sainte-Chapelle%2010%20Boulevard%20du%20Palais%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Sainte-Chapelle%2010%20Boulevard%20du%20Palais%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Sainte-Chapelle%2010%20Boulevard%20du%20Palais%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Sainte-Chapelle&endaddress=10%20Boulevard%20du%20Palais%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Sainte-Chapelle 10 Boulevard du Palais, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d3-1",
+          "time": "09:30",
+          "description": "Cappella gotica di Luigi IX; vetrate e rosone. Arrivare 30 min prima.",
+          "weather": "indoor",
+          "status": "booked_time_unknown",
+          "durationMinutes": 60,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Notre-Dame",
+          "address": "6 Parvis Notre-Dame, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Notre-Dame%206%20Parvis%20Notre-Dame%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Notre-Dame%206%20Parvis%20Notre-Dame%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Notre-Dame%206%20Parvis%20Notre-Dame%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Notre-Dame&endaddress=6%20Parvis%20Notre-Dame%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Notre-Dame 6 Parvis Notre-Dame, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d3-2",
+          "time": "11:00",
+          "description": "Cattedrale gotica; visita interna gratuita, prenotazione gratuita facoltativa da verificare.",
+          "weather": "indoor",
+          "status": "planned",
+          "durationMinutes": 50,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Mercatino Notre-Dame",
+          "address": "Square René Viviani, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Mercatino%20Notre-Dame%20Square%20Ren%C3%A9%20Viviani%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Mercatino%20Notre-Dame%20Square%20Ren%C3%A9%20Viviani%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Mercatino%20Notre-Dame%20Square%20Ren%C3%A9%20Viviani%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Mercatino%20Notre-Dame&endaddress=Square%20Ren%C3%A9%20Viviani%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Mercatino Notre-Dame Square René Viviani, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d3-3",
+          "time": "12:00",
+          "description": "Artigianato e gastronomia natalizia; date specifiche da verificare.",
+          "weather": "outdoor",
+          "status": "optional",
+          "durationMinutes": 30,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Pranzo",
+          "address": "Quartier Latin, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Pranzo%20Quartier%20Latin%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Pranzo%20Quartier%20Latin%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Pranzo%20Quartier%20Latin%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Pranzo&endaddress=Quartier%20Latin%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Pranzo Quartier Latin, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d3-4",
+          "time": "12:30",
+          "description": "Mercatino oppure pranzo al chiuso; falafel nel Marais se si anticipa la passeggiata.",
+          "weather": "mixed",
+          "status": "optional",
+          "durationMinutes": 60,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Île Saint-Louis",
+          "address": "Rue Saint-Louis en l’Île, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=%C3%8Ele%20Saint-Louis%20Rue%20Saint-Louis%20en%20l%E2%80%99%C3%8Ele%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=%C3%8Ele%20Saint-Louis%20Rue%20Saint-Louis%20en%20l%E2%80%99%C3%8Ele%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=%C3%8Ele%20Saint-Louis%20Rue%20Saint-Louis%20en%20l%E2%80%99%C3%8Ele%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=%C3%8Ele%20Saint-Louis&endaddress=Rue%20Saint-Louis%20en%20l%E2%80%99%C3%8Ele%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Île Saint-Louis Rue Saint-Louis en l’Île, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d3-5",
+          "time": "13:30",
+          "description": "Botteghe e scorci della Senna.",
+          "weather": "outdoor",
+          "status": "planned",
+          "durationMinutes": 30,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Aux Merveilleux de Fred",
+          "address": "24 Rue du Pont Louis-Philippe, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Aux%20Merveilleux%20de%20Fred%2024%20Rue%20du%20Pont%20Louis-Philippe%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Aux%20Merveilleux%20de%20Fred%2024%20Rue%20du%20Pont%20Louis-Philippe%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Aux%20Merveilleux%20de%20Fred%2024%20Rue%20du%20Pont%20Louis-Philippe%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Aux%20Merveilleux%20de%20Fred&endaddress=24%20Rue%20du%20Pont%20Louis-Philippe%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Aux Merveilleux de Fred 24 Rue du Pont Louis-Philippe, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d3-6",
+          "time": "14:00",
+          "description": "Cramique al cioccolato e mini merveilleux; sede da riconfermare.",
+          "weather": "indoor",
+          "status": "planned",
+          "durationMinutes": 20,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Rue François-Miron",
+          "address": "11 Rue François-Miron, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Rue%20Fran%C3%A7ois-Miron%2011%20Rue%20Fran%C3%A7ois-Miron%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Rue%20Fran%C3%A7ois-Miron%2011%20Rue%20Fran%C3%A7ois-Miron%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Rue%20Fran%C3%A7ois-Miron%2011%20Rue%20Fran%C3%A7ois-Miron%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Rue%20Fran%C3%A7ois-Miron&endaddress=11%20Rue%20Fran%C3%A7ois-Miron%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Rue François-Miron 11 Rue François-Miron, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d3-7",
+          "time": "14:30",
+          "description": "Case a graticcio ai civici 11 e 13.",
+          "weather": "outdoor",
+          "status": "optional",
+          "durationMinutes": 10,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Rue des Rosiers",
+          "address": "Rue des Rosiers, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Rue%20des%20Rosiers%20Rue%20des%20Rosiers%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Rue%20des%20Rosiers%20Rue%20des%20Rosiers%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Rue%20des%20Rosiers%20Rue%20des%20Rosiers%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Rue%20des%20Rosiers&endaddress=Rue%20des%20Rosiers%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Rue des Rosiers Rue des Rosiers, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d3-8",
+          "time": "15:00",
+          "description": "Quartiere ebraico, falafel e boutique.",
+          "weather": "mixed",
+          "status": "planned",
+          "durationMinutes": 30,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Place des Vosges",
+          "address": "Place des Vosges, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Place%20des%20Vosges%20Place%20des%20Vosges%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Place%20des%20Vosges%20Place%20des%20Vosges%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Place%20des%20Vosges%20Place%20des%20Vosges%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Place%20des%20Vosges&endaddress=Place%20des%20Vosges%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Place des Vosges Place des Vosges, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d3-9",
+          "time": "16:00",
+          "description": "Piazza seicentesca con portici riparati.",
+          "weather": "mixed",
+          "status": "optional",
+          "durationMinutes": 30,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Hôtel de Ville",
+          "address": "Place de l’Hôtel de Ville, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=H%C3%B4tel%20de%20Ville%20Place%20de%20l%E2%80%99H%C3%B4tel%20de%20Ville%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=H%C3%B4tel%20de%20Ville%20Place%20de%20l%E2%80%99H%C3%B4tel%20de%20Ville%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=H%C3%B4tel%20de%20Ville%20Place%20de%20l%E2%80%99H%C3%B4tel%20de%20Ville%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=H%C3%B4tel%20de%20Ville&endaddress=Place%20de%20l%E2%80%99H%C3%B4tel%20de%20Ville%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Hôtel de Ville Place de l’Hôtel de Ville, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d3-10",
+          "time": "17:00",
+          "description": "Municipio monumentale; decorazioni da verificare.",
+          "weather": "outdoor",
+          "status": "optional",
+          "durationMinutes": 15,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Crociera Pont Neuf",
+          "address": "Square du Vert-Galant, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Crociera%20Pont%20Neuf%20Square%20du%20Vert-Galant%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Crociera%20Pont%20Neuf%20Square%20du%20Vert-Galant%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Crociera%20Pont%20Neuf%20Square%20du%20Vert-Galant%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Crociera%20Pont%20Neuf&endaddress=Square%20du%20Vert-Galant%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Crociera Pont Neuf Square du Vert-Galant, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d3-11",
+          "time": "18:15",
+          "description": "Presentarsi all’imbarco; partenza confermata 18:45. Rientro stimato 19:45.",
+          "weather": "mixed",
+          "status": "confirmed",
+          "durationMinutes": 90,
+          "timeStatus": "user_confirmed"
+        },
+        {
+          "name": "Cena e jazz",
+          "address": "Rue des Lombards, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Cena%20e%20jazz%20Rue%20des%20Lombards%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Cena%20e%20jazz%20Rue%20des%20Lombards%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Cena%20e%20jazz%20Rue%20des%20Lombards%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Cena%20e%20jazz&endaddress=Rue%20des%20Lombards%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Cena e jazz Rue des Lombards, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d3-12",
+          "time": "20:00",
+          "description": "Cena con calma, jazz seduti se compatibile. Sunside o Caveau de la Huchette; programma da verificare.",
+          "weather": "indoor",
+          "status": "optional",
+          "durationMinutes": 120,
+          "timeStatus": "indicative"
+        }
+      ],
+      "transport": "Metro 12 Mairie d’Issy fino a Concorde, metro 1 Château de Vincennes fino a Châtelet, poi a piedi. Rientro da Châtelet via Concorde.",
+      "rain": {
+        "light": "Portici Marais, pause al caldo",
+        "heavy": "Sainte-Chapelle, Notre-Dame, Conciergerie o Maison de Victor Hugo (verificare), crociera se operativa e coperta"
+      },
+      "nearby": [
+        {
+          "name": "Conciergerie",
+          "address": "2 Boulevard du Palais, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Conciergerie%202%20Boulevard%20du%20Palais%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Conciergerie%202%20Boulevard%20du%20Palais%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Conciergerie%202%20Boulevard%20du%20Palais%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Conciergerie&endaddress=2%20Boulevard%20du%20Palais%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Conciergerie 2 Boulevard du Palais, Paris",
+            "url": null,
+            "license": null
+          }
+        },
+        {
+          "name": "Place Dauphine",
+          "address": "Place Dauphine, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Place%20Dauphine%20Place%20Dauphine%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Place%20Dauphine%20Place%20Dauphine%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Place%20Dauphine%20Place%20Dauphine%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Place%20Dauphine&endaddress=Place%20Dauphine%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Place Dauphine Place Dauphine, Paris",
+            "url": null,
+            "license": null
+          }
+        },
+        {
+          "name": "Shakespeare and Company",
+          "address": "37 Rue de la Bûcherie, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Shakespeare%20and%20Company%2037%20Rue%20de%20la%20B%C3%BBcherie%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Shakespeare%20and%20Company%2037%20Rue%20de%20la%20B%C3%BBcherie%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Shakespeare%20and%20Company%2037%20Rue%20de%20la%20B%C3%BBcherie%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Shakespeare%20and%20Company&endaddress=37%20Rue%20de%20la%20B%C3%BBcherie%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Shakespeare and Company 37 Rue de la Bûcherie, Paris",
+            "url": null,
+            "license": null
+          }
+        },
+        {
+          "name": "Maison de Victor Hugo",
+          "address": "6 Place des Vosges, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Maison%20de%20Victor%20Hugo%206%20Place%20des%20Vosges%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Maison%20de%20Victor%20Hugo%206%20Place%20des%20Vosges%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Maison%20de%20Victor%20Hugo%206%20Place%20des%20Vosges%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Maison%20de%20Victor%20Hugo&endaddress=6%20Place%20des%20Vosges%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Maison de Victor Hugo 6 Place des Vosges, Paris",
+            "url": null,
+            "license": null
+          }
+        },
+        {
+          "name": "Galerie Vivienne",
+          "address": "4 Rue des Petits Champs, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Galerie%20Vivienne%204%20Rue%20des%20Petits%20Champs%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Galerie%20Vivienne%204%20Rue%20des%20Petits%20Champs%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Galerie%20Vivienne%204%20Rue%20des%20Petits%20Champs%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Galerie%20Vivienne&endaddress=4%20Rue%20des%20Petits%20Champs%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Galerie Vivienne 4 Rue des Petits Champs, Paris",
+            "url": null,
+            "license": null
+          }
+        }
+      ],
+      "foodIdeas": [
+        "Mercatino: 20–36 € in due",
+        "L’As du Fallafel o Miznon: 20–44 € in due",
+        "Fred: 6–12 € in due",
+        "Cena zona Pont Neuf/Lombards: 30–50 €; jazz extra 28–65 €"
+      ]
+    },
+    {
+      "date": "2026-12-10",
+      "title": "Monet e Torre Eiffel",
+      "activities": [
+        {
+          "name": "Musée de l’Orangerie",
+          "address": "Jardin des Tuileries, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Mus%C3%A9e%20de%20l%E2%80%99Orangerie%20Jardin%20des%20Tuileries%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Mus%C3%A9e%20de%20l%E2%80%99Orangerie%20Jardin%20des%20Tuileries%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Mus%C3%A9e%20de%20l%E2%80%99Orangerie%20Jardin%20des%20Tuileries%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Mus%C3%A9e%20de%20l%E2%80%99Orangerie&endaddress=Jardin%20des%20Tuileries%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Musée de l’Orangerie Jardin des Tuileries, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d4-1",
+          "time": "09:00",
+          "description": "Ninfee di Monet nelle due sale ovali; priorità della coppia.",
+          "weather": "indoor",
+          "status": "booked_time_unknown",
+          "durationMinutes": 75,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Musée d’Orsay",
+          "address": "1 Rue de la Légion d’Honneur, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Mus%C3%A9e%20d%E2%80%99Orsay%201%20Rue%20de%20la%20L%C3%A9gion%20d%E2%80%99Honneur%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Mus%C3%A9e%20d%E2%80%99Orsay%201%20Rue%20de%20la%20L%C3%A9gion%20d%E2%80%99Honneur%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Mus%C3%A9e%20d%E2%80%99Orsay%201%20Rue%20de%20la%20L%C3%A9gion%20d%E2%80%99Honneur%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Mus%C3%A9e%20d%E2%80%99Orsay&endaddress=1%20Rue%20de%20la%20L%C3%A9gion%20d%E2%80%99Honneur%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Musée d’Orsay 1 Rue de la Légion d’Honneur, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d4-2",
+          "time": "11:00",
+          "description": "Ex stazione, impressionismo; grande orologio. Opere esposte da verificare.",
+          "weather": "indoor",
+          "status": "booked_time_unknown",
+          "durationMinutes": 120,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Galette Café",
+          "address": "2 Rue de l’Université, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Galette%20Caf%C3%A9%202%20Rue%20de%20l%E2%80%99Universit%C3%A9%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Galette%20Caf%C3%A9%202%20Rue%20de%20l%E2%80%99Universit%C3%A9%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Galette%20Caf%C3%A9%202%20Rue%20de%20l%E2%80%99Universit%C3%A9%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Galette%20Caf%C3%A9&endaddress=2%20Rue%20de%20l%E2%80%99Universit%C3%A9%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Galette Café 2 Rue de l’Université, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d4-3",
+          "time": "13:00",
+          "description": "Galette bretone; indirizzo e menu da verificare. Alternative Café Campana e ristorante Orsay.",
+          "weather": "indoor",
+          "status": "optional",
+          "durationMinutes": 65,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Rue de l’Université",
+          "address": "223 Rue de l’Université, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Rue%20de%20l%E2%80%99Universit%C3%A9%20223%20Rue%20de%20l%E2%80%99Universit%C3%A9%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Rue%20de%20l%E2%80%99Universit%C3%A9%20223%20Rue%20de%20l%E2%80%99Universit%C3%A9%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Rue%20de%20l%E2%80%99Universit%C3%A9%20223%20Rue%20de%20l%E2%80%99Universit%C3%A9%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Rue%20de%20l%E2%80%99Universit%C3%A9&endaddress=223%20Rue%20de%20l%E2%80%99Universit%C3%A9%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Rue de l’Université 223 Rue de l’Université, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d4-4",
+          "time": "14:45",
+          "description": "Scorcio fotografico della Torre Eiffel.",
+          "weather": "outdoor",
+          "status": "optional",
+          "durationMinutes": 15,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Champ de Mars",
+          "address": "Champ de Mars, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Champ%20de%20Mars%20Champ%20de%20Mars%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Champ%20de%20Mars%20Champ%20de%20Mars%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Champ%20de%20Mars%20Champ%20de%20Mars%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Champ%20de%20Mars&endaddress=Champ%20de%20Mars%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Champ de Mars Champ de Mars, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d4-5",
+          "time": "15:15",
+          "description": "Vista esterna della torre; nessuna salita.",
+          "weather": "outdoor",
+          "status": "planned",
+          "durationMinutes": 30,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Trocadéro",
+          "address": "Place du Trocadéro, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Trocad%C3%A9ro%20Place%20du%20Trocad%C3%A9ro%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Trocad%C3%A9ro%20Place%20du%20Trocad%C3%A9ro%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Trocad%C3%A9ro%20Place%20du%20Trocad%C3%A9ro%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Trocad%C3%A9ro&endaddress=Place%20du%20Trocad%C3%A9ro%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Trocadéro Place du Trocadéro, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d4-6",
+          "time": "16:00",
+          "description": "Attraversare Pont d’Iéna se accessibile; tramonto e scintillio delle 17 o 18 se attivo.",
+          "weather": "outdoor",
+          "status": "planned",
+          "durationMinutes": 75,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Avenue Montaigne",
+          "address": "30 Avenue Montaigne, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Avenue%20Montaigne%2030%20Avenue%20Montaigne%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Avenue%20Montaigne%2030%20Avenue%20Montaigne%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Avenue%20Montaigne%2030%20Avenue%20Montaigne%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Avenue%20Montaigne&endaddress=30%20Avenue%20Montaigne%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Avenue Montaigne 30 Avenue Montaigne, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d4-7",
+          "time": "18:00",
+          "description": "Vetrine Dior e Plaza Athénée; luminarie.",
+          "weather": "outdoor",
+          "status": "optional",
+          "durationMinutes": 40,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Mercatino Champs-Élysées",
+          "address": "Rond-point des Champs-Élysées, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Mercatino%20Champs-%C3%89lys%C3%A9es%20Rond-point%20des%20Champs-%C3%89lys%C3%A9es%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Mercatino%20Champs-%C3%89lys%C3%A9es%20Rond-point%20des%20Champs-%C3%89lys%C3%A9es%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Mercatino%20Champs-%C3%89lys%C3%A9es%20Rond-point%20des%20Champs-%C3%89lys%C3%A9es%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Mercatino%20Champs-%C3%89lys%C3%A9es&endaddress=Rond-point%20des%20Champs-%C3%89lys%C3%A9es%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Mercatino Champs-Élysées Rond-point des Champs-Élysées, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d4-8",
+          "time": "18:45",
+          "description": "Mercatino confermato dal Comune; cena street food o bistrot.",
+          "weather": "outdoor",
+          "status": "planned",
+          "durationMinutes": 90,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Arc de Triomphe",
+          "address": "Place Charles de Gaulle, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Arc%20de%20Triomphe%20Place%20Charles%20de%20Gaulle%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Arc%20de%20Triomphe%20Place%20Charles%20de%20Gaulle%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Arc%20de%20Triomphe%20Place%20Charles%20de%20Gaulle%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Arc%20de%20Triomphe&endaddress=Place%20Charles%20de%20Gaulle%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Arc de Triomphe Place Charles de Gaulle, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d4-9",
+          "time": "20:30",
+          "description": "Esterno, facoltativo; metro 1 per evitare lunga camminata.",
+          "weather": "outdoor",
+          "status": "optional",
+          "durationMinutes": 20,
+          "timeStatus": "indicative"
+        }
+      ],
+      "transport": "Metro 12 fino a Concorde; a piedi Orsay. RER C verso Champ de Mars–Tour Eiffel se in servizio oppure mezzi indicati da Citymapper. Metro 9 Trocadéro–Alma-Marceau, rientro da Concorde metro 12.",
+      "rain": {
+        "light": "Solo punti fotografici essenziali e metro",
+        "heavy": "Orsay più lungo, Le Bon Marché e Grande Épicerie; recupero Eiffel venerdì se possibile"
+      },
+      "nearby": [
+        {
+          "name": "Pont Alexandre III",
+          "address": "Pont Alexandre III, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Pont%20Alexandre%20III%20Pont%20Alexandre%20III%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Pont%20Alexandre%20III%20Pont%20Alexandre%20III%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Pont%20Alexandre%20III%20Pont%20Alexandre%20III%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Pont%20Alexandre%20III&endaddress=Pont%20Alexandre%20III%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Pont Alexandre III Pont Alexandre III, Paris",
+            "url": null,
+            "license": null
+          }
+        },
+        {
+          "name": "Palais de Tokyo",
+          "address": "13 Avenue du Président Wilson, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Palais%20de%20Tokyo%2013%20Avenue%20du%20Pr%C3%A9sident%20Wilson%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Palais%20de%20Tokyo%2013%20Avenue%20du%20Pr%C3%A9sident%20Wilson%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Palais%20de%20Tokyo%2013%20Avenue%20du%20Pr%C3%A9sident%20Wilson%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Palais%20de%20Tokyo&endaddress=13%20Avenue%20du%20Pr%C3%A9sident%20Wilson%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Palais de Tokyo 13 Avenue du Président Wilson, Paris",
+            "url": null,
+            "license": null
+          }
+        },
+        {
+          "name": "Le Bon Marché",
+          "address": "24 Rue de Sèvres, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Le%20Bon%20March%C3%A9%2024%20Rue%20de%20S%C3%A8vres%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Le%20Bon%20March%C3%A9%2024%20Rue%20de%20S%C3%A8vres%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Le%20Bon%20March%C3%A9%2024%20Rue%20de%20S%C3%A8vres%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Le%20Bon%20March%C3%A9&endaddress=24%20Rue%20de%20S%C3%A8vres%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Le Bon Marché 24 Rue de Sèvres, Paris",
+            "url": null,
+            "license": null
+          }
+        },
+        {
+          "name": "Grande Épicerie",
+          "address": "38 Rue de Sèvres, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Grande%20%C3%89picerie%2038%20Rue%20de%20S%C3%A8vres%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Grande%20%C3%89picerie%2038%20Rue%20de%20S%C3%A8vres%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Grande%20%C3%89picerie%2038%20Rue%20de%20S%C3%A8vres%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Grande%20%C3%89picerie&endaddress=38%20Rue%20de%20S%C3%A8vres%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Grande Épicerie 38 Rue de Sèvres, Paris",
+            "url": null,
+            "license": null
+          }
+        }
+      ],
+      "foodIdeas": [
+        "Galette Café: 24–40 € in due",
+        "Café Campana: 30–50 €",
+        "Restaurant Orsay: 60–90 €",
+        "Mercatino: 20–35 € oppure bistrot 40–60 €"
+      ]
+    },
+    {
+      "date": "2026-12-11",
+      "title": "Arte ed eleganza",
+      "activities": [
+        {
+          "name": "Musée du Louvre",
+          "address": "Rue de Rivoli, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Mus%C3%A9e%20du%20Louvre%20Rue%20de%20Rivoli%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Mus%C3%A9e%20du%20Louvre%20Rue%20de%20Rivoli%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Mus%C3%A9e%20du%20Louvre%20Rue%20de%20Rivoli%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Mus%C3%A9e%20du%20Louvre&endaddress=Rue%20de%20Rivoli%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Musée du Louvre Rue de Rivoli, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d5-1",
+          "time": "09:00",
+          "description": "Gioconda, Nozze di Cana, Vittoria, Canova; appartamenti Napoleone III se aperti.",
+          "weather": "indoor",
+          "status": "booked_time_unknown",
+          "durationMinutes": 195,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Mercatino Tuileries",
+          "address": "Jardin des Tuileries, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Mercatino%20Tuileries%20Jardin%20des%20Tuileries%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Mercatino%20Tuileries%20Jardin%20des%20Tuileries%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Mercatino%20Tuileries%20Jardin%20des%20Tuileries%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Mercatino%20Tuileries&endaddress=Jardin%20des%20Tuileries%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Mercatino Tuileries Jardin des Tuileries, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d5-2",
+          "time": "12:15",
+          "description": "Pranzo e giro facoltativo; verificare edizione.",
+          "weather": "outdoor",
+          "status": "optional",
+          "durationMinutes": 75,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Place Vendôme",
+          "address": "Place Vendôme, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Place%20Vend%C3%B4me%20Place%20Vend%C3%B4me%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Place%20Vend%C3%B4me%20Place%20Vend%C3%B4me%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Place%20Vend%C3%B4me%20Place%20Vend%C3%B4me%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Place%20Vend%C3%B4me&endaddress=Place%20Vend%C3%B4me%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Place Vendôme Place Vendôme, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d5-3",
+          "time": "13:45",
+          "description": "Piazza elegante con colonna monumentale; passaggio facoltativo.",
+          "weather": "outdoor",
+          "status": "optional",
+          "durationMinutes": 10,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Opéra Garnier",
+          "address": "Place de l’Opéra, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Op%C3%A9ra%20Garnier%20Place%20de%20l%E2%80%99Op%C3%A9ra%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Op%C3%A9ra%20Garnier%20Place%20de%20l%E2%80%99Op%C3%A9ra%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Op%C3%A9ra%20Garnier%20Place%20de%20l%E2%80%99Op%C3%A9ra%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Op%C3%A9ra%20Garnier&endaddress=Place%20de%20l%E2%80%99Op%C3%A9ra%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Opéra Garnier Place de l’Opéra, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d5-4",
+          "time": "14:30",
+          "description": "Scalinata, Grand Foyer, sala se accessibile; prenotare visita.",
+          "weather": "indoor",
+          "status": "to_book",
+          "durationMinutes": 90,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Galeries Lafayette",
+          "address": "40 Boulevard Haussmann, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Galeries%20Lafayette%2040%20Boulevard%20Haussmann%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Galeries%20Lafayette%2040%20Boulevard%20Haussmann%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Galeries%20Lafayette%2040%20Boulevard%20Haussmann%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Galeries%20Lafayette&endaddress=40%20Boulevard%20Haussmann%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Galeries Lafayette 40 Boulevard Haussmann, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d5-5",
+          "time": "16:00",
+          "description": "Cupola, albero e vetrine natalizie; terrazza se aperta.",
+          "weather": "mixed",
+          "status": "planned",
+          "durationMinutes": 75,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Printemps Haussmann",
+          "address": "64 Boulevard Haussmann, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Printemps%20Haussmann%2064%20Boulevard%20Haussmann%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Printemps%20Haussmann%2064%20Boulevard%20Haussmann%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Printemps%20Haussmann%2064%20Boulevard%20Haussmann%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Printemps%20Haussmann&endaddress=64%20Boulevard%20Haussmann%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Printemps Haussmann 64 Boulevard Haussmann, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d5-6",
+          "time": "17:15",
+          "description": "Vetrine e decorazioni; terrazza facoltativa.",
+          "weather": "mixed",
+          "status": "optional",
+          "durationMinutes": 45,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Galeries Lafayette Gourmet",
+          "address": "35 Boulevard Haussmann, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Galeries%20Lafayette%20Gourmet%2035%20Boulevard%20Haussmann%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Galeries%20Lafayette%20Gourmet%2035%20Boulevard%20Haussmann%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Galeries%20Lafayette%20Gourmet%2035%20Boulevard%20Haussmann%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Galeries%20Lafayette%20Gourmet&endaddress=35%20Boulevard%20Haussmann%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Galeries Lafayette Gourmet 35 Boulevard Haussmann, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d5-7",
+          "time": "18:00",
+          "description": "Macarons, pasticceria e dolci natalizi.",
+          "weather": "indoor",
+          "status": "optional",
+          "durationMinutes": 30,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Jungle Palace",
+          "address": "12 Rue de la Fidélité, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Jungle%20Palace%2012%20Rue%20de%20la%20Fid%C3%A9lit%C3%A9%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Jungle%20Palace%2012%20Rue%20de%20la%20Fid%C3%A9lit%C3%A9%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Jungle%20Palace%2012%20Rue%20de%20la%20Fid%C3%A9lit%C3%A9%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Jungle%20Palace&endaddress=12%20Rue%20de%20la%20Fid%C3%A9lit%C3%A9%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Jungle Palace 12 Rue de la Fidélité, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d5-8",
+          "time": "20:00",
+          "description": "Cena immersiva a tema giungla; prenotazione da fare, prezzi da verificare.",
+          "weather": "indoor",
+          "status": "to_book",
+          "durationMinutes": 90,
+          "timeStatus": "indicative"
+        }
+      ],
+      "transport": "Metro 12 fino a Concorde, metro 1 fino a Palais Royal–Musée du Louvre; poi a piedi verso Opéra. Verso Jungle Palace usare Citymapper, possibile metro 7 Opéra–Poissonnière e passeggiata.",
+      "rain": {
+        "light": "Salta mercatino, visita grandi magazzini",
+        "heavy": "Louvre, Opéra, grandi magazzini, cena; se recupero Eiffel alle 18 taglia Printemps"
+      },
+      "nearby": [
+        {
+          "name": "Palais Royal",
+          "address": "Place du Palais Royal, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Palais%20Royal%20Place%20du%20Palais%20Royal%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Palais%20Royal%20Place%20du%20Palais%20Royal%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Palais%20Royal%20Place%20du%20Palais%20Royal%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Palais%20Royal&endaddress=Place%20du%20Palais%20Royal%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Palais Royal Place du Palais Royal, Paris",
+            "url": null,
+            "license": null
+          }
+        },
+        {
+          "name": "Galerie Vivienne",
+          "address": "4 Rue des Petits Champs, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Galerie%20Vivienne%204%20Rue%20des%20Petits%20Champs%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Galerie%20Vivienne%204%20Rue%20des%20Petits%20Champs%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Galerie%20Vivienne%204%20Rue%20des%20Petits%20Champs%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Galerie%20Vivienne&endaddress=4%20Rue%20des%20Petits%20Champs%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Galerie Vivienne 4 Rue des Petits Champs, Paris",
+            "url": null,
+            "license": null
+          }
+        },
+        {
+          "name": "Olympia",
+          "address": "28 Boulevard des Capucines, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Olympia%2028%20Boulevard%20des%20Capucines%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Olympia%2028%20Boulevard%20des%20Capucines%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Olympia%2028%20Boulevard%20des%20Capucines%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Olympia&endaddress=28%20Boulevard%20des%20Capucines%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Olympia 28 Boulevard des Capucines, Paris",
+            "url": null,
+            "license": null
+          }
+        }
+      ],
+      "foodIdeas": [
+        "Le Petit Vendôme, 8 Rue des Capucines: 15–25 € in due",
+        "Angelina, 226 Rue de Rivoli: pausa facoltativa",
+        "Jungle Palace: 40–75 € in due; burger, tacos, dessert, mocktail"
+      ]
+    },
+    {
+      "date": "2026-12-12",
+      "title": "Arrivederci Parigi",
+      "activities": [
+        {
+          "name": "Colazione Montmartre",
+          "address": "Rue Ordener, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Colazione%20Montmartre%20Rue%20Ordener%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Colazione%20Montmartre%20Rue%20Ordener%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Colazione%20Montmartre%20Rue%20Ordener%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Colazione%20Montmartre&endaddress=Rue%20Ordener%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Colazione Montmartre Rue Ordener, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d6-1",
+          "time": "08:00",
+          "description": "Ultima colazione seduti; check-out e deposito bagagli da confermare.",
+          "weather": "indoor",
+          "status": "planned",
+          "durationMinutes": 45,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Villa Léandre",
+          "address": "Villa Léandre, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Villa%20L%C3%A9andre%20Villa%20L%C3%A9andre%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Villa%20L%C3%A9andre%20Villa%20L%C3%A9andre%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Villa%20L%C3%A9andre%20Villa%20L%C3%A9andre%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Villa%20L%C3%A9andre&endaddress=Villa%20L%C3%A9andre%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Villa Léandre Villa Léandre, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d6-2",
+          "time": "09:00",
+          "description": "Casette in stile inglese, strada residenziale.",
+          "weather": "outdoor",
+          "status": "optional",
+          "durationMinutes": 15,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Place Dalida",
+          "address": "Place Dalida, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Place%20Dalida%20Place%20Dalida%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Place%20Dalida%20Place%20Dalida%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Place%20Dalida%20Place%20Dalida%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Place%20Dalida&endaddress=Place%20Dalida%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Place Dalida Place Dalida, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d6-3",
+          "time": "09:20",
+          "description": "Recupero foto e rue de l’Abreuvoir.",
+          "weather": "outdoor",
+          "status": "optional",
+          "durationMinutes": 15,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "La Maison Rose",
+          "address": "2 Rue de l’Abreuvoir, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=La%20Maison%20Rose%202%20Rue%20de%20l%E2%80%99Abreuvoir%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=La%20Maison%20Rose%202%20Rue%20de%20l%E2%80%99Abreuvoir%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=La%20Maison%20Rose%202%20Rue%20de%20l%E2%80%99Abreuvoir%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=La%20Maison%20Rose&endaddress=2%20Rue%20de%20l%E2%80%99Abreuvoir%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "La Maison Rose 2 Rue de l’Abreuvoir, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d6-4",
+          "time": "09:35",
+          "description": "Foto alla luce del mattino.",
+          "weather": "outdoor",
+          "status": "optional",
+          "durationMinutes": 10,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Sacré-Cœur",
+          "address": "35 Rue du Chevalier de la Barre, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Sacr%C3%A9-C%C5%93ur%2035%20Rue%20du%20Chevalier%20de%20la%20Barre%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Sacr%C3%A9-C%C5%93ur%2035%20Rue%20du%20Chevalier%20de%20la%20Barre%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Sacr%C3%A9-C%C5%93ur%2035%20Rue%20du%20Chevalier%20de%20la%20Barre%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Sacr%C3%A9-C%C5%93ur&endaddress=35%20Rue%20du%20Chevalier%20de%20la%20Barre%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Sacré-Cœur 35 Rue du Chevalier de la Barre, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d6-5",
+          "time": "09:45",
+          "description": "Recupero eventuale visita e panorama.",
+          "weather": "mixed",
+          "status": "optional",
+          "durationMinutes": 30,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Place du Tertre",
+          "address": "Place du Tertre, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Place%20du%20Tertre%20Place%20du%20Tertre%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Place%20du%20Tertre%20Place%20du%20Tertre%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Place%20du%20Tertre%20Place%20du%20Tertre%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Place%20du%20Tertre&endaddress=Place%20du%20Tertre%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Place du Tertre Place du Tertre, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d6-6",
+          "time": "10:15",
+          "description": "Piazza degli artisti; ritratto solo con prezzo e durata concordati.",
+          "weather": "outdoor",
+          "status": "optional",
+          "durationMinutes": 40,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Hôtel Jardins de Montmartre",
+          "address": "131 Rue Ordener, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=H%C3%B4tel%20Jardins%20de%20Montmartre%20131%20Rue%20Ordener%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=H%C3%B4tel%20Jardins%20de%20Montmartre%20131%20Rue%20Ordener%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=H%C3%B4tel%20Jardins%20de%20Montmartre%20131%20Rue%20Ordener%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=H%C3%B4tel%20Jardins%20de%20Montmartre&endaddress=131%20Rue%20Ordener%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Hôtel Jardins de Montmartre 131 Rue Ordener, Paris",
+            "url": null,
+            "license": null
+          },
+          "id": "d6-7",
+          "time": "11:15",
+          "description": "Pranzo da asporto e recupero bagagli entro 11:40.",
+          "weather": "indoor",
+          "status": "planned",
+          "durationMinutes": 45,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Trasferimento Orly",
+          "address": "Aéroport Paris-Orly, France",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Trasferimento%20Orly%20A%C3%A9roport%20Paris-Orly%2C%20France",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Trasferimento%20Orly%20A%C3%A9roport%20Paris-Orly%2C%20France&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Trasferimento%20Orly%20A%C3%A9roport%20Paris-Orly%2C%20France&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Trasferimento%20Orly&endaddress=A%C3%A9roport%20Paris-Orly%2C%20France",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Trasferimento Orly Aéroport Paris-Orly, France",
+            "url": null,
+            "license": null
+          },
+          "id": "d6-8",
+          "time": "12:00",
+          "description": "Metro 12 Jules Joffrin–Madeleine, metro 14 Orly. Arrivo stimato 13:15–13:30; terminal da verificare.",
+          "weather": "indoor",
+          "status": "planned",
+          "durationMinutes": 90,
+          "timeStatus": "indicative"
+        },
+        {
+          "name": "Volo Wizz Air",
+          "address": "Aéroport Paris-Orly, France",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Volo%20Wizz%20Air%20A%C3%A9roport%20Paris-Orly%2C%20France",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Volo%20Wizz%20Air%20A%C3%A9roport%20Paris-Orly%2C%20France&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Volo%20Wizz%20Air%20A%C3%A9roport%20Paris-Orly%2C%20France&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Volo%20Wizz%20Air&endaddress=A%C3%A9roport%20Paris-Orly%2C%20France",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Volo Wizz Air Aéroport Paris-Orly, France",
+            "url": null,
+            "license": null
+          },
+          "id": "d6-9",
+          "time": "16:40",
+          "description": "Volo di ritorno; orario riferito dall’utente.",
+          "weather": "mixed",
+          "status": "confirmed",
+          "durationMinutes": 0,
+          "timeStatus": "user_confirmed"
+        }
+      ],
+      "transport": "Metro 12 Jules Joffrin verso Mairie d’Issy fino a Madeleine, metro 14 verso Aéroport d’Orly.",
+      "rain": {
+        "light": "Sacro Cuore e caffè",
+        "heavy": "Colazione e negozi vicini, anticipo aeroporto"
+      },
+      "nearby": [
+        {
+          "name": "Square Marcel Bleustein Blanchet",
+          "address": "Rue du Chevalier de la Barre, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Square%20Marcel%20Bleustein%20Blanchet%20Rue%20du%20Chevalier%20de%20la%20Barre%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Square%20Marcel%20Bleustein%20Blanchet%20Rue%20du%20Chevalier%20de%20la%20Barre%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Square%20Marcel%20Bleustein%20Blanchet%20Rue%20du%20Chevalier%20de%20la%20Barre%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Square%20Marcel%20Bleustein%20Blanchet&endaddress=Rue%20du%20Chevalier%20de%20la%20Barre%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Square Marcel Bleustein Blanchet Rue du Chevalier de la Barre, Paris",
+            "url": null,
+            "license": null
+          }
+        },
+        {
+          "name": "Musée de Montmartre",
+          "address": "12 Rue Cortot, Paris",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Mus%C3%A9e%20de%20Montmartre%2012%20Rue%20Cortot%2C%20Paris",
+          "transit": "https://www.google.com/maps/dir/?api=1&destination=Mus%C3%A9e%20de%20Montmartre%2012%20Rue%20Cortot%2C%20Paris&travelmode=transit",
+          "walking": "https://www.google.com/maps/dir/?api=1&destination=Mus%C3%A9e%20de%20Montmartre%2012%20Rue%20Cortot%2C%20Paris&travelmode=walking",
+          "citymapper": "https://citymapper.com/directions?endname=Mus%C3%A9e%20de%20Montmartre&endaddress=12%20Rue%20Cortot%2C%20Paris",
+          "coordinates": null,
+          "photo": {
+            "status": "to_source",
+            "search": "Musée de Montmartre 12 Rue Cortot, Paris",
+            "url": null,
+            "license": null
+          }
+        }
+      ],
+      "foodIdeas": [
+        "Boulangerie Rue Ordener: colazione 12–22 € e panini 10–18 € in due"
+      ]
+    }
+  ]
+}
